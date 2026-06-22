@@ -1,8 +1,9 @@
-export type ApplicationFieldType = "text" | "select" | "textarea";
+export type ApplicationFieldType = "text" | "textarea" | "select" | "date";
 
 export interface ApplicationFieldOption {
   value: string;
   label: string;
+  group?: string;
 }
 
 export interface ApplicationField {
@@ -21,6 +22,26 @@ export interface ApplicationDef {
   fields: ApplicationField[];
 }
 
+const GENDER_OPTIONS: ApplicationFieldOption[] = [
+  { value: "男", label: "男" },
+  { value: "女", label: "女" },
+  { value: "その他", label: "その他" },
+  { value: "草", label: "草" },
+  { value: "神", label: "神" },
+];
+
+const PIN_MIAN_POSITIONS: ApplicationFieldOption[] = [
+  { value: "民間一般ピン留ミアン", label: "民間一般ピン留ミアン", group: "民間" },
+  { value: "民間特殊ピン留ミアン", label: "民間特殊ピン留ミアン", group: "民間" },
+  { value: "民間臨時ピン留ミアン", label: "民間臨時ピン留ミアン", group: "民間" },
+  { value: "公務一般ピン留ミアン", label: "公務一般ピン留ミアン", group: "公務" },
+  { value: "公務特殊ピン留ミアン", label: "公務特殊ピン留ミアン", group: "公務" },
+  { value: "公務臨時ピン留ミアン", label: "公務臨時ピン留ミアン", group: "公務" },
+  { value: "軍事一般ピン留ミアン", label: "軍事一般ピン留ミアン", group: "軍事" },
+  { value: "軍事特殊ピン留ミアン", label: "軍事特殊ピン留ミアン", group: "軍事" },
+  { value: "軍事臨時ピン留ミアン", label: "軍事臨時ピン留ミアン", group: "軍事" },
+];
+
 // 新しい申請を追加したい場合は、この配列に項目を追加するだけで /applications 一覧と
 // /applications/[slug] のフォームに自動的に反映されます。
 export const APPLICATIONS: ApplicationDef[] = [
@@ -31,19 +52,7 @@ export const APPLICATIONS: ApplicationDef[] = [
       "心が疲れたとき、矢張市民は一時的に「現実」を離れることができます。出発前にこちらの渡航届をご提出ください。",
     fields: [
       { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
-      {
-        name: "gender",
-        label: "性別",
-        type: "select",
-        required: true,
-        options: [
-          { value: "男", label: "男" },
-          { value: "女", label: "女" },
-          { value: "その他", label: "その他" },
-          { value: "草", label: "草" },
-          { value: "神", label: "神" },
-        ],
-      },
+      { name: "gender", label: "性別", type: "select", required: true, options: GENDER_OPTIONS },
       {
         name: "destination",
         label: "逃避先",
@@ -65,6 +74,24 @@ export const APPLICATIONS: ApplicationDef[] = [
       { name: "reason", label: "理由", type: "textarea", required: true, placeholder: "例: 月曜日だから" },
       { name: "companion", label: "同伴者", type: "text", placeholder: "例: なし、猫、推しキャラ" },
       { name: "remarks", label: "備考", type: "textarea" },
+    ],
+  },
+  {
+    slug: "pin-mian-registration",
+    title: "ピン留ミアン登録システム",
+    description: "矢張市における各種ピン留ミアンの登録はこちらから申請してください。",
+    fields: [
+      {
+        name: "pinMianNumber",
+        label: "ピン留ミアン番号",
+        type: "text",
+        required: true,
+        placeholder: "例: PM-0001",
+      },
+      { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
+      { name: "gender", label: "性別", type: "select", required: true, options: GENDER_OPTIONS },
+      { name: "appointmentDate", label: "就任日", type: "date", required: true },
+      { name: "position", label: "役職", type: "select", required: true, options: PIN_MIAN_POSITIONS },
     ],
   },
 ];

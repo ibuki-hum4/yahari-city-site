@@ -1,14 +1,28 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useRef, useState } from "react";
-import type { ApplicationDef } from "@/lib/applications";
+import { Fragment, useRef, useState } from "react";
+import type { ApplicationDef, ApplicationFieldOption } from "@/lib/applications";
 import { generateApplicationNumber } from "@/lib/applications";
 import { drawCertificate } from "@/lib/certificate";
 
 type Stage = "form" | "processing" | "done";
 
 const PROCESSING_STEPS = ["ただいま書類を精査中…", "ハンコを押しています…", "受理しています…"];
+
+// グループ名が連続する選択肢を <optgroup> でまとめる。グループ指定がない選択肢はそのまま並べる。
+function groupOptions(options: ApplicationFieldOption[]): { group?: string; options: ApplicationFieldOption[] }[] {
+  const chunks: { group?: string; options: ApplicationFieldOption[] }[] = [];
+  for (const option of options) {
+    const last = chunks[chunks.length - 1];
+    if (last && last.group === option.group) {
+      last.options.push(option);
+    } else {
+      chunks.push({ group: option.group, options: [option] });
+    }
+  }
+  return chunks;
+}
 
 export default function ApplicationForm({ application }: { application: ApplicationDef }) {
   const [values, setValues] = useState<Record<string, string>>({});
@@ -141,12 +155,30 @@ export default function ApplicationForm({ application }: { application: Applicat
                   className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
                 >
                   <option value="">選択してください</option>
-                  {field.options?.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
+                  {groupOptions(field.options ?? []).map((chunk, chunkIndex) => {
+                    const optionElements = chunk.options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ));
+                    return chunk.group ? (
+                      <optgroup key={chunk.group} label={chunk.group}>
+                        {optionElements}
+                      </optgroup>
+                    ) : (
+                      <Fragment key={`ungrouped-${chunkIndex}`}>{optionElements}</Fragment>
+                    );
+                  })}
                 </select>
+              ) : field.type === "date" ? (
+                <input
+                  id={field.name}
+                  type="date"
+                  required={field.required}
+                  value={values[field.name] ?? ""}
+                  onChange={(event) => handleChange(field.name, event.target.value)}
+                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+                />
               ) : field.type === "textarea" ? (
                 <textarea
                   id={field.name}
