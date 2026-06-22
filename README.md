@@ -25,20 +25,25 @@ printf 'launch\nnav /\nss home\nquit\n' | node .claude/skills/run-yahari-site/dr
 
 ## 構成
 
-- `app/` — 各ページ(ホーム / about / history / pictures / news / access / faq / search / sitemap / accessibility / privacy / terms / bosai / applications / departments / legends / contact)
+- `app/` — 各ページ(ホーム / about / history / pictures / news / newspaper / access / faq / search / sitemap / accessibility / privacy / terms / bosai / applications / departments / legends / contact)
 - `components/` — Header, Footer, Carousel, AccessibilityMenu, WarningLookup, EarthquakeMap, ApplicationForm, ContactForm, MascotChatbot, Markdown, DiscordWidget, XHashtagFeed など共通コンポーネント
 - `lib/content.ts` — 市の基礎データ・沿革・部署一覧・殿堂入り記録・サイトマップ用ページ一覧・`pageMetadata()`/`buildMetadata()`ヘルパー
 - `lib/news.ts` — `content/news/*.md` を読み込むお知らせ取得関数
+- `lib/newspaper.ts` — `content/newspaper/*.md` を読み込む矢張市新聞取得関数
+- `lib/markdown-excerpt.ts` — `lib/news.ts`/`lib/newspaper.ts`で共用するMarkdown抜粋生成ユーティリティ
 - `lib/faq.ts` — よくある質問のデータ
 - `lib/jma.ts` — 気象庁の公開JSONを取得するユーティリティ(防災ポータル用)
 - `lib/discord.ts` — Discordウィジェット(widget.json)を取得するユーティリティ
 - `lib/applications.ts` — 申請フォームの定義一覧・申請番号生成
 - `lib/certificate.ts` — Canvasで証明書PNGを描画するユーティリティ
+- `lib/moderation.ts` — Gemini APIで`/contact`投稿内容をモデレーションするユーティリティ
 - `content/news/*.md` — お知らせ本文(Markdown, frontmatterで`title`/`date`/`category`を指定)
+- `content/newspaper/*.md` — 矢張市新聞本文(Markdown, frontmatterで`issue`/`type`(定期号/号外)/`title`/`date`を指定)
 
 ## 機能
 
 - お知らせはMarkdownファイル(`content/news/`)で管理し、`react-markdown`でレンダリング
+- 矢張市新聞(`/newspaper`) — `content/newspaper/*.md`で管理する月刊新聞。`type`フィールドで定期号/号外を区別し、号外は赤バッジで表示。お知らせと同じ「一覧は抜粋+リンク、詳細ページに全文+Article JSON-LD」の構成
 - サイト内検索(`/search`) — お知らせとページをキーワードで検索(ヘッダーの検索ボックスから利用可)
 - サイトマップ(`/sitemap`)、よくある質問(`/faq`)
 - Discordウィジェット(`/access`) — `widget.json`から取得した実際のオンライン人数・メンバーアバターを表示(`lib/discord.ts`、60秒キャッシュ)
@@ -46,7 +51,7 @@ printf 'launch\nnav /\nss home\nquit\n' | node .claude/skills/run-yahari-site/dr
 - 各種申請窓口(`/applications`) — `lib/applications.ts`の配列に追加するだけで申請フォームを増やせる設計。申請後はお役所風の処理アニメーション→申請番号(`YHR-2026-XXXX-XXXX-WORD-XXX`形式)発行→証明書PNGをダウンロード可能。現実逃避の一時渡航届・ピン留ミアン登録・推し活休暇申請・二度寝許可証・VC耐久参加証明書を収録
 - 部署一覧(`/departments`) — `lib/content.ts`の`DEPARTMENTS`配列(MascotChatbotのたらい回し先と共通データ)を一覧表示
 - 殿堂入り(`/legends`) — `lib/content.ts`の`LEGEND_RECORDS`配列を手動キュレーションで管理する伝説的記録集
-- 市民の声フォーム(`/contact`) — `app/contact/actions.ts`のServer ActionがDiscord Webhook(`DISCORD_FEEDBACK_WEBHOOK_URL`)へ送信する実用フォーム。honeypotフィールドと表示後3秒未満の送信拒否でボット対策、`lib/moderation.ts`がGemini 1.5 Pro(`GEMINI_API_KEY`)に投稿内容を判定させ、暴言・差別的表現が含まれる場合は送信前に拒否(APIキー未設定またはAPI呼び出し失敗時も安全側に倒して送信を拒否する)
+- 市民の声フォーム(`/contact`) — `app/contact/actions.ts`のServer ActionがDiscord Webhook(`DISCORD_FEEDBACK_WEBHOOK_URL`)へ送信する実用フォーム。honeypotフィールドと表示後3秒未満の送信拒否でボット対策、`lib/moderation.ts`がGemini(既定では`gemini-2.5-flash`、`GEMINI_API_KEY`が必要)に投稿内容を判定させ、暴言・差別的表現が含まれる場合は送信前に拒否(APIキー未設定またはAPI呼び出し失敗時も安全側に倒して送信を拒否する)
 - 404 (`not-found.tsx`) / 500 (`error.tsx`) / 読み込み中 (`loading.tsx`) のカスタムページ
 - Xの「#矢張市最高の瞬間」ハッシュタグタイムライン埋め込み・実際のスクリーンショット掲載(`/pictures`)
 - ホームのCarousel(`motion`によるクロスフェード、サムネイルプレビュー、一時停止操作付き)

@@ -31,6 +31,11 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-white/80">各種情報</h3>
           <ul className="mt-3 space-y-2 text-sm text-white/70">
             <li>
+              <Link href="/newspaper" className="hover:text-white hover:underline">
+                矢張市新聞
+              </Link>
+            </li>
+            <li>
               <Link href="/departments" className="hover:text-white hover:underline">
                 部署一覧
               </Link>

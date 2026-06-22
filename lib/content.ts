@@ -76,6 +76,12 @@ export const SITE_PAGES: SitePage[] = [
     keywords: "ニュース 告知 イベント 制度",
   },
   {
+    href: "/newspaper",
+    title: "矢張市新聞",
+    description: "矢張市の月刊新聞です。大きな出来事があった際は号外を発行します。",
+    keywords: "新聞 月刊 号外 創刊号",
+  },
+  {
     href: "/bosai",
     title: "矢張市防災ポータル",
     description: "気象庁の公開データに基づく、全国の地震・津波・警報注意報・避難所情報をまとめたポータルです。",

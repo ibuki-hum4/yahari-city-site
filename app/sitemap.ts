@@ -2,11 +2,13 @@ import type { MetadataRoute } from "next";
 import { APPLICATIONS } from "@/lib/applications";
 import { SITE, SITE_PAGES } from "@/lib/content";
 import { getAllNews } from "@/lib/news";
+import { getAllIssues } from "@/lib/newspaper";
 
 // ページの重要度を明示しない場合は0.6を既定値とする
 const PRIORITY: Record<string, number> = {
   "/": 1,
   "/news": 0.9,
+  "/newspaper": 0.7,
   "/accessibility": 0.3,
   "/privacy": 0.3,
   "/terms": 0.3,
@@ -28,11 +30,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
+  const newspaperPages: MetadataRoute.Sitemap = getAllIssues().map((issue) => ({
+    url: `${SITE.url}/newspaper/${issue.slug}`,
+    lastModified: issue.date,
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }));
+
   const applicationPages: MetadataRoute.Sitemap = APPLICATIONS.map((application) => ({
     url: `${SITE.url}/applications/${application.slug}`,
     changeFrequency: "yearly" as const,
     priority: 0.4,
   }));
 
-  return [...pages, ...newsPages, ...applicationPages];
+  return [...pages, ...newsPages, ...newspaperPages, ...applicationPages];
 }
