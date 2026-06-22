@@ -44,21 +44,24 @@ export default function ApplicationForm({ application }: { application: Applicat
       await new Promise((resolve) => setTimeout(resolve, 1300));
     }
 
-    const number = generateApplicationNumber();
-    setApplicationNumber(number);
+    setApplicationNumber(generateApplicationNumber());
     setStage("done");
+  };
 
-    requestAnimationFrame(() => {
-      if (!canvasRef.current) return;
-      drawCertificate(canvasRef.current, {
-        title: application.title,
-        applicationNumber: number,
-        issuedAt: new Date().toLocaleDateString("ja-JP"),
-        fields: application.fields.map((field) => ({
-          label: field.label,
-          value: values[field.name] ?? "",
-        })),
-      });
+  // AnimatePresence(mode="wait")が処理中画面の退場アニメーションを終えるまで
+  // 証明書のcanvasはDOMに挿入されない。requestAnimationFrameでの描画だとその前に
+  // 実行されて何も描かれないため、canvas実マウント時に発火するref callbackで描画する。
+  const handleCanvasMount = (node: HTMLCanvasElement | null) => {
+    canvasRef.current = node;
+    if (!node || !applicationNumber) return;
+    drawCertificate(node, {
+      title: application.title,
+      applicationNumber,
+      issuedAt: new Date().toLocaleDateString("ja-JP"),
+      fields: application.fields.map((field) => ({
+        label: field.label,
+        value: values[field.name] ?? "",
+      })),
     });
   };
 
@@ -109,7 +112,7 @@ export default function ApplicationForm({ application }: { application: Applicat
           <p className="break-all rounded bg-yahari-sky-light px-4 py-2 font-mono text-base font-bold text-yahari-navy sm:text-lg">
             {applicationNumber}
           </p>
-          <canvas ref={canvasRef} className="w-full max-w-sm rounded-lg border border-gray-200 shadow-md" />
+          <canvas ref={handleCanvasMount} className="w-full max-w-sm rounded-lg border border-gray-200 shadow-md" />
           <div className="flex flex-wrap justify-center gap-4">
             <button
               type="button"
