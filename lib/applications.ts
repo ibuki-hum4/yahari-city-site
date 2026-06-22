@@ -41,6 +41,7 @@ export const APPLICATIONS: ApplicationDef[] = [
           { value: "女", label: "女" },
           { value: "その他", label: "その他" },
           { value: "草", label: "草" },
+          { value: "神", label: "神" },
         ],
       },
       {

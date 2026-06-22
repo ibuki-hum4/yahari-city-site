@@ -14,7 +14,7 @@ const CAROUSEL_SLIDES: CarouselSlide[] = [
     external: true,
   },
   {
-    src: "/Carousel/yahari_city.png",
+    src: "/Carousel/yahari-city.png",
     alt: "ABOUT 新都市、矢張市とは?",
     href: "/about",
   },
