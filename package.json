@@ -10,6 +10,7 @@
     "typecheck": "bunx tsc --noEmit"
   },
   "dependencies": {
+    "@next/third-parties": "^16.2.9",
     "@tailwindcss/typography": "^0.5.20",
     "gray-matter": "^4.0.3",
     "leaflet": "^1.9.4",

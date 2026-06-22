@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import BackToTop from "@/components/BackToTop";
 import Header from "@/components/Header";
@@ -87,6 +88,7 @@ export default function RootLayout({
         <Footer />
         <BackToTop />
         <MascotChatbot />
+        <GoogleAnalytics gaId={SITE.googleAnalyticsId} />
       </body>
     </html>
   );

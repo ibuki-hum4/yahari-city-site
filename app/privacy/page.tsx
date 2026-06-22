@@ -53,6 +53,17 @@ export default function PrivacyPage() {
                 </a>
               </li>
               <li>Google翻訳(ヘッダーの「English」リンクから利用した場合)</li>
+              <li>
+                Google アナリティクス(アクセス解析) —{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yahari-navy underline"
+                >
+                  Googleのプライバシーポリシー
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -61,7 +72,16 @@ export default function PrivacyPage() {
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">アクセス解析について</h2>
         <p className="mt-4 text-sm leading-relaxed text-gray-700">
-          現時点で、本サイトはアクセス解析ツールを導入していません。導入する場合は、本ページにて事前にお知らせします。
+          本サイトでは、サイトの利用状況を把握するためにGoogleアナリティクスを利用しています。Googleアナリティクスはトラフィックデータの収集のためにCookieを使用しますが、このデータは匿名で収集されており、個人を特定するものではありません。Googleアナリティクスの利用規約に関しては、
+          <a
+            href="https://marketingplatform.google.com/about/analytics/terms/jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yahari-navy underline"
+          >
+            Googleアナリティクス利用規約
+          </a>
+          をご覧ください。Cookieの利用を望まない場合は、ブラウザの設定からCookieを無効にすることができます。
         </p>
         <p className="mt-8 text-xs text-gray-600">本方針は2026年6月22日に制定しました。</p>
       </section>

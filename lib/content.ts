@@ -18,6 +18,7 @@ export const SITE = {
   discordInviteUrl: "/discord", // next.config.ts の redirects() で実際のDiscord招待リンクに転送
   discordGuildId: "1475468019831406796",
   xHashtag: "矢張市最高の瞬間",
+  googleAnalyticsId: "G-VRZTM3QCTC",
   // ロゴは基本的に透過版を使用する。背景あり版は専用の枠で囲うなど場所を選んで使うこと。
   logo: "/矢張市_透過.png",
   logoWithBackground: "/矢張市.png",
