@@ -137,18 +137,30 @@ export const SITE_PAGES: SitePage[] = [
   },
 ];
 
+export function buildMetadata({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { title, description, url: path },
+    twitter: { title, description },
+  };
+}
+
 export function pageMetadata(href: string): Metadata {
   const page = SITE_PAGES.find((p) => p.href === href);
   if (!page) {
     throw new Error(`pageMetadata: unknown page "${href}". Add it to SITE_PAGES first.`);
   }
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: { canonical: page.href },
-    openGraph: { title: page.title, description: page.description, url: page.href },
-    twitter: { title: page.title, description: page.description },
-  };
+  return buildMetadata({ title: page.title, description: page.description, path: page.href });
 }
 
 export interface EmergencyNotice {

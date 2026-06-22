@@ -15,13 +15,13 @@ export async function GET() {
 
   const items = news
     .map((item) => {
-      const link = `${SITE.url}/news`;
+      const link = `${SITE.url}/news/${item.slug}`;
       const pubDate = new Date(item.date).toUTCString();
       return `
     <item>
       <title>${escapeXml(item.title)}</title>
       <link>${link}</link>
-      <guid isPermaLink="false">${SITE.url}/news#${item.slug}</guid>
+      <guid isPermaLink="true">${link}</guid>
       <pubDate>${pubDate}</pubDate>
       <category>${escapeXml(item.category)}</category>
       <description>${escapeXml(item.content)}</description>

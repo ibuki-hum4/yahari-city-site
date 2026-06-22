@@ -5,18 +5,28 @@ export default function PageHeader({
   title,
   path,
   lead,
+  parent,
 }: {
   title: string;
   path: string;
   lead?: string;
+  parent?: { label: string; href: string };
 }) {
+  const crumbs = [
+    { name: "ホーム", item: SITE.url },
+    ...(parent ? [{ name: parent.label, item: `${SITE.url}${parent.href}` }] : []),
+    { name: title, item: `${SITE.url}${path}` },
+  ];
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ホーム", item: SITE.url },
-      { "@type": "ListItem", position: 2, name: title, item: `${SITE.url}${path}` },
-    ],
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.item,
+    })),
   };
 
   return (
@@ -31,6 +41,14 @@ export default function PageHeader({
             ホーム
           </Link>
           <span className="mx-1">›</span>
+          {parent && (
+            <>
+              <Link href={parent.href} className="hover:underline">
+                {parent.label}
+              </Link>
+              <span className="mx-1">›</span>
+            </>
+          )}
           <span className="text-gray-700">{title}</span>
         </nav>
         <h1 className="mt-2 text-2xl font-bold text-yahari-navy sm:text-3xl">

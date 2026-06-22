@@ -53,9 +53,11 @@ bun run typecheck  # 型チェック
 
 ### SEO
 
-- `metadataBase`・OGP・Twitter Card・JSON-LD(Organization / WebSite+SearchAction / BreadcrumbList / FAQPage)
-- `/sitemap.xml`(`app/sitemap.ts`)、`/robots.txt`(`app/robots.ts`)、お知らせRSS(`/feed.xml`)
-- 各ページの`description`/`canonical`は`lib/content.ts`の`pageMetadata()`で一元管理
+- `metadataBase`・OGP・Twitter Card・JSON-LD(Organization / WebSite+SearchAction / BreadcrumbList / FAQPage / Article)
+- お知らせは`/news/[slug]`で個別URL・個別メタデータ・Article JSON-LDを持つ(一覧`/news`は抜粋+リンクのみ)
+- `/sitemap.xml`(`app/sitemap.ts`、お知らせ・申請ページを含む全URLを`changeFrequency`/`priority`/実日付の`lastModified`付きで出力)、`/robots.txt`(`app/robots.ts`)、`/manifest.webmanifest`(`app/manifest.ts`)、お知らせRSS(`/feed.xml`、各記事へのパーマリンク付き)
+- 各ページの`description`/`canonical`は`lib/content.ts`の`pageMetadata()`/`buildMetadata()`で一元管理
+- 検索結果ページ(`/search?q=`)は`robots: { index: false }`で重複コンテンツ化を回避
 
 ### アクセシビリティ
 

@@ -1,5 +1,5 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import BackToTop from "@/components/BackToTop";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     description,
     images: ["/og-image.png"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#173a5e",
+  colorScheme: "light",
 };
 
 const organizationJsonLd = {

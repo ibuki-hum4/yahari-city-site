@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Markdown from "@/components/Markdown";
+import Link from "next/link";
 import NewsBadge from "@/components/NewsBadge";
 import PageHeader from "@/components/PageHeader";
 import { SITE, pageMetadata } from "@/lib/content";
-import { getAllNews } from "@/lib/news";
+import { getAllNews, getExcerpt } from "@/lib/news";
 
 export const metadata: Metadata = pageMetadata("/news");
 
@@ -22,10 +22,20 @@ export default function NewsPage() {
                 <time className="text-sm text-gray-500">{item.date}</time>
                 <NewsBadge category={item.category} />
               </div>
-              <h2 className="mt-2 font-bold text-gray-800">{item.title}</h2>
-              <div className="mt-2">
-                <Markdown>{item.content}</Markdown>
-              </div>
+              <h2 className="mt-2 font-bold text-gray-800">
+                <Link href={`/news/${item.slug}`} className="hover:underline">
+                  {item.title}
+                </Link>
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                {getExcerpt(item.content, 140)}
+              </p>
+              <Link
+                href={`/news/${item.slug}`}
+                className="mt-2 inline-block text-sm font-medium text-yahari-navy hover:underline"
+              >
+                続きを読む ›
+              </Link>
             </li>
           ))}
         </ul>
