@@ -94,6 +94,69 @@ export const APPLICATIONS: ApplicationDef[] = [
       { name: "position", label: "役職", type: "select", required: true, options: PIN_MIAN_POSITIONS },
     ],
   },
+  {
+    slug: "oshi-leave",
+    title: "推し活休暇申請",
+    description: "推しのために業務・学業から一時離脱する市民のための休暇申請です。",
+    fields: [
+      { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
+      { name: "oshiName", label: "推しの名前", type: "text", required: true, placeholder: "例: ○○担" },
+      {
+        name: "activity",
+        label: "活動内容",
+        type: "select",
+        required: true,
+        options: [
+          { value: "配信視聴", label: "配信視聴" },
+          { value: "ライブ参戦", label: "ライブ参戦" },
+          { value: "円盤鑑賞", label: "円盤鑑賞" },
+          { value: "物販列", label: "物販列" },
+          { value: "その他", label: "その他" },
+        ],
+      },
+      { name: "duration", label: "休暇期間", type: "text", required: true, placeholder: "例: 3日間、無期限" },
+      { name: "love", label: "推しへの愛", type: "textarea", required: true, placeholder: "例: 尊い、生きる希望" },
+    ],
+  },
+  {
+    slug: "snooze-permit",
+    title: "二度寝許可証",
+    description: "二度寝の権利を公的に保障するための許可証です。",
+    fields: [
+      { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
+      { name: "snoozeTime", label: "二度寝予定時間", type: "text", required: true, placeholder: "例: 30分、3時間" },
+      { name: "excuse", label: "言い訳", type: "textarea", required: true, placeholder: "例: 布団が重力に勝てなかった" },
+      { name: "wakeUpTime", label: "起床予定", type: "text", placeholder: "例: 正午、未定" },
+    ],
+  },
+  {
+    slug: "vc-marathon-certificate",
+    title: "VC耐久参加証明書",
+    description: "矢張市公認の耐久VCに参加した市民へ贈られる証明書です。",
+    fields: [
+      { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
+      {
+        name: "participationTime",
+        label: "参加時間",
+        type: "text",
+        required: true,
+        placeholder: "例: 224時間48分",
+      },
+      {
+        name: "stamina",
+        label: "体力残量",
+        type: "select",
+        required: true,
+        options: [
+          { value: "満タン", label: "満タン" },
+          { value: "普通", label: "普通" },
+          { value: "限界", label: "限界" },
+          { value: "灰", label: "灰" },
+        ],
+      },
+      { name: "comment", label: "ひとこと", type: "textarea", placeholder: "例: もう一回いけます" },
+    ],
+  },
 ];
 
 export function getApplication(slug: string): ApplicationDef | undefined {

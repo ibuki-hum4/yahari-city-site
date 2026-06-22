@@ -15,11 +15,19 @@ bun run typecheck  # 型チェック
 
 `package.json`のスクリプトは`bun --bun next dev`ではなく素の`next dev`を呼んでいます(`bun run`経由なので実行自体はbunです)。`--bun`を付けるとこの環境ではdevサーバーが数リクエスト後に無言で落ちる現象が再現したため、安定性を優先しています。
 
+### 動作確認(エージェント向け)
+
+devサーバーの起動からブラウザでのスクリーンショット取得までを1コマンドで実行できます(`.claude/skills/run-yahari-site/`にPlaywrightベースのドライバあり):
+
+```bash
+printf 'launch\nnav /\nss home\nquit\n' | node .claude/skills/run-yahari-site/driver.mjs
+```
+
 ## 構成
 
-- `app/` — 各ページ(ホーム / about / history / pictures / news / access / faq / search / sitemap / accessibility / privacy / terms / bosai / applications)
-- `components/` — Header, Footer, Carousel, AccessibilityMenu, WarningLookup, EarthquakeMap, ApplicationForm, MascotChatbot, Markdown, DiscordWidget, XHashtagFeed など共通コンポーネント
-- `lib/content.ts` — 市の基礎データ・沿革・サイトマップ用ページ一覧・`pageMetadata()`ヘルパー
+- `app/` — 各ページ(ホーム / about / history / pictures / news / access / faq / search / sitemap / accessibility / privacy / terms / bosai / applications / departments / legends / contact)
+- `components/` — Header, Footer, Carousel, AccessibilityMenu, WarningLookup, EarthquakeMap, ApplicationForm, ContactForm, MascotChatbot, Markdown, DiscordWidget, XHashtagFeed など共通コンポーネント
+- `lib/content.ts` — 市の基礎データ・沿革・部署一覧・殿堂入り記録・サイトマップ用ページ一覧・`pageMetadata()`/`buildMetadata()`ヘルパー
 - `lib/news.ts` — `content/news/*.md` を読み込むお知らせ取得関数
 - `lib/faq.ts` — よくある質問のデータ
 - `lib/jma.ts` — 気象庁の公開JSONを取得するユーティリティ(防災ポータル用)
@@ -35,7 +43,10 @@ bun run typecheck  # 型チェック
 - サイトマップ(`/sitemap`)、よくある質問(`/faq`)
 - Discordウィジェット(`/access`) — `widget.json`から取得した実際のオンライン人数・メンバーアバターを表示(`lib/discord.ts`、60秒キャッシュ)
 - 総合窓口AIチャットボット(全ページ右下) — ルールベースの簡易チャット。「お腹すいた」に反応、それ以外はランダムな部署にたらい回し、20時〜8時はsleepモード
-- 各種申請窓口(`/applications`) — `lib/applications.ts`の配列に追加するだけで申請フォームを増やせる設計。申請後はお役所風の処理アニメーション→申請番号(`YHR-2026-XXXX-XXXX-WORD-XXX`形式)発行→証明書PNGをダウンロード可能。第一弾は「現実逃避の一時渡航届」
+- 各種申請窓口(`/applications`) — `lib/applications.ts`の配列に追加するだけで申請フォームを増やせる設計。申請後はお役所風の処理アニメーション→申請番号(`YHR-2026-XXXX-XXXX-WORD-XXX`形式)発行→証明書PNGをダウンロード可能。現実逃避の一時渡航届・ピン留ミアン登録・推し活休暇申請・二度寝許可証・VC耐久参加証明書を収録
+- 部署一覧(`/departments`) — `lib/content.ts`の`DEPARTMENTS`配列(MascotChatbotのたらい回し先と共通データ)を一覧表示
+- 殿堂入り(`/legends`) — `lib/content.ts`の`LEGEND_RECORDS`配列を手動キュレーションで管理する伝説的記録集
+- 市民の声フォーム(`/contact`) — `app/contact/actions.ts`のServer ActionがDiscord Webhook(`DISCORD_FEEDBACK_WEBHOOK_URL`)へ送信する実用フォーム。honeypotフィールドと表示後3秒未満の送信拒否でボット対策、`lib/moderation.ts`がGemini 1.5 Pro(`GEMINI_API_KEY`)に投稿内容を判定させ、暴言・差別的表現が含まれる場合は送信前に拒否(APIキー未設定またはAPI呼び出し失敗時も安全側に倒して送信を拒否する)
 - 404 (`not-found.tsx`) / 500 (`error.tsx`) / 読み込み中 (`loading.tsx`) のカスタムページ
 - Xの「#矢張市最高の瞬間」ハッシュタグタイムライン埋め込み・実際のスクリーンショット掲載(`/pictures`)
 - ホームのCarousel(`motion`によるクロスフェード、サムネイルプレビュー、一時停止操作付き)
@@ -72,3 +83,4 @@ bun run typecheck  # 型チェック
 - `lib/content.ts` の `SITE.url` — 実際に公開するドメイン(metadataBase / OGP / サイトマップ / RSSで使用)
 - `content/news/*.md`・`HISTORY_EVENTS`の日付・内容は架空のサンプルです
 - `public/` 内の写真ギャラリー用の実際の画像
+- `/contact`(市民の声フォーム)を使う場合は、Discordサーバーの「サーバー設定 → 連携サービス → ウェブフック」で新規ウェブフックを作成し、そのURLを`.env.local`に`DISCORD_FEEDBACK_WEBHOOK_URL=...`として設定してください(`.env.local.example`参照)。加えて、投稿内容のモデレーション(Gemini 1.5 Pro)に使う`GEMINI_API_KEY`を[Google AI Studio](https://aistudio.google.com/app/apikey)で発行し設定してください。いずれか未設定のままでもサイトはクラッシュせず、フォームが「準備中」エラーを返すだけです

@@ -31,6 +31,21 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-white/80">各種情報</h3>
           <ul className="mt-3 space-y-2 text-sm text-white/70">
             <li>
+              <Link href="/departments" className="hover:text-white hover:underline">
+                部署一覧
+              </Link>
+            </li>
+            <li>
+              <Link href="/legends" className="hover:text-white hover:underline">
+                殿堂入り
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:text-white hover:underline">
+                市民の声
+              </Link>
+            </li>
+            <li>
               <Link href="/search" className="hover:text-white hover:underline">
                 サイト内検索
               </Link>

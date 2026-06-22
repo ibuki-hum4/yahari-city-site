@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
@@ -90,6 +91,10 @@ export default function PicturesPage() {
             </div>
             <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
               歴代記録、224時間48分の耐久VC
+              <br />
+              <Link href="/legends" className="font-medium text-yahari-navy hover:underline">
+                → 殿堂入りページで見る
+              </Link>
             </figcaption>
           </figure>
           <figure className="overflow-hidden rounded-lg bg-gray-50">

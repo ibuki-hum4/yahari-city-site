@@ -2,24 +2,12 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { DEPARTMENTS } from "@/lib/content";
 
 interface ChatMessage {
   role: "bot" | "user";
   text: string;
 }
-
-const DEPARTMENTS = [
-  "観光課",
-  "戸籍課",
-  "税務課",
-  "道路課",
-  "環境課",
-  "広報課",
-  "防災安全課",
-  "教育委員会",
-  "市民協働課",
-  "上下水道課",
-];
 
 function getBotReply(input: string): string {
   const hour = new Date().getHours();
@@ -30,7 +18,7 @@ function getBotReply(input: string): string {
     return "それでしたら、矢張市役所地下食堂の定食(サバ味噌)がおすすめです。本日も大変好評をいただいております。";
   }
   const department = DEPARTMENTS[Math.floor(Math.random() * DEPARTMENTS.length)];
-  return `それは${department}の管轄です。お手数ですが、担当部署までお問い合わせください。`;
+  return `それは${department.name}の管轄です。お手数ですが、担当部署までお問い合わせください。`;
 }
 
 export default function MascotChatbot() {

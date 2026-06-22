@@ -106,6 +106,24 @@ export const SITE_PAGES: SitePage[] = [
     keywords: "申請 手続き 届出 渡航届",
   },
   {
+    href: "/departments",
+    title: "部署一覧",
+    description: "矢張市役所の各部署と業務内容をご紹介します。",
+    keywords: "部署 組織図 課 役所 業務",
+  },
+  {
+    href: "/legends",
+    title: "殿堂入り",
+    description: "矢張市民が打ち立てた伝説的な記録を集めた殿堂です。",
+    keywords: "殿堂 記録 伝説 ランキング VC耐久",
+  },
+  {
+    href: "/contact",
+    title: "市民の声",
+    description: "矢張市公式サイトへのご意見・ご感想・不具合の報告はこちらから。",
+    keywords: "お問い合わせ 意見 感想 不具合 報告",
+  },
+  {
     href: "/search",
     title: "サイト内検索",
     description: "お知らせやページをキーワードで検索できます。",
@@ -197,5 +215,39 @@ export const HISTORY_EVENTS: HistoryEvent[] = [
   {
     date: "2026年6月22日",
     title: "矢張市公式ウェブサイトを開設",
+  },
+];
+
+export interface Department {
+  name: string;
+  description: string;
+}
+
+// MascotChatbotのたらい回し先と/departmentsページの両方から参照される
+export const DEPARTMENTS: Department[] = [
+  { name: "観光課", description: "矢張市の見どころ発掘とPRを担当。実在する観光資源は今のところありません。" },
+  { name: "戸籍課", description: "市民登録やニックネーム変更などの各種届出を取り扱います。" },
+  { name: "税務課", description: "市税に関する業務を担当。矢張市には実際に課税できる税はありません。" },
+  { name: "道路課", description: "市内の道路(Discordのテキストチャンネル)の管理・整備を担当。" },
+  { name: "環境課", description: "サーバー内の空気を綺麗に保つための雑談浄化活動を行っています。" },
+  { name: "広報課", description: "お知らせの作成や公式サイトの運営など、市の情報発信全般を担当。" },
+  { name: "防災安全課", description: "矢張市防災ポータルの運営など、市民の安全に関する情報提供を担当。" },
+  { name: "教育委員会", description: "矢張市検定(構想中)など、市民の学びを支援する事業を検討しています。" },
+  { name: "市民協働課", description: "市民同士の交流イベントの企画・運営を担当。" },
+  { name: "上下水道課", description: "Discordサーバーには水道はありませんが、便宜上設置されています。" },
+];
+
+export interface LegendRecord {
+  title: string;
+  holder?: string;
+  detail: string;
+  date?: string;
+}
+
+export const LEGEND_RECORDS: LegendRecord[] = [
+  {
+    title: "歴代記録: 224時間48分の耐久VC",
+    detail: "矢張市史上最長となるボイスチャット滞在記録。詳細は写真とあわせてフォトギャラリーでも公開中です。",
+    date: "2026年",
   },
 ];

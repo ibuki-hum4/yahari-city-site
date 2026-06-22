@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import { SITE, pageMetadata } from "@/lib/content";
@@ -83,6 +84,11 @@ export default function AboutPage() {
             </div>
           ))}
         </dl>
+        <p className="mt-6 text-sm">
+          <Link href="/departments" className="font-medium text-yahari-navy hover:underline">
+            矢張市役所の部署一覧を見る ›
+          </Link>
+        </p>
       </section>
     </>
   );
