@@ -24,7 +24,7 @@ const DEPARTMENTS = [
 function getBotReply(input: string): string {
   const hour = new Date().getHours();
   if (hour >= 20 || hour < 8) {
-    return "本日の業務は終了しました(AIなのに退勤)。明日8時以降にまたお越しください。";
+    return "本日の業務は終了しました。明日8時以降にまたお越しください。";
   }
   if (/腹|すいた|ハングリー|hungry/i.test(input)) {
     return "それでしたら、矢張市役所地下食堂の定食(サバ味噌)がおすすめです。本日も大変好評をいただいております。";
