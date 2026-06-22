@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const CONTRAST_KEY = "yahari-high-contrast";
@@ -83,33 +84,41 @@ export default function AccessibilityMenu() {
         </svg>
       </button>
 
-      {open && (
-        <div className="absolute right-0 top-full z-20 mt-2 w-64 rounded-md bg-white p-2 text-sm text-gray-800 shadow-lg">
-          <button
-            type="button"
-            onClick={toggleSpeech}
-            className="flex w-full items-center justify-between rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute right-0 top-full z-20 mt-2 w-64 rounded-md bg-white p-2 text-sm text-gray-800 shadow-lg"
           >
-            <span>ページの読み上げ</span>
-            <span className="text-xs font-semibold text-yahari-navy">{speaking ? "停止" : "開始"}</span>
-          </button>
-          <button
-            type="button"
-            onClick={toggleContrast}
-            className="mt-1 flex w-full items-center justify-between rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
-          >
-            <span>高コントラスト表示</span>
-            <span className="text-xs font-semibold text-yahari-navy">{highContrast ? "ON" : "OFF"}</span>
-          </button>
-          <button
-            type="button"
-            onClick={openTranslate}
-            className="mt-1 block w-full rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
-          >
-            English(Google翻訳)
-          </button>
-        </div>
-      )}
+            <button
+              type="button"
+              onClick={toggleSpeech}
+              className="flex w-full items-center justify-between rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
+            >
+              <span>ページの読み上げ</span>
+              <span className="text-xs font-semibold text-yahari-navy">{speaking ? "停止" : "開始"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={toggleContrast}
+              className="mt-1 flex w-full items-center justify-between rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
+            >
+              <span>高コントラスト表示</span>
+              <span className="text-xs font-semibold text-yahari-navy">{highContrast ? "ON" : "OFF"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={openTranslate}
+              className="mt-1 block w-full rounded px-3 py-2 text-left hover:bg-yahari-sky-light"
+            >
+              English(Google翻訳)
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
