@@ -235,6 +235,13 @@ export const DEPARTMENTS: Department[] = [
   { name: "教育委員会", description: "矢張市検定(構想中)など、市民の学びを支援する事業を検討しています。" },
   { name: "市民協働課", description: "市民同士の交流イベントの企画・運営を担当。" },
   { name: "上下水道課", description: "Discordサーバーには水道はありませんが、便宜上設置されています。" },
+  { name: "住民課", description: "市民の入会・退会(Discordサーバーへの参加・退出)に関する手続きを担当。" },
+  { name: "生活福祉課", description: "市民の生活相談を受け付けていますが、相談内容はだいたい「眠い」か「お腹すいた」です。" },
+  { name: "財政課", description: "矢張市の予算編成を担当。予算は発足以来ずっと0円です。" },
+  { name: "政策推進課", description: "市の政策企画を担当。スローガン「まっすぐ、未来へ。」が現時点で唯一の公式政策です。" },
+  { name: "福祉保健局", description: "生活福祉課などを管轄する局。市民の健康(主に夜更かし防止)を見守っています。" },
+  { name: "すぐやる課", description: "市民の些細な要望に即対応する課。名前に違わず、本当に「すぐ」対応します。" },
+  { name: "春巻き推進課", description: "春巻きの普及と消費拡大を推進する課。なぜ設置されたのかは誰も覚えていません。" },
 ];
 
 export interface LegendRecord {
