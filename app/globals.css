@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-yahari-navy: #173a5e;
+  --color-yahari-navy-dark: #0f2b43;
+  --color-yahari-sky: #a6e1ff;
+  --color-yahari-sky-light: #eaf6ff;
+  --color-yahari-accent: #c0392b;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1f2937;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic",
+    "Meiryo", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 高コントラスト表示: ヘッダーの「アクセシビリティ」メニューから切り替え可能 */
+.high-contrast {
+  color-scheme: dark;
+}
+
+.high-contrast * {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+.high-contrast a:focus-visible,
+.high-contrast button:focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px;
+}
