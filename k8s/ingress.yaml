@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: yahari-app
+  name: yahari-app-ingress
   namespace: yahari-city
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod # cert-managerを使わない場合は削除する
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - yahari-city.skyia.jp # 実際に公開するドメインへ書き換える
+        - yahari-city.skyia.jp
       secretName: yahari-app-tls
   rules:
-    - host: yahari-city.skyia.jp # 実際に公開するドメインへ書き換える
+    - host: yahari-city.skyia.jp
       http:
         paths:
           - path: /

@@ -144,7 +144,7 @@ cosign verify docker.io/kemar1/yahari-city:vX.Y.Z \
 - `sealed/sealedsecret.yaml` / `sealed/sealedpostgres-secret.yaml` — 上記2つをkubesealで暗号化した結果(これをコミットし、`kustomization.yaml`もこちらを参照する)
 - `migration-job.yaml` — `migrator`イメージで`prisma migrate deploy`を実行するJob
 - `deployment.yaml` / `service.yaml` — アプリ本体のDeployment(`/api/health`でlive/readyを判定)とService
-- `ingress.yaml` — Ingress(Traefik想定。ホスト名・TLS設定はサンプル値なので書き換えが必要)
+- `ingress.yaml` — Ingress(Traefik + cert-manager想定。`letsencrypt-prod`という名前のClusterIssuerがクラスタ側に既に存在することを前提とする。このリポジトリではClusterIssuer自体は管理しない)
 - `kustomization.yaml` — 上記をまとめて適用する。デプロイするバージョンを上げる際は`images`の`newTag`を手動で書き換える(自動更新ツールは使わない運用)
 
 シークレットの更新手順:
