@@ -1,0 +1,19 @@
+# デプロイ前にPrismaのマイグレーションを適用するJob。
+# `kubectl apply -f k8s/migration-job.yaml` を実行するたびに新規Jobとして再作成する場合は、
+# 事前に `kubectl delete job yahari-migrate -n yahari-city --ignore-not-found` してから適用すること。
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: yahari-migrate
+  namespace: yahari-city
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: docker.io/kemar1/yahari-city-migrate:latest # ビルド時に実際のイメージへ書き換える(kustomization.yamlのimagesで上書きする運用も可)
+          envFrom:
+            - secretRef:
+                name: yahari-app-secret

@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: yahari-city
+
+resources:
+  - namespace.yaml
+  - sealed/sealedpostgres-secret.yaml
+  - postgres.yaml
+  - sealed/sealedsecret.yaml
+  - migration-job.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+
+# 新しいバージョンをデプロイする際は、ここのnewTagを書き換える(手動運用)
+images:
+  - name: docker.io/kemar1/yahari-city
+    newTag: latest
+  - name: docker.io/kemar1/yahari-city-migrate
+    newTag: latest

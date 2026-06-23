@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yahari-app
+  namespace: yahari-city
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yahari-app
+  template:
+    metadata:
+      labels:
+        app: yahari-app
+    spec:
+      containers:
+        - name: yahari-app
+          image: docker.io/kemar1/yahari-city:latest # ビルド時に実際のイメージへ書き換える(kustomization.yamlのimagesで上書きする運用も可)
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: yahari-app-secret
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
