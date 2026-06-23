@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { SITE, pageMetadata } from "@/lib/content";
+import { MAYOR_PROFILE, MAYOR_QUOTES, SITE, pageMetadata } from "@/lib/content";
 
 export const metadata: Metadata = pageMetadata("/about");
 
@@ -55,6 +55,29 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 py-12">
+        <h2 className="text-xl font-bold text-yahari-navy">{SITE.mayorTitle}プロフィール</h2>
+        <dl className="mt-6 divide-y divide-gray-100 border-y border-gray-100 text-sm">
+          {MAYOR_PROFILE.map((item) => (
+            <div key={item.label} className="grid grid-cols-3 gap-4 py-3">
+              <dt className="font-semibold text-gray-500">{item.label}</dt>
+              <dd className="col-span-2 text-gray-800">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-8 rounded-lg border border-yahari-sky bg-yahari-sky-light/40 p-5">
+          <h3 className="text-sm font-bold text-yahari-navy">市長の一言コーナー</h3>
+          <p className="mt-2 text-sm leading-relaxed text-gray-700">「{MAYOR_QUOTES[0]}」</p>
+        </div>
+
+        <p className="mt-6 text-sm">
+          <Link href="/column" className="font-medium text-yahari-navy hover:underline">
+            市長コラムをもっと読む ›
+          </Link>
+        </p>
       </section>
 
       <section className="bg-yahari-sky-light/40">

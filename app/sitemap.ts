@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
 import { APPLICATIONS } from "@/lib/applications";
 import { SITE, SITE_PAGES } from "@/lib/content";
+import { getAllColumns } from "@/lib/column";
 import { getAllNews } from "@/lib/news";
 import { getAllIssues } from "@/lib/newspaper";
+import { ORDINANCES } from "@/lib/ordinances";
+import { PERSONNEL_TRANSFERS } from "@/lib/personnel";
 
 // ページの重要度を明示しない場合は0.6を既定値とする
 const PRIORITY: Record<string, number> = {
@@ -43,5 +46,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
-  return [...pages, ...newsPages, ...newspaperPages, ...applicationPages];
+  const columnPages: MetadataRoute.Sitemap = getAllColumns().map((item) => ({
+    url: `${SITE.url}/column/${item.slug}`,
+    lastModified: item.date,
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }));
+
+  const ordinancePages: MetadataRoute.Sitemap = ORDINANCES.map((ordinance) => ({
+    url: `${SITE.url}/ordinances/${ordinance.slug}`,
+    changeFrequency: "yearly" as const,
+    priority: 0.5,
+  }));
+
+  const personnelPages: MetadataRoute.Sitemap = PERSONNEL_TRANSFERS.map((transfer) => ({
+    url: `${SITE.url}/personnel/${transfer.id}`,
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  }));
+
+  return [
+    ...pages,
+    ...newsPages,
+    ...newspaperPages,
+    ...applicationPages,
+    ...columnPages,
+    ...ordinancePages,
+    ...personnelPages,
+  ];
 }

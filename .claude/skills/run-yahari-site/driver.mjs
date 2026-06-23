@@ -116,6 +116,13 @@ const COMMANDS = {
     console.log("fill", sel);
   },
 
+  async "set-file"(args) {
+    if (!page) return console.log("ERROR: launch first");
+    const [sel, ...rest] = args.split(" ");
+    await page.setInputFiles(sel, rest.join(" "));
+    console.log("set-file", sel);
+  },
+
   async type(text) {
     if (page) await page.keyboard.type(text, { delay: 30 });
   },

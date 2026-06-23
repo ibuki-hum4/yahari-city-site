@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+.claude
+*.md
+.env
+.env.*
+!.env.local.example
+lib/generated
+prisma/migrations/**/*.sql.bak
+.vscode
+.idea
+*.log
+npm-debug.log*
+.DS_Store

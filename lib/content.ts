@@ -40,6 +40,7 @@ export const NAV_LINKS: NavLink[] = [
   { href: "/pictures", label: "フォトギャラリー" },
   { href: "/access", label: "市民になるには" },
   { href: "/applications", label: "申請窓口" },
+  { href: "/citizen-card", label: "市民証発行" },
   { href: "/faq", label: "よくある質問" },
 ];
 
@@ -82,6 +83,12 @@ export const SITE_PAGES: SitePage[] = [
     keywords: "新聞 月刊 号外 創刊号",
   },
   {
+    href: "/column",
+    title: "市長コラム",
+    description: "市長が、思いついたことを不定期に書き残すコラムです。",
+    keywords: "市長コラム ブログ 市長 エッセイ",
+  },
+  {
     href: "/bosai",
     title: "矢張市防災ポータル",
     description: "気象庁の公開データに基づく、全国の地震・津波・警報注意報・避難所情報をまとめたポータルです。",
@@ -116,6 +123,36 @@ export const SITE_PAGES: SitePage[] = [
     title: "部署一覧",
     description: "矢張市役所の各部署と業務内容をご紹介します。",
     keywords: "部署 組織図 課 役所 業務",
+  },
+  {
+    href: "/ordinances",
+    title: "条例集",
+    description: "矢張市で制定された条例を、条文・改正履歴つきで掲載しています。",
+    keywords: "条例 法令 条文 改正履歴 検索",
+  },
+  {
+    href: "/personnel",
+    title: "人事異動情報",
+    description: "矢張市役所における辞令(就任・異動・退任・新設)の一覧です。",
+    keywords: "人事異動 辞令 就任 異動 退任 新設 PDF",
+  },
+  {
+    href: "/groups",
+    title: "市民活動団体登録",
+    description: "矢張市民活動団体登録条例に基づき登録された団体の一覧です。",
+    keywords: "市民活動 団体 サークル 登録 申請",
+  },
+  {
+    href: "/applications/group-registration",
+    title: "市民活動団体登録申請",
+    description: "矢張市内で活動する団体の登録はこちらから申請してください。",
+    keywords: "市民活動 団体 サークル 登録 申請",
+  },
+  {
+    href: "/citizen-card",
+    title: "市民証発行",
+    description: "氏名・所属期(クォーター)・加入日を入力すると、市章入りの矢張市民証(画像)をその場で発行・ダウンロードできます。",
+    keywords: "市民証 ID 証明書 発行 市章 通し番号 所属期 クォーター",
   },
   {
     href: "/legends",
@@ -248,6 +285,27 @@ export const DEPARTMENTS: Department[] = [
   { name: "福祉保健局", description: "生活福祉課などを管轄する局。市民の健康(主に夜更かし防止)を見守っています。" },
   { name: "すぐやる課", description: "市民の些細な要望に即対応する課。名前に違わず、本当に「すぐ」対応します。" },
   { name: "春巻き推進課", description: "春巻きの普及と消費拡大を推進する課。なぜ設置されたのかは誰も覚えていません。" },
+];
+
+export interface MayorProfileItem {
+  label: string;
+  value: string;
+}
+
+export const MAYOR_PROFILE: MayorProfileItem[] = [
+  { label: "就任", value: `${SITE.founded}(矢張市発足と同時に就任)` },
+  { label: "出身", value: "Discordのどこかのサーバー(本人もうろ覚え)" },
+  { label: "趣味", value: "VC耐久、推し活、二度寝" },
+  { label: "座右の銘", value: SITE.slogan },
+  { label: "好きな部署", value: "春巻き推進課(設置の経緯はいまだに不明)" },
+];
+
+// 「市長の一言コーナー」に表示する一言。配列の先頭(最新)が表示される。更新する場合は先頭に追加する
+export const MAYOR_QUOTES: string[] = [
+  "市民が増えるたびに、部署が増えている気がする。誰が決めているんだろう。",
+  "二度寝にも市長印を。市民の権利は市長が守ります。",
+  "「まっすぐ、未来へ。」は市のスローガンですが、私個人の座右の銘でもあります。",
+  "市長印は実在しません。押した気分だけ味わってください。",
 ];
 
 export interface LegendRecord {

@@ -16,6 +16,15 @@ export default function ApplicationsPage() {
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
         <div className="grid gap-6 sm:grid-cols-2">
+          <Link
+            href="/applications/group-registration"
+            className="rounded-lg bg-yahari-sky-light p-5 shadow-sm transition hover:shadow-md"
+          >
+            <h2 className="font-bold text-yahari-navy">市民活動団体登録申請</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              矢張市内で活動する団体の登録はこちらから申請してください。登録された団体は市民活動団体一覧に掲載されます。
+            </p>
+          </Link>
           {APPLICATIONS.map((application) => (
             <Link
               key={application.slug}

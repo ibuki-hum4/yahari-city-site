@@ -1,0 +1,53 @@
+name: yahari-city-site
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-yahari}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-yaharipass}
+      POSTGRES_DB: ${POSTGRES_DB:-yahari}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-yahari}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # スキーマ変更時に手動で実行する: docker compose run --rm migrate
+  migrate:
+    image: docker.io/kemar1/yahari-city-migrate:latest
+    build:
+      context: .
+      target: migrator
+    profiles: ["tools"]
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-yahari}:${POSTGRES_PASSWORD:-yaharipass}@postgres:5432/${POSTGRES_DB:-yahari}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  app:
+    image: docker.io/kemar1/yahari-city:latest
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-yahari}:${POSTGRES_PASSWORD:-yaharipass}@postgres:5432/${POSTGRES_DB:-yahari}
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:

@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 市民活動団体登録条例(矢張市条例第6号)に基づき登録された団体
+model CitizenGroup {
+  id                 Int      @id @default(autoincrement())
+  registrationNumber String   @unique
+  name               String
+  representative     String
+  activity           String
+  registeredAt       DateTime @default(now())
+}

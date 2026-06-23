@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import { DEPARTMENTS, pageMetadata } from "@/lib/content";
@@ -22,6 +23,11 @@ export default function DepartmentsPage() {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-sm">
+          <Link href="/personnel" className="font-medium text-yahari-navy hover:underline">
+            人事異動情報(辞令一覧)を見る ›
+          </Link>
+        </p>
       </section>
     </>
   );

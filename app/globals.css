@@ -53,3 +53,23 @@ body {
   outline: 3px solid #ffff00 !important;
   outline-offset: 2px;
 }
+
+/* 辞令などの印刷(PDF保存)機能: .print-areaの内容だけを印刷する */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

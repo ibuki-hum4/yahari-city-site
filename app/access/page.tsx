@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import DiscordWidget from "@/components/DiscordWidget";
 import PageHeader from "@/components/PageHeader";
 import { SITE, pageMetadata } from "@/lib/content";
@@ -58,6 +59,13 @@ export default function AccessPage() {
           >
             Discordサーバーに参加する
           </a>
+          <p className="mt-4 text-sm">
+            市民になったら、
+            <Link href="/citizen-card" className="font-medium text-yahari-navy hover:underline">
+              市民証発行ページ
+            </Link>
+            から自分だけの市民証を発行してみましょう。
+          </p>
         </div>
       </section>
 

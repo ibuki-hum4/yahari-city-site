@@ -36,8 +36,28 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/column" className="hover:text-white hover:underline">
+                市長コラム
+              </Link>
+            </li>
+            <li>
               <Link href="/departments" className="hover:text-white hover:underline">
                 部署一覧
+              </Link>
+            </li>
+            <li>
+              <Link href="/ordinances" className="hover:text-white hover:underline">
+                条例集
+              </Link>
+            </li>
+            <li>
+              <Link href="/personnel" className="hover:text-white hover:underline">
+                人事異動情報
+              </Link>
+            </li>
+            <li>
+              <Link href="/groups" className="hover:text-white hover:underline">
+                市民活動団体登録
               </Link>
             </li>
             <li>
