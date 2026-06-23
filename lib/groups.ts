@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 export interface CitizenGroup {
+  id: number;
   registrationNumber: string;
   name: string;
   representative: string;
@@ -13,6 +14,7 @@ export interface CitizenGroup {
 export async function getAllGroups(): Promise<CitizenGroup[]> {
   const groups = await prisma.citizenGroup.findMany({ orderBy: { id: "asc" } });
   return groups.map((group) => ({
+    id: group.id,
     registrationNumber: group.registrationNumber,
     name: group.name,
     representative: group.representative,
