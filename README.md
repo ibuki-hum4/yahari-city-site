@@ -126,6 +126,16 @@ podman push docker.io/kemar1/yahari-city-migrate:vX.Y.Z
 
 GitHub Actions(`.github/workflows/docker-publish.yml`)は`vX.Y.Z`形式のタグがpushされたときに、上記と同じ2つのイメージをDocker Hubへ自動的にビルド・プッシュします(Docker Buildxを使用。Podmanはローカル開発・手動ビルド用)。リポジトリの Settings → Secrets and variables → Actions に `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`(Docker Hubのアクセストークン)を設定してください。
 
+プッシュ後、両イメージは[cosign](https://docs.sigstore.dev/)でkeyless署名されます(GitHub ActionsのOIDCを使うSigstore方式のため、鍵の管理は不要)。検証する場合:
+
+```bash
+cosign verify docker.io/kemar1/yahari-city:vX.Y.Z \
+  --certificate-identity-regexp "^https://github.com/OWNER/REPO/.github/workflows/docker-publish.yml@refs/tags/v.+$" \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
+
+(`OWNER/REPO`は実際にこのワークフローが動くGitHubリポジトリへ書き換える)
+
 ### Kubernetesマニフェスト(`k8s/`)
 
 - `namespace.yaml` — `yahari-city`Namespace

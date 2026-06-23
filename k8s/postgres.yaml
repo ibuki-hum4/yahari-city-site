@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: yahari-postgres
   namespace: yahari-city
 spec:
   clusterIP: None
   selector:
-    app: postgres
+    app: yahari-postgres
   ports:
     - port: 5432
       targetPort: 5432
@@ -14,18 +14,18 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: yahari-postgres
   namespace: yahari-city
 spec:
-  serviceName: postgres
+  serviceName: yahari-postgres
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: yahari-postgres
   template:
     metadata:
       labels:
-        app: postgres
+        app: yahari-postgres
     spec:
       containers:
         - name: postgres

@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write # cosignのkeyless署名(Sigstore OIDC)に必要
 
     steps:
       - name: Checkout repository
@@ -17,6 +18,11 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v4
+        with:
+          cosign-release: "v3.1.1"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
@@ -29,6 +35,7 @@ jobs:
         run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - name: Build and push app image
+        id: build-app
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -41,6 +48,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push migrator image
+        id: build-migrator
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -51,3 +59,10 @@ jobs:
             docker.io/kemar1/yahari-city-migrate:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      # ダイジェスト指定でkeyless署名する(Fulcio/Rekorを使用。鍵管理は不要)
+      - name: Sign app image
+        run: cosign sign --yes "docker.io/kemar1/yahari-city@${{ steps.build-app.outputs.digest }}"
+
+      - name: Sign migrator image
+        run: cosign sign --yes "docker.io/kemar1/yahari-city-migrate@${{ steps.build-migrator.outputs.digest }}"
