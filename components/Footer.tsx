@@ -66,8 +66,18 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/spots" className="hover:text-white hover:underline">
+                観光スポット
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" className="hover:text-white hover:underline">
                 市民の声
+              </Link>
+            </li>
+            <li>
+              <Link href="/changelog" className="hover:text-white hover:underline">
+                更新履歴
               </Link>
             </li>
             <li>

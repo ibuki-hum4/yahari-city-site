@@ -161,6 +161,18 @@ export const SITE_PAGES: SitePage[] = [
     keywords: "殿堂 記録 伝説 ランキング VC耐久",
   },
   {
+    href: "/spots",
+    title: "観光スポット",
+    description: "矢張市内の名所をご紹介します。",
+    keywords: "観光 スポット 名所 VC耐久の間",
+  },
+  {
+    href: "/changelog",
+    title: "更新履歴",
+    description: "矢張市公式サイト自体の更新履歴(変更ログ)です。",
+    keywords: "更新履歴 変更ログ changelog リリースノート",
+  },
+  {
     href: "/contact",
     title: "市民の声",
     description: "矢張市公式サイトへのご意見・ご感想・不具合の報告はこちらから。",
@@ -259,6 +271,11 @@ export const HISTORY_EVENTS: HistoryEvent[] = [
     date: "2026年6月22日",
     title: "矢張市公式ウェブサイトを開設",
   },
+  {
+    date: "2026年6月23日",
+    title: "矢張市創立4か月",
+    description: "市長やーはりが創立4か月を祝うメッセージを投稿し、多くの市民から祝福が寄せられました。",
+  },
 ];
 
 export interface Department {
@@ -318,7 +335,55 @@ export interface LegendRecord {
 export const LEGEND_RECORDS: LegendRecord[] = [
   {
     title: "歴代記録: 224時間48分の耐久VC",
-    detail: "矢張市史上最長となるボイスチャット滞在記録。詳細は写真とあわせてフォトギャラリーでも公開中です。",
+    detail: "矢張市史上最長となったボイスチャット滞在記録(当時)。後に293時間56分19秒の記録に更新されました。",
     date: "2026年",
+  },
+  {
+    title: "新記録: 293時間56分19秒の耐久VC",
+    detail: "前回記録(224時間48分)を更新した、矢張市史上最長のボイスチャット滞在記録。詳細は写真とあわせてフォトギャラリーでも公開中です。",
+    date: "2026年6月",
+  },
+];
+
+export interface TouristSpot {
+  name: string;
+  description: string;
+  highlight: string;
+  image?: string;
+}
+
+export const TOURIST_SPOTS: TouristSpot[] = [
+  {
+    name: "VC耐久の間",
+    description: "歴代記録「293時間56分19秒の耐久VC」が打ち立てられた、矢張市で最も有名なボイスチャンネル。",
+    highlight: "深夜帯になるほど人が増えるという不思議な名所。",
+    image: "/chojikan-vc.png",
+  },
+  {
+    name: "雑談広場",
+    description: "市民が集う中央広場のような総合雑談チャンネル。市政とは無関係の話題で常に賑わっています。",
+    highlight: "創立4か月のお祝いムードもここから始まりました。",
+    image: "/4kagetsu.png",
+  },
+  {
+    name: "春巻き横丁",
+    description: "春巻き推進条例(矢張市条例第4号)の制定地とされる、春巻き愛好家たちの集会スポット。",
+    highlight: "なぜここが「横丁」なのかは誰も知りません。",
+  },
+  {
+    name: "ピン留め記念碑",
+    description: "ピン留ミアン登録システムの発祥地と伝わる場所。多くの市民がここで思い出をピン留めしてきました。",
+    highlight: "申請窓口からピン留ミアン登録ができます。",
+  },
+  {
+    name: "バズったら置くところ",
+    description: "市民がXでバズった投稿を報告しあう専用チャンネル。矢張市と無関係な話題も大歓迎です。",
+    highlight: "世界的なバズり投稿がふらっと貼られることもある隠れた名所。",
+    image: "/bazuttaraokutokoro.png",
+  },
+  {
+    name: "フォトギャラリー展望台",
+    description: "矢張市の歴史的な瞬間を写真で振り返ることができる展望スポット。",
+    highlight: "実際の写真はフォトギャラリーページでご覧いただけます。",
   },
 ];
