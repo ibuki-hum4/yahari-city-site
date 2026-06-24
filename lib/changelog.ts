@@ -7,6 +7,24 @@ export interface ChangelogEntry {
 // サイト自体の更新履歴。新しいバージョンをリリースしたら配列の先頭に追加する(新しい順)。
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "v1.2.1",
+    date: "2026年6月24日",
+    highlights: [
+      "サイトマップ(sitemap.xml)の優先度・更新頻度を新ページ分も含めて整理",
+      "更新情報RSS(feed.xml)に市長コラムも含めるよう拡張",
+      "コンテナイメージのビルド・プッシュをdocker buildx bakeに変更して高速化",
+    ],
+  },
+  {
+    version: "v1.2.0",
+    date: "2026年6月24日",
+    highlights: [
+      "観光スポット(/spots)を追加",
+      "更新履歴(/changelog)を追加",
+      "フォトギャラリー・殿堂入り・沿革に新記録(293時間56分19秒の耐久VC)と創立4か月の節目を追加",
+    ],
+  },
+  {
     version: "v1.1.1",
     date: "2026年6月23日",
     highlights: ["コンテナイメージの署名(cosign)に使うGitHub Actionsの設定を修正"],
