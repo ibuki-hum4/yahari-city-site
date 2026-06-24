@@ -124,7 +124,9 @@ podman build --target migrator -t docker.io/kemar1/yahari-city-migrate:vX.Y.Z .
 podman push docker.io/kemar1/yahari-city-migrate:vX.Y.Z
 ```
 
-GitHub Actions(`.github/workflows/docker-publish.yml`)は`vX.Y.Z`形式のタグがpushされたときに、上記と同じ2つのイメージをDocker Hubへ自動的にビルド・プッシュします(Docker Buildxを使用。Podmanはローカル開発・手動ビルド用)。リポジトリの Settings → Secrets and variables → Actions に `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`(Docker Hubのアクセストークン)を設定してください。
+GitHub Actions(`.github/workflows/docker-publish.yml`)は`vX.Y.Z`形式のタグがpushされたときに、上記と同じ2つのイメージをDocker Hubへ自動的にビルド・プッシュします(Podmanはローカル開発・手動ビルド用)。リポジトリの Settings → Secrets and variables → Actions に `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`(Docker Hubのアクセストークン)を設定してください。
+
+CIでは2イメージを`docker buildx build`で個別にビルドする代わりに、`docker-bake.hcl`(`app`/`migrator`の2ターゲットを定義)を`docker/bake-action`で1回のビルドグラフとしてビルドします。`deps`/`builder`など共有ステージの実行・キャッシュ往復が1回分減るため、2回個別にビルドするより速くなります。
 
 プッシュ後、両イメージは[cosign](https://docs.sigstore.dev/)でkeyless署名されます(GitHub ActionsのOIDCを使うSigstore方式のため、鍵の管理は不要)。検証する場合:
 

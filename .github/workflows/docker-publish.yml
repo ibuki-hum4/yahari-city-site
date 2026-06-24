@@ -34,35 +34,24 @@ jobs:
         id: version
         run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - name: Build and push app image
-        id: build-app
-        uses: docker/build-push-action@v7
+      # docker-bake.hclでapp/migratorの2ターゲットを定義し、1回のbuildxグラフで
+      # 共有ステージ(deps/builder)を1度だけ実行してから両イメージをpushする
+      # (build-push-actionを2回呼ぶより、共有ステージの再実行・キャッシュ往復が減って速い)
+      - name: Build and push images
+        id: bake
+        uses: docker/bake-action@v7
         with:
-          context: .
-          target: runner
+          files: docker-bake.hcl
           push: true
-          tags: |
-            docker.io/kemar1/yahari-city:${{ steps.version.outputs.value }}
-            docker.io/kemar1/yahari-city:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Build and push migrator image
-        id: build-migrator
-        uses: docker/build-push-action@v7
-        with:
-          context: .
-          target: migrator
-          push: true
-          tags: |
-            docker.io/kemar1/yahari-city-migrate:${{ steps.version.outputs.value }}
-            docker.io/kemar1/yahari-city-migrate:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          set: |
+            *.cache-from=type=gha,scope=yahari-city
+            *.cache-to=type=gha,scope=yahari-city,mode=max
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
 
       # ダイジェスト指定でkeyless署名する(Fulcio/Rekorを使用。鍵管理は不要)
-      - name: Sign app image
-        run: cosign sign --yes "docker.io/kemar1/yahari-city@${{ steps.build-app.outputs.digest }}"
-
-      - name: Sign migrator image
-        run: cosign sign --yes "docker.io/kemar1/yahari-city-migrate@${{ steps.build-migrator.outputs.digest }}"
+      - name: Sign images
+        run: |
+          echo '${{ steps.bake.outputs.metadata }}' > /tmp/metadata.json
+          cosign sign --yes "docker.io/kemar1/yahari-city@$(jq -r '.app["containerimage.digest"]' /tmp/metadata.json)"
+          cosign sign --yes "docker.io/kemar1/yahari-city-migrate@$(jq -r '.migrator["containerimage.digest"]' /tmp/metadata.json)"
