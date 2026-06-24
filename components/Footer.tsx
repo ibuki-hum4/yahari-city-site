@@ -102,7 +102,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="/feed.xml" className="hover:text-white hover:underline">
-                お知らせRSS
+                お知らせ・コラムRSS
               </a>
             </li>
           </ul>

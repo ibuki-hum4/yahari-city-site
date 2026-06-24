@@ -12,6 +12,13 @@ const PRIORITY: Record<string, number> = {
   "/": 1,
   "/news": 0.9,
   "/newspaper": 0.7,
+  "/citizen-card": 0.7,
+  "/column": 0.7,
+  "/groups": 0.6,
+  "/ordinances": 0.6,
+  "/spots": 0.5,
+  "/personnel": 0.5,
+  "/changelog": 0.4,
   "/accessibility": 0.3,
   "/privacy": 0.3,
   "/terms": 0.3,
@@ -19,10 +26,13 @@ const PRIORITY: Record<string, number> = {
   "/search": 0.3,
 };
 
+// 更新頻度が高めのページは明示的にweeklyとする(それ以外はmonthly)
+const WEEKLY_PAGES = new Set(["/", "/news", "/column", "/groups", "/changelog"]);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: MetadataRoute.Sitemap = SITE_PAGES.map((page) => ({
     url: `${SITE.url}${page.href}`,
-    changeFrequency: page.href === "/" || page.href === "/news" ? "weekly" : ("monthly" as const),
+    changeFrequency: WEEKLY_PAGES.has(page.href) ? "weekly" : ("monthly" as const),
     priority: PRIORITY[page.href] ?? 0.6,
   }));
 
