@@ -132,6 +132,24 @@ export default function PicturesPage() {
           <figure className="overflow-hidden rounded-lg bg-gray-50">
             <div className="relative aspect-video">
               <Image
+                src="/300zikan.png"
+                alt="新記録、300時間の耐久VC"
+                fill
+                sizes="(min-width: 640px) 440px, 100vw"
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
+              新記録、300時間の耐久VC
+              <br />
+              <Link href="/legends" className="font-medium text-yahari-navy hover:underline">
+                → 殿堂入りページで見る
+              </Link>
+            </figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-lg bg-gray-50">
+            <div className="relative aspect-video">
+              <Image
                 src="/4kagetsu.png"
                 alt="矢張市創立4か月を祝うメッセージ"
                 fill
