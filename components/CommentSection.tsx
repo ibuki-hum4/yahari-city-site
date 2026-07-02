@@ -19,9 +19,18 @@ export default function CommentSection({
   const [body, setBody] = useState("");
   const [website, setWebsite] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [widgetKey, setWidgetKey] = useState(0);
   const [renderedAt] = useState(() => Date.now());
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // クライアント遷移で同じ位置のCommentSectionが再利用された場合に備え、
+  // targetSlugの変化をレンダー中に検知してcommentsを最新のinitialCommentsへ揃える
+  const [prevSlug, setPrevSlug] = useState(targetSlug);
+  if (targetSlug !== prevSlug) {
+    setPrevSlug(targetSlug);
+    setComments(initialComments);
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -40,6 +49,9 @@ export default function CommentSection({
 
     if (result.ok) {
       setBody("");
+      // Turnstileトークンは一度検証されると再利用できないため、ウィジェットごと作り直す
+      setTurnstileToken("");
+      setWidgetKey((key) => key + 1);
       // DBへは即時反映されるが、Server Componentの再取得を待たずに一覧を更新するため
       // 楽観的にプレースホルダーを差し込む(次回ページ遷移時にrevalidatePathの内容へ揃う)
       setComments((prev) => [
@@ -140,7 +152,7 @@ export default function CommentSection({
           />
         </div>
 
-        <TurnstileWidget onToken={setTurnstileToken} />
+        <TurnstileWidget key={widgetKey} onToken={setTurnstileToken} />
 
         <button
           type="submit"

@@ -50,7 +50,8 @@ export default async function NewsArticlePage({
   }
 
   const summary = await summarizeText(item.content);
-  const comments = await getComments("news", slug);
+  // ビルド時の静的生成ではDBに接続できないため、失敗時は空一覧にフォールバックする
+  const comments = await getComments("news", slug).catch(() => []);
 
   const articleJsonLd = {
     "@context": "https://schema.org",

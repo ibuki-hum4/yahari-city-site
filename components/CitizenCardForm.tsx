@@ -37,6 +37,7 @@ export default function CitizenCardForm() {
   const [stepIndex, setStepIndex] = useState(0);
   const [citizenSerial, setCitizenSerial] = useState("");
   const [issuedAt, setIssuedAt] = useState("");
+  const [cardBlob, setCardBlob] = useState<Blob | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +88,9 @@ export default function CitizenCardForm() {
       issuedAt,
       photoDataUrl: photoDataUrl ?? undefined,
     });
+    // navigator.shareはクリック(ユーザー操作)に紐づくtransient activationを要求するため、
+    // クリックハンドラ内で非同期にtoBlobするとアクティベーションが失効し得る。描画直後に先読みしておく。
+    node.toBlob((blob) => setCardBlob(blob), "image/png");
   };
 
   const handleDownload = () => {
@@ -98,13 +102,10 @@ export default function CitizenCardForm() {
   };
 
   const handleShare = async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
     const shareText = `${SITE.name}民証(第${citizenSerial}号)を発行しました`;
 
-    const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-    if (blob) {
-      const file = new File([blob], `yahari-citizen-card-${citizenSerial}.png`, { type: "image/png" });
+    if (cardBlob) {
+      const file = new File([cardBlob], `yahari-citizen-card-${citizenSerial}.png`, { type: "image/png" });
       if (navigator.canShare?.({ files: [file] })) {
         try {
           await navigator.share({ files: [file], title: `${SITE.name}民証`, text: shareText });
@@ -129,6 +130,7 @@ export default function CitizenCardForm() {
     setPhotoDataUrl(null);
     setRawPhotoSrc(null);
     setIsCropping(false);
+    setCardBlob(null);
     setStage("form");
   };
 

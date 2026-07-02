@@ -75,7 +75,9 @@ export default function SitemapGraph({ pages }: { pages: SitePage[] }) {
             {categoryPages.map((page, pageIndex) => {
               const spread = Math.PI / 5;
               const pageAngle =
-                categoryAngle - spread / 2 + (categoryPages.length > 1 ? (pageIndex / (categoryPages.length - 1)) * spread : 0);
+                categoryPages.length > 1
+                  ? categoryAngle - spread / 2 + (pageIndex / (categoryPages.length - 1)) * spread
+                  : categoryAngle;
               const pagePos = polar(PAGE_RADIUS, pageAngle);
 
               return (
