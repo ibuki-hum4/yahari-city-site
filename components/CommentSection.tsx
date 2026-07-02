@@ -9,12 +9,10 @@ export default function CommentSection({
   targetType,
   targetSlug,
   initialComments,
-  turnstileSiteKey,
 }: {
   targetType: CommentTargetType;
   targetSlug: string;
   initialComments: CommentItem[];
-  turnstileSiteKey: string | null;
 }) {
   const [comments, setComments] = useState(initialComments);
   const [nickname, setNickname] = useState("");
@@ -154,7 +152,7 @@ export default function CommentSection({
           />
         </div>
 
-        <TurnstileWidget key={widgetKey} siteKey={turnstileSiteKey} onToken={setTurnstileToken} />
+        <TurnstileWidget key={widgetKey} onToken={setTurnstileToken} />
 
         <button
           type="submit"

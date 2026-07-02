@@ -86,12 +86,7 @@ export default async function NewsArticlePage({
         <div className="mt-6">
           <Markdown>{item.content}</Markdown>
         </div>
-        <CommentSection
-          targetType="news"
-          targetSlug={slug}
-          initialComments={comments}
-          turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null}
-        />
+        <CommentSection targetType="news" targetSlug={slug} initialComments={comments} />
       </section>
     </>
   );

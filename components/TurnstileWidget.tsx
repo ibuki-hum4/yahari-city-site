@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -14,17 +14,29 @@ declare global {
   }
 }
 
-export default function TurnstileWidget({
-  siteKey,
-  onToken,
-}: {
-  siteKey: string | null;
-  onToken: (token: string) => void;
-}) {
+export default function TurnstileWidget({ onToken }: { onToken: (token: string) => void }) {
   const containerId = useId();
   const rendered = useRef(false);
+  const [siteKey, setSiteKey] = useState<string | null | undefined>(undefined);
 
-  if (!siteKey) {
+  // /news/[slug]・/column/[slug]は静的HTML化されるため、サイトキーはビルド時ではなく
+  // 実行時にAPI経由で取得する(app/api/turnstile-site-key/route.ts参照)
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/turnstile-site-key")
+      .then((res) => res.json())
+      .then((data: { siteKey: string | null }) => {
+        if (!cancelled) setSiteKey(data.siteKey);
+      })
+      .catch(() => {
+        if (!cancelled) setSiteKey(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (siteKey === undefined || !siteKey) {
     return <p className="text-xs text-gray-500">認証ウィジェットは準備中です。</p>;
   }
 
