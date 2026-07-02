@@ -82,7 +82,12 @@ export default async function ColumnArticlePage({
         <div className="mt-6">
           <Markdown>{item.content}</Markdown>
         </div>
-        <CommentSection targetType="column" targetSlug={slug} initialComments={comments} />
+        <CommentSection
+          targetType="column"
+          targetSlug={slug}
+          initialComments={comments}
+          turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null}
+        />
       </section>
     </>
   );

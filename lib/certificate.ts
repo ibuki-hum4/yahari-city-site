@@ -1,3 +1,7 @@
+import { lineSeedJP } from "@/lib/fonts";
+
+const FONT_FAMILY = `${lineSeedJP.style.fontFamily}, sans-serif`;
+
 export interface CertificateField {
   label: string;
   value: string;
@@ -55,6 +59,10 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
+  // next/fontのFace読み込みを待ってから描画する(先にfillTextすると
+  // フォールバック書体でテキストが確定してしまい、後からLINE Seed JPに切り替わらない)
+  await document.fonts.ready;
+
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
 
@@ -73,13 +81,13 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
 
   ctx.textAlign = "center";
   ctx.fillStyle = "#173a5e";
-  ctx.font = "bold 28px sans-serif";
+  ctx.font = `bold 28px ${FONT_FAMILY}`;
   ctx.fillText("矢張市", width / 2, 195);
 
-  ctx.font = "bold 38px sans-serif";
+  ctx.font = `bold 38px ${FONT_FAMILY}`;
   ctx.fillText(options.title, width / 2, 250);
 
-  ctx.font = "18px sans-serif";
+  ctx.font = `18px ${FONT_FAMILY}`;
   ctx.fillStyle = "#374151";
   ctx.fillText(`申請番号: ${options.applicationNumber}`, width / 2, 290);
   ctx.fillText(`発行日: ${options.issuedAt}`, width / 2, 316);
@@ -95,10 +103,10 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   let y = 400;
   for (const field of options.fields) {
     ctx.fillStyle = "#173a5e";
-    ctx.font = "bold 20px sans-serif";
+    ctx.font = `bold 20px ${FONT_FAMILY}`;
     ctx.fillText(field.label, 90, y);
     ctx.fillStyle = "#1f2937";
-    ctx.font = "20px sans-serif";
+    ctx.font = `20px ${FONT_FAMILY}`;
     y = wrapText(ctx, field.value || "(未記入)", 90, y + 30, width - 180, 26);
     y += 40;
   }
@@ -118,14 +126,14 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   ctx.stroke();
   ctx.fillStyle = "#c0392b";
   ctx.textAlign = "center";
-  ctx.font = "bold 18px sans-serif";
+  ctx.font = `bold 18px ${FONT_FAMILY}`;
   ctx.fillText("矢張", 0, -6);
   ctx.fillText("市長印", 0, 18);
   ctx.restore();
 
   ctx.textAlign = "center";
   ctx.fillStyle = "#6b7280";
-  ctx.font = "14px sans-serif";
+  ctx.font = `14px ${FONT_FAMILY}`;
   ctx.fillText(
     "この証明書は矢張市公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
     width / 2,

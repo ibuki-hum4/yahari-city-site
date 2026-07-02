@@ -1,4 +1,7 @@
 import { SITE } from "@/lib/content";
+import { lineSeedJP } from "@/lib/fonts";
+
+const FONT_FAMILY = `${lineSeedJP.style.fontFamily}, sans-serif`;
 
 export interface CitizenCardOptions {
   name: string;
@@ -62,7 +65,7 @@ function fitFontSize(
 ): number {
   let size = startSize;
   while (size > minSize) {
-    ctx.font = `${weight} ${size}px sans-serif`;
+    ctx.font = `${weight} ${size}px ${FONT_FAMILY}`;
     if (ctx.measureText(text).width <= maxWidth) break;
     size -= 2;
   }
@@ -83,6 +86,10 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
+
+  // next/fontのFace読み込みを待ってから描画する(先にfillTextすると
+  // フォールバック書体でテキストが確定してしまい、後からLINE Seed JPに切り替わらない)
+  await document.fonts.ready;
 
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
@@ -106,14 +113,14 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
 
   ctx.textAlign = "left";
   ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 34px sans-serif";
+  ctx.font = `bold 34px ${FONT_FAMILY}`;
   ctx.fillText("矢張市民証", 155, 90);
-  ctx.font = "14px sans-serif";
+  ctx.font = `14px ${FONT_FAMILY}`;
   ctx.fillStyle = "#a6e1ff";
   ctx.fillText("YAHARI CITY RESIDENT CARD", 155, 118);
 
   ctx.textAlign = "right";
-  ctx.font = "13px sans-serif";
+  ctx.font = `13px ${FONT_FAMILY}`;
   ctx.fillStyle = "#a6e1ff";
   ctx.fillText(SITE.slogan, width - 55, 118);
 
@@ -171,7 +178,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   if (!photo) {
     ctx.textAlign = "center";
     ctx.fillStyle = "#6b7280";
-    ctx.font = "12px sans-serif";
+    ctx.font = `12px ${FONT_FAMILY}`;
     ctx.fillText("PHOTO", photoX + photoW / 2, photoY + photoH + 20);
   }
 
@@ -179,22 +186,21 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   const fieldMaxWidth = photoX - 90;
   ctx.textAlign = "left";
 
-  const fieldRows: { label: string; value: string; color: string; baseSize: number; mono?: boolean }[] = [
+  const fieldRows: { label: string; value: string; color: string; baseSize: number }[] = [
     { label: "氏名 / NAME", value: options.name, color: "#173a5e", baseSize: 32 },
     { label: "所属期 / TERM", value: options.term, color: "#1f2937", baseSize: 28 },
     { label: "加入日 / DATE OF ENTRY", value: options.joinDate, color: "#1f2937", baseSize: 28 },
-    { label: "市民番号 / CITIZEN No.", value: `第${options.citizenSerial}号`, color: "#c0392b", baseSize: 28, mono: true },
+    { label: "市民番号 / CITIZEN No.", value: `第${options.citizenSerial}号`, color: "#c0392b", baseSize: 28 },
   ];
 
   let rowY = 255;
   for (const row of fieldRows) {
     ctx.fillStyle = "#6b7280";
-    ctx.font = "14px sans-serif";
+    ctx.font = `14px ${FONT_FAMILY}`;
     ctx.fillText(row.label, 55, rowY);
-    const fontFamily = row.mono ? "monospace" : "sans-serif";
     const size = fitFontSize(ctx, row.value, fieldMaxWidth, row.baseSize, 16);
     ctx.fillStyle = row.color;
-    ctx.font = `bold ${size}px ${fontFamily}`;
+    ctx.font = `bold ${size}px ${FONT_FAMILY}`;
     ctx.fillText(row.value, 55, rowY + 37);
     rowY += 78;
   }
@@ -213,7 +219,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   ctx.stroke();
   ctx.fillStyle = "#c0392b";
   ctx.textAlign = "center";
-  ctx.font = "bold 15px sans-serif";
+  ctx.font = `bold 15px ${FONT_FAMILY}`;
   ctx.fillText("矢張", 0, -4);
   ctx.fillText("市長印", 0, 16);
   ctx.restore();
@@ -232,11 +238,11 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
 
   ctx.textAlign = "left";
   ctx.fillStyle = "#6b7280";
-  ctx.font = "13px sans-serif";
+  ctx.font = `13px ${FONT_FAMILY}`;
   ctx.fillText(`発行日: ${options.issuedAt}`, 55, 595);
 
   ctx.textAlign = "center";
-  ctx.font = "11px sans-serif";
+  ctx.font = `11px ${FONT_FAMILY}`;
   ctx.fillText(
     "このカードは矢張市公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
     width / 2,

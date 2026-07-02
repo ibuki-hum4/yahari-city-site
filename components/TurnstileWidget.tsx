@@ -14,11 +14,16 @@ declare global {
   }
 }
 
-export default function TurnstileWidget({ onToken }: { onToken: (token: string) => void }) {
+export default function TurnstileWidget({
+  siteKey,
+  onToken,
+}: {
+  siteKey: string | null;
+  onToken: (token: string) => void;
+}) {
   const containerId = useId();
   const rendered = useRef(false);
 
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   if (!siteKey) {
     return <p className="text-xs text-gray-500">認証ウィジェットは準備中です。</p>;
   }

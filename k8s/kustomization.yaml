@@ -16,6 +16,6 @@ resources:
 # 新しいバージョンをデプロイする際は、ここのnewTagを書き換える
 images:
   - name: docker.io/kemar1/yahari-city
-    newTag: 1.4.1
+    newTag: 1.5.0
   - name: docker.io/kemar1/yahari-city-migrate
-    newTag: 1.4.1
+    newTag: 1.5.0

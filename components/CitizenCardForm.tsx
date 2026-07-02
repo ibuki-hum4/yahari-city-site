@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   CITIZEN_PHOTO_HEIGHT,
   CITIZEN_PHOTO_WIDTH,
@@ -37,7 +37,6 @@ export default function CitizenCardForm() {
   const [stepIndex, setStepIndex] = useState(0);
   const [citizenSerial, setCitizenSerial] = useState("");
   const [issuedAt, setIssuedAt] = useState("");
-  const [cardBlob, setCardBlob] = useState<Blob | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,22 +75,25 @@ export default function CitizenCardForm() {
   };
 
   // AnimatePresence(mode="wait")の退場アニメーション完了後にcanvasがマウントされるため、
-  // ref callbackのマウント時に描画する(useEffectでは早すぎて何も描かれない)
-  const handleCanvasMount = (node: HTMLCanvasElement | null) => {
-    canvasRef.current = node;
-    if (!node || !citizenSerial) return;
-    drawCitizenCard(node, {
-      name,
-      term: CITIZEN_TERMS.find((option) => option.value === term)?.label ?? term,
-      joinDate: formatJaDate(joinDate),
-      citizenSerial,
-      issuedAt,
-      photoDataUrl: photoDataUrl ?? undefined,
-    });
-    // navigator.shareはクリック(ユーザー操作)に紐づくtransient activationを要求するため、
-    // クリックハンドラ内で非同期にtoBlobするとアクティベーションが失効し得る。描画直後に先読みしておく。
-    node.toBlob((blob) => setCardBlob(blob), "image/png");
-  };
+  // ref callbackのマウント時に描画する(useEffectでは早すぎて何も描かれない)。
+  // useCallbackで関数の同一性を固定しないと、レンダーのたびにこのコールバックが
+  // 新しい関数として再生成され、Reactがref(null)→ref(node)を呼び直して再描画を
+  // 繰り返しチラつく原因になる。
+  const handleCanvasMount = useCallback(
+    (node: HTMLCanvasElement | null) => {
+      canvasRef.current = node;
+      if (!node || !citizenSerial) return;
+      drawCitizenCard(node, {
+        name,
+        term: CITIZEN_TERMS.find((option) => option.value === term)?.label ?? term,
+        joinDate: formatJaDate(joinDate),
+        citizenSerial,
+        issuedAt,
+        photoDataUrl: photoDataUrl ?? undefined,
+      });
+    },
+    [name, term, joinDate, citizenSerial, issuedAt, photoDataUrl]
+  );
 
   const handleDownload = () => {
     if (!canvasRef.current) return;
@@ -101,21 +103,10 @@ export default function CitizenCardForm() {
     link.click();
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     const shareText = `${SITE.name}民証(第${citizenSerial}号)を発行しました`;
 
-    if (cardBlob) {
-      const file = new File([cardBlob], `yahari-citizen-card-${citizenSerial}.png`, { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: `${SITE.name}民証`, text: shareText });
-          return;
-        } catch {
-          // 共有がキャンセルされた場合等はX投稿画面へのフォールバックに進む
-        }
-      }
-    }
-
+    // OSの共有シートを経由すると送信先がXとは限らないため、常にXの投稿画面をリンク付きで直接開く
     const intentUrl = new URL("https://twitter.com/intent/tweet");
     intentUrl.searchParams.set("text", shareText);
     intentUrl.searchParams.set("url", `${SITE.url}/citizen-card`);
@@ -130,7 +121,6 @@ export default function CitizenCardForm() {
     setPhotoDataUrl(null);
     setRawPhotoSrc(null);
     setIsCropping(false);
-    setCardBlob(null);
     setStage("form");
   };
 

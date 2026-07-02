@@ -16,7 +16,7 @@ export default function HistoryTimeline({ events }: { events: HistoryEvent[] }) 
           transition={{ duration: 0.4, delay: index * 0.05 }}
         >
           <motion.span
-            className="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2 border-white bg-yahari-navy"
+            className="absolute -left-[41px] mt-1.5 h-4 w-4 rounded-full border-2 border-white bg-yahari-navy"
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true, margin: "-80px" }}
