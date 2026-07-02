@@ -105,16 +105,16 @@ export default function Header() {
         <div className="px-4 py-3 lg:hidden">
           <SearchForm />
         </div>
-        <ul className="mx-auto flex max-w-6xl flex-col lg:flex-row">
+        <ul className="mx-auto flex max-w-6xl flex-col lg:flex-row lg:flex-wrap lg:justify-center">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (
-              <li key={link.href} className="lg:flex-1 lg:text-center">
+              <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`block px-4 py-3 text-sm font-medium hover:bg-yahari-navy-dark ${
+                  className={`block whitespace-nowrap px-3 py-3 text-sm font-medium hover:bg-yahari-navy-dark ${
                     isActive ? "bg-yahari-navy-dark font-bold" : ""
                   }`}
                 >

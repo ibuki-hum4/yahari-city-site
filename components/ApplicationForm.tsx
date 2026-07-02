@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useRef, useState } from "react";
+import PrintButton from "@/components/PrintButton";
 import type { ApplicationDef, ApplicationFieldOption } from "@/lib/applications";
 import { generateApplicationNumber } from "@/lib/applications";
 import { drawCertificate } from "@/lib/certificate";
@@ -106,14 +107,14 @@ export default function ApplicationForm({ application }: { application: Applicat
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="flex flex-col items-center gap-6 py-8 text-center"
+          className="flex flex-col items-center gap-6 py-8 text-center print-area"
         >
           <p className="text-sm text-gray-600">受理されました。申請番号は以下の通りです。</p>
           <p className="break-all rounded bg-yahari-sky-light px-4 py-2 font-mono text-base font-bold text-yahari-navy sm:text-lg">
             {applicationNumber}
           </p>
           <canvas ref={handleCanvasMount} className="w-full max-w-sm rounded-lg border border-gray-200 shadow-md" />
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 no-print">
             <button
               type="button"
               onClick={handleDownload}
@@ -121,6 +122,7 @@ export default function ApplicationForm({ application }: { application: Applicat
             >
               証明書をダウンロード(PNG)
             </button>
+            <PrintButton label="印刷する" />
             <button
               type="button"
               onClick={handleRestart}

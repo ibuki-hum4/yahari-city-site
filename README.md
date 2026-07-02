@@ -172,5 +172,6 @@ kubectl apply -f k8s/migration-job.yaml   # スキーマ変更時は再適用す
 - `content/news/*.md`・`HISTORY_EVENTS`の日付・内容は架空のサンプルです
 - `public/` 内の写真ギャラリー用の実際の画像
 - `/contact`(市民の声フォーム)を使う場合は、Discordサーバーの「サーバー設定 → 連携サービス → ウェブフック」で新規ウェブフックを作成し、そのURLを`.env.local`に`DISCORD_FEEDBACK_WEBHOOK_URL=...`として設定してください(`.env.local.example`参照)。加えて、投稿内容のモデレーション(Gemini 1.5 Pro)に使う`GEMINI_API_KEY`を[Google AI Studio](https://aistudio.google.com/app/apikey)で発行し設定してください。いずれか未設定のままでもサイトはクラッシュせず、フォームが「準備中」エラーを返すだけです
-- `/groups`・`/applications/group-registration`を使う場合は、PostgreSQL 18を用意して`DATABASE_URL`を設定し、`bunx prisma migrate deploy`(本番)または`bunx prisma migrate dev`(開発時)でスキーマを反映してください(`.env.local.example`参照)。未設定の場合、これらのページはエラーメッセージを表示します
-- `k8s/ingress.yaml`のホスト名、`k8s/secret.yaml`/`k8s/postgres-secret.yaml`の`CHANGE_ME`(値を埋めたらkubesealで`k8s/sealed/`に変換する)
+- `/groups`・`/applications/group-registration`・記事コメント機能を使う場合は、PostgreSQL 18を用意して`DATABASE_URL`を設定し、`bunx prisma migrate deploy`(本番)または`bunx prisma migrate dev`(開発時)でスキーマを反映してください(`.env.local.example`参照)。未設定の場合、これらのページはエラーメッセージを表示します
+- 記事コメント機能(`/news`, `/column`)の荒らし対策には[Cloudflare Turnstile](https://dash.cloudflare.com/)のサイトキーを発行し、`NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`を設定してください(`.env.local.example`参照)。未設定の場合、ウィジェットは「準備中」と表示され投稿は常に拒否されます
+- `k8s/ingress.yaml`のホスト名、`k8s/secret.yaml`/`k8s/postgres-secret.yaml`の`CHANGE_ME`(値を埋めたらkubesealで`k8s/sealed/`に変換する。`NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`も同様に追加が必要)

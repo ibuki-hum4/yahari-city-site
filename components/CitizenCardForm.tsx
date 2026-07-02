@@ -10,6 +10,8 @@ import {
   generateCitizenSerial,
 } from "@/lib/citizen-card";
 import PhotoCropper from "@/components/PhotoCropper";
+import PrintButton from "@/components/PrintButton";
+import { SITE } from "@/lib/content";
 
 const PHOTO_ASPECT = CITIZEN_PHOTO_WIDTH / CITIZEN_PHOTO_HEIGHT;
 const PHOTO_OUTPUT_WIDTH = CITIZEN_PHOTO_WIDTH * 2;
@@ -95,6 +97,31 @@ export default function CitizenCardForm() {
     link.click();
   };
 
+  const handleShare = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const shareText = `${SITE.name}民証(第${citizenSerial}号)を発行しました`;
+
+    const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+    if (blob) {
+      const file = new File([blob], `yahari-citizen-card-${citizenSerial}.png`, { type: "image/png" });
+      if (navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: `${SITE.name}民証`, text: shareText });
+          return;
+        } catch {
+          // 共有がキャンセルされた場合等はX投稿画面へのフォールバックに進む
+        }
+      }
+    }
+
+    const intentUrl = new URL("https://twitter.com/intent/tweet");
+    intentUrl.searchParams.set("text", shareText);
+    intentUrl.searchParams.set("url", `${SITE.url}/citizen-card`);
+    intentUrl.searchParams.set("hashtags", SITE.xHashtag);
+    window.open(intentUrl.toString(), "_blank", "noopener,noreferrer");
+  };
+
   const handleRestart = () => {
     setName("");
     setTerm("");
@@ -133,20 +160,28 @@ export default function CitizenCardForm() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="flex flex-col items-center gap-6 py-8 text-center"
+          className="flex flex-col items-center gap-6 py-8 text-center print-area"
         >
           <p className="text-sm text-gray-600">市民証が発行されました。市民番号は以下の通りです。</p>
           <p className="break-all rounded bg-yahari-sky-light px-4 py-2 font-mono text-base font-bold text-yahari-navy sm:text-lg">
             第{citizenSerial}号
           </p>
           <canvas ref={handleCanvasMount} className="w-full max-w-xl rounded-lg border border-gray-200 shadow-md" />
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 no-print">
             <button
               type="button"
               onClick={handleDownload}
               className="rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
             >
               市民証をダウンロード(PNG)
+            </button>
+            <PrintButton label="印刷する" />
+            <button
+              type="button"
+              onClick={handleShare}
+              className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
+            >
+              Xでシェア
             </button>
             <button
               type="button"
@@ -156,6 +191,9 @@ export default function CitizenCardForm() {
               新しく発行する
             </button>
           </div>
+          <p className="text-xs text-gray-500 no-print">
+            ※ お使いの環境によっては画像を直接共有できない場合があります。その際は先にダウンロードしてから、開いた投稿画面に画像を添付してください。
+          </p>
         </motion.div>
       )}
 

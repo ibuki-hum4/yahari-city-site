@@ -22,6 +22,7 @@ export const CITIZEN_PHOTO_HEIGHT = 190;
 export const CITIZEN_TERMS: CitizenTermOption[] = [
   { value: "O0", label: "O0(Origin 0)" },
   { value: "01A", label: "01A" },
+  { value: "01B", label: "01B" },
 ];
 
 function loadImage(src: string): Promise<HTMLImageElement> {

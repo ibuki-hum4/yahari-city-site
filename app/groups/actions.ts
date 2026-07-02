@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isAdminSecretValid } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 
 export interface AdminActionResult {
@@ -12,11 +13,6 @@ export interface GroupUpdateInput {
   name: string;
   representative: string;
   activity: string;
-}
-
-function isAdminSecretValid(adminSecret: string): boolean {
-  const expected = process.env.ADMIN_SECRET;
-  return Boolean(expected) && adminSecret === expected;
 }
 
 export async function deleteGroup(id: number, adminSecret: string): Promise<AdminActionResult> {

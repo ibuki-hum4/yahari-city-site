@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import AiSummary from "@/components/AiSummary";
+import CommentSection from "@/components/CommentSection";
 import Markdown from "@/components/Markdown";
 import PageHeader from "@/components/PageHeader";
+import { getComments } from "@/lib/comments";
 import { SITE, buildMetadata } from "@/lib/content";
 import { getAllColumns, getColumnBySlug, getExcerpt } from "@/lib/column";
+import { summarizeText } from "@/lib/summarize";
 
 export function generateStaticParams() {
   return getAllColumns().map((item) => ({ slug: item.slug }));
@@ -44,6 +48,9 @@ export default async function ColumnArticlePage({
     notFound();
   }
 
+  const summary = await summarizeText(item.content);
+  const comments = await getComments("column", slug);
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -70,9 +77,11 @@ export default async function ColumnArticlePage({
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <time className="text-sm text-gray-500">{item.date}</time>
+        <AiSummary summary={summary} />
         <div className="mt-6">
           <Markdown>{item.content}</Markdown>
         </div>
+        <CommentSection targetType="column" targetSlug={slug} initialComments={comments} />
       </section>
     </>
   );

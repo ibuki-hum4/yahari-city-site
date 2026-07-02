@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import PhotoGalleryClient from "@/components/PhotoGalleryClient";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import XHashtagFeed from "@/components/XHashtagFeed";
 import { SITE, pageMetadata } from "@/lib/content";
+import { PHOTOS } from "@/lib/photos";
 
 export const metadata: Metadata = pageMetadata("/pictures");
 
@@ -78,107 +79,8 @@ export default function PicturesPage() {
           市民の皆さまがXに投稿した「#{SITE.xHashtag}」タグの様子をご覧いただけます。
         </p>
 
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/224,48,00.png"
-                alt="歴代記録、224時間48分の耐久VC"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              歴代記録、224時間48分の耐久VC
-              <br />
-              <Link href="/legends" className="font-medium text-yahari-navy hover:underline">
-                → 殿堂入りページで見る
-              </Link>
-            </figcaption>
-          </figure>
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/op.png"
-                alt="盛り上がる雑談チャンネルの一幕"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              盛り上がる雑談チャンネルの一幕
-            </figcaption>
-          </figure>
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/chojikan-vc.png"
-                alt="新記録、293時間56分19秒の耐久VC"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              新記録、293時間56分19秒の耐久VC
-              <br />
-              <Link href="/legends" className="font-medium text-yahari-navy hover:underline">
-                → 殿堂入りページで見る
-              </Link>
-            </figcaption>
-          </figure>
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/300zikan.png"
-                alt="新記録、300時間の耐久VC"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              新記録、300時間の耐久VC
-              <br />
-              <Link href="/legends" className="font-medium text-yahari-navy hover:underline">
-                → 殿堂入りページで見る
-              </Link>
-            </figcaption>
-          </figure>
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/4kagetsu.png"
-                alt="矢張市創立4か月を祝うメッセージ"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              矢張市創立4か月を祝うメッセージ
-              <br />
-              <Link href="/history" className="font-medium text-yahari-navy hover:underline">
-                → 沿革ページで見る
-              </Link>
-            </figcaption>
-          </figure>
-          <figure className="overflow-hidden rounded-lg bg-gray-50">
-            <div className="relative aspect-video">
-              <Image
-                src="/bazuttaraokutokoro.png"
-                alt="「#バズったら置くところ」チャンネルの一幕"
-                fill
-                sizes="(min-width: 640px) 440px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <figcaption className="px-4 py-3 text-center text-sm text-gray-600">
-              「#バズったら置くところ」チャンネルの一幕
-            </figcaption>
-          </figure>
+        <div className="mt-6">
+          <PhotoGalleryClient photos={PHOTOS} />
         </div>
 
         <div className="mt-8">

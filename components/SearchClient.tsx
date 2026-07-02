@@ -1,5 +1,6 @@
 "use client";
 
+import Fuse from "fuse.js";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import NewsBadge from "@/components/NewsBadge";
@@ -16,21 +17,26 @@ export default function SearchClient({
   news: NewsItem[];
 }) {
   const [query, setQuery] = useState(initialQuery);
-  const normalized = query.trim().toLowerCase();
+  const normalized = query.trim();
+
+  const pagesFuse = useMemo(
+    () => new Fuse(pages, { keys: ["title", "description", "keywords"], threshold: 0.4, ignoreLocation: true }),
+    [pages]
+  );
+  const newsFuse = useMemo(
+    () => new Fuse(news, { keys: ["title", "content"], threshold: 0.4, ignoreLocation: true }),
+    [news]
+  );
 
   const matchedPages = useMemo(() => {
     if (!normalized) return [];
-    return pages.filter((page) =>
-      `${page.title} ${page.description} ${page.keywords}`.toLowerCase().includes(normalized)
-    );
-  }, [normalized, pages]);
+    return pagesFuse.search(normalized).map((result) => result.item);
+  }, [normalized, pagesFuse]);
 
   const matchedNews = useMemo(() => {
     if (!normalized) return [];
-    return news.filter((item) =>
-      `${item.title} ${item.content}`.toLowerCase().includes(normalized)
-    );
-  }, [normalized, news]);
+    return newsFuse.search(normalized).map((result) => result.item);
+  }, [normalized, newsFuse]);
 
   const hasResults = matchedPages.length > 0 || matchedNews.length > 0;
 

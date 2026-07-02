@@ -19,3 +19,15 @@ model CitizenGroup {
   activity           String
   registeredAt       DateTime @default(now())
 }
+
+// お知らせ(news)・市長コラム(column)記事に対するコメント
+model Comment {
+  id         Int      @id @default(autoincrement())
+  targetType String // "news" | "column"
+  targetSlug String
+  nickname   String
+  body       String
+  createdAt  DateTime @default(now())
+
+  @@index([targetType, targetSlug])
+}

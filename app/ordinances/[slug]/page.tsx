@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import OrdinanceDiff from "@/components/OrdinanceDiff";
 import PageHeader from "@/components/PageHeader";
 import { buildMetadata } from "@/lib/content";
 import { ORDINANCES, getLatestAmendmentDate, getOrdinance, toKanjiNumber, toZenkakuNumber } from "@/lib/ordinances";
@@ -70,9 +71,23 @@ export default async function OrdinanceDetailPage({
             <h2 className="text-sm font-bold text-yahari-navy">改正履歴</h2>
             <ul className="mt-3 divide-y divide-gray-100 border-y border-gray-100 text-sm">
               {ordinance.amendments.map((amendment) => (
-                <li key={`${amendment.date}-${amendment.description}`} className="flex gap-4 py-3">
-                  <span className="w-28 shrink-0 text-gray-500">{amendment.date}</span>
-                  <span className="text-gray-800">{amendment.description}</span>
+                <li key={`${amendment.date}-${amendment.description}`} className="py-3">
+                  <div className="flex gap-4">
+                    <span className="w-28 shrink-0 text-gray-500">{amendment.date}</span>
+                    <span className="text-gray-800">{amendment.description}</span>
+                  </div>
+                  {amendment.after && (
+                    <details className="mt-2 ml-[7.5rem]">
+                      <summary className="cursor-pointer text-xs font-semibold text-yahari-navy hover:underline">
+                        改正内容を見る
+                      </summary>
+                      <OrdinanceDiff
+                        articleNumber={amendment.articleNumber}
+                        before={amendment.before}
+                        after={amendment.after}
+                      />
+                    </details>
+                  )}
                 </li>
               ))}
             </ul>

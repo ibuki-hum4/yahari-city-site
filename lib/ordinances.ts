@@ -12,6 +12,9 @@ export interface OrdinanceArticle {
 export interface OrdinanceAmendment {
   date: string;
   description: string;
+  articleNumber?: number;
+  before?: string;
+  after?: string;
 }
 
 export interface Ordinance {
@@ -35,7 +38,14 @@ export const ORDINANCES: Ordinance[] = [
     category: "基本",
     enactedDate: "2026年2月23日",
     summary: "矢張市の理念と、市民の定義を定める基本条例。",
-    amendments: [{ date: "2026年3月", description: "市章の制定に伴い、第3条(市章)を新設する改正。" }],
+    amendments: [
+      {
+        date: "2026年3月",
+        description: "市章の制定に伴い、第3条(市章)を新設する改正。",
+        articleNumber: 3,
+        after: "矢張市は、まっすぐに進む矢をモチーフとした市章を用いる。市章は、市の発行する証明書その他の公式な文書に使用することができる。",
+      },
+    ],
     articles: [
       {
         number: 1,
@@ -134,7 +144,14 @@ export const ORDINANCES: Ordinance[] = [
     category: "産業",
     enactedDate: "2026年4月29日",
     summary: "春巻きの普及及び消費拡大を推進する条例。なお、制定の経緯は記録に残っていない。",
-    amendments: [{ date: "2026年5月", description: "春巻き推進課の設置を明記する改正。" }],
+    amendments: [
+      {
+        date: "2026年5月",
+        description: "春巻き推進課の設置を明記する改正。",
+        articleNumber: 2,
+        after: "前条の目的を達成するため、矢張市役所に春巻き推進課を置く。",
+      },
+    ],
     articles: [
       {
         number: 1,

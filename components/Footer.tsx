@@ -120,6 +120,14 @@ export default function Footer() {
           <Link href="/terms" className="mt-2 inline-block text-sm text-white/70 underline hover:text-white">
             著作権・リンクについて
           </Link>
+          <a
+            href="https://uniproject.jp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 flex w-fit items-center gap-1.5 rounded-full bg-white px-4 py-2 opacity-90 transition hover:opacity-100"
+          >
+            <Image src="/powered_by_unipro_ol.svg" alt="Powered by UniProject" width={140} height={38} className="h-[26px] w-auto" />
+          </a>
         </div>
       </div>
 
