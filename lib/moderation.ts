@@ -47,7 +47,9 @@ export async function moderateText(text: string): Promise<ModerationOutcome> {
     const prompt = PROMPT_TEMPLATE.replace("{{TEXT}}", text);
     const result = await model.generateContent(prompt);
     return parseResponse(result.response.text());
-  } catch {
+  } catch (error) {
+    // 原因が完全に握りつぶされるとpodログからも追えなくなるため、失敗理由だけは残す
+    console.error("[moderateText] Gemini呼び出しに失敗しました:", error);
     return { status: "unavailable" };
   }
 }

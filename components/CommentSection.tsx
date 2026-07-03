@@ -47,11 +47,14 @@ export default function CommentSection({
       turnstileToken,
     });
 
+    // Turnstileトークンは検証に使われた時点で成功・失敗を問わず再利用できなくなるため、
+    // 送信結果によらず毎回ウィジェットごと作り直す(失敗時に同じトークンで再送すると
+    // 「認証に失敗しました」になり続けてしまう)
+    setTurnstileToken("");
+    setWidgetKey((key) => key + 1);
+
     if (result.ok) {
       setBody("");
-      // Turnstileトークンは一度検証されると再利用できないため、ウィジェットごと作り直す
-      setTurnstileToken("");
-      setWidgetKey((key) => key + 1);
       // DBへは即時反映されるが、Server Componentの再取得を待たずに一覧を更新するため
       // 楽観的にプレースホルダーを差し込む(次回ページ遷移時にrevalidatePathの内容へ揃う)
       setComments((prev) => [

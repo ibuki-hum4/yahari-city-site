@@ -55,7 +55,9 @@ export async function summarizeText(text: string): Promise<SummaryOutcome> {
     const prompt = PROMPT_TEMPLATE.replace("{{TEXT}}", text);
     const result = await withTimeout(model.generateContent(prompt), CALL_TIMEOUT_MS);
     return parseResponse(result.response.text());
-  } catch {
+  } catch (error) {
+    // 原因が完全に握りつぶされるとpodログからも追えなくなるため、失敗理由だけは残す
+    console.error("[summarizeText] Gemini呼び出しに失敗しました:", error);
     return { status: "unavailable" };
   }
 }
