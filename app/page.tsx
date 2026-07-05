@@ -3,6 +3,8 @@ import Link from "next/link";
 import Carousel, { type CarouselSlide } from "@/components/Carousel";
 import EmergencyBanner from "@/components/EmergencyBanner";
 import NewsBadge from "@/components/NewsBadge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { SITE } from "@/lib/content";
 import { getAllNews } from "@/lib/news";
 
@@ -77,20 +79,23 @@ export default function Home() {
             {SITE.slogan} Discord上に築かれた、市民{SITE.population}人の「街」です。
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/about"
-              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
+            <Button
+              asChild
+              size="lg"
+              className="rounded-full bg-white text-yahari-navy hover:bg-yahari-sky-light"
             >
-              矢張市について知る
-            </Link>
-            <a
-              href={SITE.discordInviteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold hover:bg-white/10"
+              <Link href="/about">矢張市について知る</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
             >
-              Discordに参加する
-            </a>
+              <a href={SITE.discordInviteUrl} target="_blank" rel="noopener noreferrer">
+                Discordに参加する
+              </a>
+            </Button>
           </div>
         </div>
       </section>
@@ -101,14 +106,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-gray-100 bg-white">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 sm:grid-cols-4">
+      <section className="border-b bg-background">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4">
           {STATS.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-xs font-semibold text-gray-500">{stat.label}</p>
-              <p className="mt-1 text-lg font-bold text-yahari-navy">{stat.value}</p>
-              {stat.note && <p className="text-xs text-gray-600">{stat.note}</p>}
-            </div>
+            <Card key={stat.label} size="sm" className="shadow-none">
+              <CardContent>
+                <p className="text-xs font-semibold text-muted-foreground">{stat.label}</p>
+                <p className="mt-1 text-lg font-bold text-yahari-navy">{stat.value}</p>
+                {stat.note && <p className="text-xs text-muted-foreground">{stat.note}</p>}
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
@@ -138,14 +145,14 @@ export default function Home() {
           <h2 className="text-xl font-bold text-yahari-navy">サイトメニュー</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {QUICK_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-lg bg-white p-5 shadow-sm transition hover:shadow-md"
-              >
-                <h3 className="font-bold text-yahari-navy">{link.title}</h3>
-                <p className="mt-2 text-sm text-gray-600">{link.description}</p>
-              </Link>
+              <Card key={link.href} className="transition hover:shadow-md">
+                <Link href={link.href}>
+                  <CardContent>
+                    <h3 className="font-bold text-yahari-navy">{link.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{link.description}</p>
+                  </CardContent>
+                </Link>
+              </Card>
             ))}
           </div>
         </div>

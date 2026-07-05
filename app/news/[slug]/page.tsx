@@ -79,7 +79,7 @@ export default async function NewsArticlePage({
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <div className="flex items-center gap-3">
-          <time className="text-sm text-gray-500">{item.date}</time>
+          <time className="text-sm text-muted-foreground">{item.date}</time>
           <NewsBadge category={item.category} />
         </div>
         <AiSummary summary={summary} />

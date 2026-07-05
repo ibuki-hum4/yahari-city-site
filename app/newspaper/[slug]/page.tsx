@@ -71,9 +71,9 @@ export default async function NewspaperIssuePage({
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <div className="flex items-center gap-3">
-          <time className="text-sm text-gray-500">{issue.date}</time>
+          <time className="text-sm text-muted-foreground">{issue.date}</time>
           <NewspaperBadge type={issue.type} />
-          <span className="text-xs font-semibold text-gray-500">{issue.issue}</span>
+          <span className="text-xs font-semibold text-muted-foreground">{issue.issue}</span>
         </div>
         <div className="mt-6">
           <Markdown>{issue.content}</Markdown>

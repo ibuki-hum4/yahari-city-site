@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { Badge } from "@/components/ui/badge";
 import { SITE, pageMetadata } from "@/lib/content";
 
 export const metadata: Metadata = pageMetadata("/accessibility");
@@ -25,7 +26,7 @@ export default function AccessibilityPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">基本方針</h2>
-        <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700">
+        <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
           <p>
             {SITE.name}公式サイトは、高齢の方や障害のある方を含め、誰もが利用しやすいウェブサイトを目指しています。日本産業規格「JIS
             X 8341-3」の適合レベルAAを目標として、可能な範囲で継続的な改善に取り組んでいます。
@@ -39,9 +40,12 @@ export default function AccessibilityPage() {
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-4xl px-4 py-12">
           <h2 className="text-xl font-bold text-yahari-navy">対応している機能</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+          <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
             {FEATURES.map((feature) => (
-              <li key={feature}>{feature}</li>
+              <li key={feature} className="flex items-start gap-2">
+                <Badge className="mt-0.5 shrink-0 bg-yahari-navy text-white">対応済み</Badge>
+                <span>{feature}</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -49,10 +53,10 @@ export default function AccessibilityPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">ご意見・お問い合わせ</h2>
-        <p className="mt-4 text-sm leading-relaxed text-gray-700">
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
           本サイトのご利用にあたって分かりにくい点や改善のご提案がございましたら、Discordサーバー内の「#お問い合わせ」チャンネルまでお知らせください。
         </p>
-        <p className="mt-8 text-xs text-gray-600">本方針は2026年6月22日に制定しました。</p>
+        <p className="mt-8 text-xs text-muted-foreground">本方針は2026年6月22日に制定しました。</p>
       </section>
     </>
   );

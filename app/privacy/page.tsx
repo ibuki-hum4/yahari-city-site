@@ -15,7 +15,7 @@ export default function PrivacyPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">本サイトでの情報の取得について</h2>
-        <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700">
+        <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
           <p>
             {SITE.name}公式サイトには、お名前やメールアドレスなどの個人情報を入力する問い合わせフォーム等は設置していません。サイト内検索やフォトギャラリーなどの機能は、入力された内容をサーバーに送信せず、お使いの端末(ブラウザ)内のみで処理しています。
           </p>
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-4xl px-4 py-12">
           <h2 className="text-xl font-bold text-yahari-navy">外部サービスの埋め込みについて</h2>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700">
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
             <p>
               本サイトでは、以下の外部サービスのコンテンツを埋め込んでいます。これらのサービスは、各社のプライバシーポリシーに基づき、Cookie等を利用して情報を取得する場合があります。
             </p>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">アクセス解析について</h2>
-        <p className="mt-4 text-sm leading-relaxed text-gray-700">
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
           本サイトでは、サイトの利用状況を把握するためにGoogleアナリティクスを利用しています。Googleアナリティクスはトラフィックデータの収集のためにCookieを使用しますが、このデータは匿名で収集されており、個人を特定するものではありません。Googleアナリティクスの利用規約に関しては、
           <a
             href="https://marketingplatform.google.com/about/analytics/terms/jp/"
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
           </a>
           をご覧ください。Cookieの利用を望まない場合は、ブラウザの設定からCookieを無効にすることができます。
         </p>
-        <p className="mt-8 text-xs text-gray-600">本方針は2026年6月22日に制定しました。</p>
+        <p className="mt-8 text-xs text-muted-foreground">本方針は2026年6月22日に制定しました。</p>
       </section>
     </>
   );

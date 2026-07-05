@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import GroupCard from "@/components/GroupCard";
 import PageHeader from "@/components/PageHeader";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { pageMetadata } from "@/lib/content";
 import { getAllGroups } from "@/lib/groups";
 
@@ -28,9 +30,11 @@ export default async function GroupsPage() {
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
         {dbError && (
-          <p className="rounded bg-amber-50 px-4 py-3 text-sm text-amber-700">
-            現在、団体情報を取得できません。しばらくお待ちください。
-          </p>
+          <Alert className="mb-6 border-amber-200 bg-amber-50">
+            <AlertDescription className="text-amber-700">
+              現在、団体情報を取得できません。しばらくお待ちください。
+            </AlertDescription>
+          </Alert>
         )}
         <div className="grid gap-6 sm:grid-cols-2">
           {groups.map((group) => (
@@ -39,16 +43,13 @@ export default async function GroupsPage() {
         </div>
 
         <div className="mt-10 rounded-lg bg-yahari-sky-light p-6 text-center">
-          <p className="text-sm text-gray-700">矢張市内で活動する団体を、新たに登録することができます。</p>
-          <Link
-            href="/applications/group-registration"
-            className="mt-4 inline-block rounded-full bg-yahari-navy px-8 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
-          >
-            団体を登録申請する
-          </Link>
+          <p className="text-sm text-foreground">矢張市内で活動する団体を、新たに登録することができます。</p>
+          <Button asChild size="lg" className="mt-4 rounded-full">
+            <Link href="/applications/group-registration">団体を登録申請する</Link>
+          </Button>
         </div>
 
-        <p className="mt-8 text-xs text-gray-600">
+        <p className="mt-8 text-xs text-muted-foreground">
           ※ 掲載している団体は遊戯目的のサンプルです。根拠条例は
           <Link href="/ordinances/citizen-group-registration" className="font-medium text-yahari-navy hover:underline">
             矢張市民活動団体登録条例

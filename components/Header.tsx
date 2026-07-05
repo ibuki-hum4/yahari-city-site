@@ -1,12 +1,22 @@
 "use client";
 
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import SearchForm from "@/components/SearchForm";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { NAV_LINKS, SITE } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 const FONT_SCALE_KEY = "yahari-font-scale";
 const FONT_SCALES = [
@@ -34,7 +44,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 border-b bg-background shadow-sm">
       <div className="bg-yahari-navy-dark text-xs text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-1.5">
           <p className="hidden sm:block">{SITE.name}公式サイト</p>
@@ -54,14 +64,15 @@ export default function Header() {
               ))}
             </div>
             <AccessibilityMenu />
-            <a
-              href={SITE.discordInviteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full bg-yahari-sky px-3 py-1 font-semibold text-yahari-navy-dark hover:bg-white"
+            <Button
+              asChild
+              size="xs"
+              className="rounded-full bg-yahari-sky text-yahari-navy-dark hover:bg-white"
             >
-              Discordに参加
-            </a>
+              <a href={SITE.discordInviteUrl} target="_blank" rel="noopener noreferrer">
+                Discordに参加
+              </a>
+            </Button>
           </div>
         </div>
       </div>
@@ -79,7 +90,7 @@ export default function Header() {
             <span className="block text-xl font-bold tracking-wide text-yahari-navy">
               {SITE.name}
             </span>
-            <span className="block text-xs text-gray-600">
+            <span className="block text-xs text-muted-foreground">
               {SITE.englishName} 公式サイト
             </span>
           </span>
@@ -87,36 +98,65 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <SearchForm className="hidden w-48 lg:flex" />
-          <button
-            type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="rounded p-2 text-yahari-navy hover:bg-yahari-sky-light lg:hidden"
-            aria-label="メニューを開く"
-            aria-expanded={menuOpen}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-yahari-navy lg:hidden"
+                aria-label="メニューを開く"
+              >
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-4/5 p-0 sm:max-w-xs">
+              <SheetHeader className="border-b">
+                <SheetTitle className="flex items-center gap-2 text-yahari-navy">
+                  <Image src={SITE.logo} alt="" width={24} height={24} aria-hidden />
+                  {SITE.name}メニュー
+                </SheetTitle>
+              </SheetHeader>
+              <div className="px-4 pb-4">
+                <SearchForm />
+              </div>
+              <nav aria-label="メインナビゲーション" className="flex flex-col overflow-y-auto px-2 pb-6">
+                {NAV_LINKS.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted",
+                        isActive && "bg-yahari-sky-light font-bold text-yahari-navy"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
 
-      <nav aria-label="メインナビゲーション" className={`bg-yahari-navy text-white ${menuOpen ? "block" : "hidden"} lg:block`}>
-        <div className="px-4 py-3 lg:hidden">
-          <SearchForm />
-        </div>
-        <ul className="mx-auto flex max-w-6xl flex-col lg:flex-row lg:flex-wrap lg:justify-center">
+      <nav aria-label="メインナビゲーション" className="hidden bg-yahari-navy text-white lg:block">
+        <ul className="mx-auto flex max-w-6xl flex-wrap justify-center">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`block whitespace-nowrap px-3 py-3 text-sm font-medium hover:bg-yahari-navy-dark ${
-                    isActive ? "bg-yahari-navy-dark font-bold" : ""
-                  }`}
+                  className={cn(
+                    "block whitespace-nowrap px-3 py-3 text-sm font-medium hover:bg-yahari-navy-dark",
+                    isActive && "bg-yahari-navy-dark font-bold"
+                  )}
                 >
                   {link.label}
                 </Link>

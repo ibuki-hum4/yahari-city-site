@@ -1,23 +1,21 @@
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 export default function SearchForm({ className = "" }: { className?: string }) {
   return (
-    <form action="/search" method="GET" className={`flex items-center ${className}`}>
-      <input
+    <form action="/search" method="GET" className={cn("flex items-center gap-1.5", className)}>
+      <Input
         type="search"
         name="q"
         placeholder="サイト内検索"
         aria-label="サイト内検索"
-        className="w-full min-w-0 rounded-l border border-gray-300 px-3 py-1.5 text-sm text-gray-800 focus:border-yahari-navy focus:outline-none"
+        className="h-9"
       />
-      <button
-        type="submit"
-        aria-label="検索"
-        className="shrink-0 rounded-r border border-l-0 border-gray-300 bg-yahari-navy px-3 py-1.5 text-white hover:bg-yahari-navy-dark"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="7" />
-          <path strokeLinecap="round" d="M21 21l-4.3-4.3" />
-        </svg>
-      </button>
+      <Button type="submit" size="icon" aria-label="検索">
+        <Search />
+      </Button>
     </form>
   );
 }

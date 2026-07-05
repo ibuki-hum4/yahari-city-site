@@ -3,6 +3,12 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { submitFeedback } from "@/app/contact/actions";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 type Stage = "form" | "submitting" | "done";
 
@@ -67,13 +73,9 @@ export default function ContactForm() {
           className="flex flex-col items-center gap-4 py-16 text-center"
         >
           <p className="font-semibold text-yahari-navy">送信しました。ご意見ありがとうございます。</p>
-          <button
-            type="button"
-            onClick={handleRestart}
-            className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
-          >
+          <Button type="button" variant="outline" size="lg" onClick={handleRestart} className="rounded-full">
             もう一件送る
-          </button>
+          </Button>
         </motion.div>
       )}
 
@@ -88,50 +90,50 @@ export default function ContactForm() {
           className="relative space-y-5"
         >
           {errorMessage && (
-            <p role="alert" className="rounded bg-red-50 px-4 py-3 text-sm text-red-700">
-              {errorMessage}
-            </p>
+            <Alert variant="destructive" role="alert">
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Alert>
           )}
 
           <div>
-            <label htmlFor="category" className="block text-sm font-semibold text-gray-700">
+            <Label htmlFor="category" className="text-sm font-semibold text-foreground">
               種別
-            </label>
-            <select
-              id="category"
-              value={values.category}
-              onChange={(event) => handleChange("category", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
-            >
-              {CATEGORY_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            </Label>
+            <Select value={values.category} onValueChange={(value) => handleChange("category", value)}>
+              <SelectTrigger id="category" className="mt-1 w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {CATEGORY_OPTIONS.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
-            <label htmlFor="nickname" className="block text-sm font-semibold text-gray-700">
+            <Label htmlFor="nickname" className="text-sm font-semibold text-foreground">
               ニックネーム(任意)
-            </label>
-            <input
+            </Label>
+            <Input
               id="nickname"
               type="text"
               maxLength={30}
               placeholder="例: やーはり"
               value={values.nickname}
               onChange={(event) => handleChange("nickname", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-semibold text-gray-700">
+            <Label htmlFor="message" className="text-sm font-semibold text-foreground">
               ご意見・ご感想
-              <span className="ml-1 text-red-600">*</span>
-            </label>
-            <textarea
+              <span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Textarea
               id="message"
               required
               maxLength={1000}
@@ -139,7 +141,7 @@ export default function ContactForm() {
               placeholder="サイトへのご意見、不具合の報告などをお書きください。"
               value={values.message}
               onChange={(event) => handleChange("message", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
@@ -155,12 +157,9 @@ export default function ContactForm() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark sm:w-auto"
-          >
+          <Button type="submit" size="lg" className="w-full rounded-full sm:w-auto">
             送信する
-          </button>
+          </Button>
         </motion.form>
       )}
     </AnimatePresence>

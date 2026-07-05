@@ -1,4 +1,12 @@
 import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { SITE } from "@/lib/content";
 
 export default function PageHeader({
@@ -36,25 +44,33 @@ export default function PageHeader({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <nav aria-label="現在の位置" className="text-xs text-gray-600">
-          <Link href="/" className="hover:underline">
-            ホーム
-          </Link>
-          <span className="mx-1">›</span>
-          {parent && (
-            <>
-              <Link href={parent.href} className="hover:underline">
-                {parent.label}
-              </Link>
-              <span className="mx-1">›</span>
-            </>
-          )}
-          <span className="text-gray-700">{title}</span>
-        </nav>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">ホーム</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            {parent && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href={parent.href}>{parent.label}</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </>
+            )}
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <h1 className="mt-2 text-2xl font-bold text-yahari-navy sm:text-3xl">
           {title}
         </h1>
-        {lead && <p className="mt-3 max-w-2xl text-sm text-gray-600">{lead}</p>}
+        {lead && <p className="mt-3 max-w-2xl text-sm text-muted-foreground">{lead}</p>}
       </div>
     </div>
   );

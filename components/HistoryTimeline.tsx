@@ -23,9 +23,9 @@ export default function HistoryTimeline({ events }: { events: HistoryEvent[] }) 
             transition={{ duration: 0.3, delay: index * 0.05 + 0.1 }}
           />
           <time className="text-sm font-semibold text-yahari-navy">{event.date}</time>
-          <h2 className="mt-1 font-bold text-gray-800">{event.title}</h2>
+          <h2 className="mt-1 font-bold text-foreground">{event.title}</h2>
           {event.description && (
-            <p className="mt-1 text-sm leading-relaxed text-gray-600">{event.description}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{event.description}</p>
           )}
         </motion.li>
       ))}

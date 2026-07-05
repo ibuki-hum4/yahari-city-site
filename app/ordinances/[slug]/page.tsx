@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import OrdinanceDiff from "@/components/OrdinanceDiff";
 import PageHeader from "@/components/PageHeader";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { buildMetadata } from "@/lib/content";
 import { ORDINANCES, getLatestAmendmentDate, getOrdinance, toKanjiNumber, toZenkakuNumber } from "@/lib/ordinances";
 
@@ -47,46 +49,54 @@ export default async function OrdinanceDetailPage({
       />
 
       <section className="mx-auto max-w-3xl px-4 py-12">
-        <dl className="divide-y divide-gray-100 border-y border-gray-100 text-sm">
-          <div className="grid grid-cols-3 gap-4 py-3">
-            <dt className="font-semibold text-gray-500">条例番号</dt>
-            <dd className="col-span-2 font-mono text-gray-800">{ordinance.number}</dd>
-          </div>
-          <div className="grid grid-cols-3 gap-4 py-3">
-            <dt className="font-semibold text-gray-500">分類</dt>
-            <dd className="col-span-2 text-gray-800">{ordinance.category}</dd>
-          </div>
-          <div className="grid grid-cols-3 gap-4 py-3">
-            <dt className="font-semibold text-gray-500">制定日</dt>
-            <dd className="col-span-2 text-gray-800">{ordinance.enactedDate}</dd>
-          </div>
-          <div className="grid grid-cols-3 gap-4 py-3">
-            <dt className="font-semibold text-gray-500">最終改正</dt>
-            <dd className="col-span-2 text-gray-800">{getLatestAmendmentDate(ordinance)}</dd>
-          </div>
-        </dl>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-32 whitespace-nowrap font-semibold text-muted-foreground">条例番号</TableCell>
+              <TableCell className="font-mono text-foreground">{ordinance.number}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="whitespace-nowrap font-semibold text-muted-foreground">分類</TableCell>
+              <TableCell className="text-foreground">{ordinance.category}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="whitespace-nowrap font-semibold text-muted-foreground">制定日</TableCell>
+              <TableCell className="text-foreground">{ordinance.enactedDate}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="whitespace-nowrap font-semibold text-muted-foreground">最終改正</TableCell>
+              <TableCell className="text-foreground">{getLatestAmendmentDate(ordinance)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
 
         {ordinance.amendments.length > 0 && (
           <div className="mt-8">
             <h2 className="text-sm font-bold text-yahari-navy">改正履歴</h2>
-            <ul className="mt-3 divide-y divide-gray-100 border-y border-gray-100 text-sm">
+            <ul className="mt-3 divide-y divide-border border-y border-border text-sm">
               {ordinance.amendments.map((amendment) => (
                 <li key={`${amendment.date}-${amendment.description}`} className="py-3">
                   <div className="flex gap-4">
-                    <span className="w-28 shrink-0 text-gray-500">{amendment.date}</span>
-                    <span className="text-gray-800">{amendment.description}</span>
+                    <span className="w-28 shrink-0 text-muted-foreground">{amendment.date}</span>
+                    <span className="text-foreground">{amendment.description}</span>
                   </div>
                   {amendment.after && (
-                    <details className="mt-2 ml-[7.5rem]">
-                      <summary className="cursor-pointer text-xs font-semibold text-yahari-navy hover:underline">
-                        改正内容を見る
-                      </summary>
-                      <OrdinanceDiff
-                        articleNumber={amendment.articleNumber}
-                        before={amendment.before}
-                        after={amendment.after}
-                      />
-                    </details>
+                    <div className="ml-[7.5rem]">
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="detail" className="border-none">
+                          <AccordionTrigger className="w-fit py-1 text-xs font-semibold text-yahari-navy hover:no-underline">
+                            改正内容を見る
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <OrdinanceDiff
+                              articleNumber={amendment.articleNumber}
+                              before={amendment.before}
+                              after={amendment.after}
+                            />
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </div>
                   )}
                 </li>
               ))}
@@ -99,9 +109,11 @@ export default async function OrdinanceDetailPage({
             <div key={article.number}>
               <h2 className="font-bold text-yahari-navy">
                 第{toZenkakuNumber(article.number)}条
-                {article.heading && <span className="ml-1 font-normal text-gray-600">({article.heading})</span>}
+                {article.heading && (
+                  <span className="ml-1 font-normal text-muted-foreground">({article.heading})</span>
+                )}
               </h2>
-              <div className="mt-2 space-y-2 text-sm leading-relaxed text-gray-700">
+              <div className="mt-2 space-y-2 text-sm leading-relaxed text-foreground/90">
                 {article.paragraphs.map((paragraph, index) => (
                   <div key={index}>
                     <p>

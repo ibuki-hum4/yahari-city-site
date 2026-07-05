@@ -37,7 +37,7 @@ export default function TurnstileWidget({ onToken }: { onToken: (token: string) 
   }, []);
 
   if (siteKey === undefined || !siteKey) {
-    return <p className="text-xs text-gray-500">認証ウィジェットは準備中です。</p>;
+    return <p className="text-xs text-muted-foreground">認証ウィジェットは準備中です。</p>;
   }
 
   const renderWidget = () => {

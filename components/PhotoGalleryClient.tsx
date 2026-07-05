@@ -3,7 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { PHOTO_ALBUMS, type Photo } from "@/lib/photos";
 
 const ALL = "すべて";
@@ -30,21 +33,19 @@ export default function PhotoGalleryClient({ photos }: { photos: Photo[] }) {
     <div>
       <div className="flex flex-wrap gap-2">
         {[ALL, ...PHOTO_ALBUMS].map((name) => (
-          <button
+          <Button
             key={name}
             type="button"
+            size="sm"
+            variant={album === name ? "default" : "secondary"}
+            className="rounded-full"
             onClick={() => {
               setAlbum(name);
               setSelectedIndex(null);
             }}
-            className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
-              album === name
-                ? "bg-yahari-navy text-white"
-                : "bg-white text-yahari-navy hover:bg-yahari-sky-light"
-            }`}
           >
             {name}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -54,12 +55,12 @@ export default function PhotoGalleryClient({ photos }: { photos: Photo[] }) {
             key={photo.src}
             type="button"
             onClick={() => setSelectedIndex(index)}
-            className="overflow-hidden rounded-lg bg-gray-50 text-left"
+            className="overflow-hidden rounded-lg bg-muted text-left"
           >
             <div className="relative aspect-video">
               <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 640px) 440px, 100vw" className="object-contain" />
             </div>
-            <p className="px-4 py-3 text-center text-sm text-gray-600">
+            <p className="px-4 py-3 text-center text-sm text-muted-foreground">
               {photo.caption}
               {photo.relatedHref && (
                 <>
@@ -83,14 +84,16 @@ export default function PhotoGalleryClient({ photos }: { photos: Photo[] }) {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
             onClick={() => setSelectedIndex(null)}
           >
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-lg"
               aria-label="閉じる"
               onClick={() => setSelectedIndex(null)}
-              className="absolute right-4 top-4 text-3xl text-white/80 hover:text-white"
+              className={cn("absolute right-4 top-4 text-white/80 hover:bg-white/10 hover:text-white")}
             >
-              ×
-            </button>
+              <X className="size-6" />
+            </Button>
             <div className="relative h-[70vh] w-full max-w-4xl" onClick={(event) => event.stopPropagation()}>
               <Image src={selected.src} alt={selected.alt} fill sizes="100vw" className="object-contain" />
             </div>
@@ -99,28 +102,32 @@ export default function PhotoGalleryClient({ photos }: { photos: Photo[] }) {
             </p>
             {filtered.length > 1 && (
               <>
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon-lg"
                   aria-label="前の写真"
                   onClick={(event) => {
                     event.stopPropagation();
                     setSelectedIndex((i) => (i === null ? i : (i - 1 + filtered.length) % filtered.length));
                   }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-3xl text-white/80 hover:text-white"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:bg-white/10 hover:text-white"
                 >
-                  ‹
-                </button>
-                <button
+                  <ChevronLeft className="size-6" />
+                </Button>
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon-lg"
                   aria-label="次の写真"
                   onClick={(event) => {
                     event.stopPropagation();
                     setSelectedIndex((i) => (i === null ? i : (i + 1) % filtered.length));
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-3xl text-white/80 hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:bg-white/10 hover:text-white"
                 >
-                  ›
-                </button>
+                  <ChevronRight className="size-6" />
+                </Button>
               </>
             )}
           </motion.div>

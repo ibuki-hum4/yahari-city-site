@@ -1,8 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PrintButton from "@/components/PrintButton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import type { ApplicationDef, ApplicationFieldOption } from "@/lib/applications";
 import { generateApplicationNumber } from "@/lib/applications";
 import { drawCertificate } from "@/lib/certificate";
@@ -11,7 +16,7 @@ type Stage = "form" | "processing" | "done";
 
 const PROCESSING_STEPS = ["ただいま書類を精査中…", "ハンコを押しています…", "受理しています…"];
 
-// グループ名が連続する選択肢を <optgroup> でまとめる。グループ指定がない選択肢はそのまま並べる。
+// グループ名が連続する選択肢をまとめる。グループ指定がない選択肢はそのまま並べる。
 function groupOptions(options: ApplicationFieldOption[]): { group?: string; options: ApplicationFieldOption[] }[] {
   const chunks: { group?: string; options: ApplicationFieldOption[] }[] = [];
   for (const option of options) {
@@ -115,21 +120,13 @@ export default function ApplicationForm({ application }: { application: Applicat
           </p>
           <canvas ref={handleCanvasMount} className="w-full max-w-sm rounded-lg border border-gray-200 shadow-md" />
           <div className="flex flex-wrap justify-center gap-4 no-print">
-            <button
-              type="button"
-              onClick={handleDownload}
-              className="rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
-            >
+            <Button type="button" onClick={handleDownload} size="lg" className="rounded-full">
               証明書をダウンロード(PNG)
-            </button>
+            </Button>
             <PrintButton label="印刷する" />
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
-            >
+            <Button type="button" variant="outline" onClick={handleRestart} size="lg" className="rounded-full">
               新しく申請する
-            </button>
+            </Button>
           </div>
         </motion.div>
       )}
@@ -146,74 +143,77 @@ export default function ApplicationForm({ application }: { application: Applicat
         >
           {application.fields.map((field) => (
             <div key={field.name}>
-              <label htmlFor={field.name} className="block text-sm font-semibold text-gray-700">
+              <Label htmlFor={field.name}>
                 {field.label}
-                {field.required && <span className="ml-1 text-red-600">*</span>}
-              </label>
+                {field.required && <span className="ml-1 text-destructive">*</span>}
+              </Label>
 
               {field.type === "select" ? (
-                <select
-                  id={field.name}
-                  required={field.required}
+                <Select
                   value={values[field.name] ?? ""}
-                  onChange={(event) => handleChange(field.name, event.target.value)}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+                  onValueChange={(value) => handleChange(field.name, value)}
+                  required={field.required}
                 >
-                  <option value="">選択してください</option>
-                  {groupOptions(field.options ?? []).map((chunk, chunkIndex) => {
-                    const optionElements = chunk.options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ));
-                    return chunk.group ? (
-                      <optgroup key={chunk.group} label={chunk.group}>
-                        {optionElements}
-                      </optgroup>
-                    ) : (
-                      <Fragment key={`ungrouped-${chunkIndex}`}>{optionElements}</Fragment>
-                    );
-                  })}
-                </select>
+                  <SelectTrigger id={field.name} className="mt-1 w-full">
+                    <SelectValue placeholder="選択してください" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {groupOptions(field.options ?? []).map((chunk, chunkIndex) =>
+                      chunk.group ? (
+                        <SelectGroup key={chunk.group}>
+                          <SelectLabel>{chunk.group}</SelectLabel>
+                          {chunk.options.map((option) => (
+                            <SelectItem key={option.value} value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ) : (
+                        chunk.options.map((option) => (
+                          <SelectItem key={`ungrouped-${chunkIndex}-${option.value}`} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))
+                      )
+                    )}
+                  </SelectContent>
+                </Select>
               ) : field.type === "date" ? (
-                <input
+                <Input
                   id={field.name}
                   type="date"
                   required={field.required}
                   value={values[field.name] ?? ""}
                   onChange={(event) => handleChange(field.name, event.target.value)}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+                  className="mt-1"
                 />
               ) : field.type === "textarea" ? (
-                <textarea
+                <Textarea
                   id={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
                   value={values[field.name] ?? ""}
                   onChange={(event) => handleChange(field.name, event.target.value)}
                   rows={3}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+                  className="mt-1"
                 />
               ) : (
-                <input
+                <Input
                   id={field.name}
                   type="text"
                   required={field.required}
                   placeholder={field.placeholder}
                   value={values[field.name] ?? ""}
                   onChange={(event) => handleChange(field.name, event.target.value)}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+                  className="mt-1"
                 />
               )}
             </div>
           ))}
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark sm:w-auto"
-          >
+          <Button type="submit" size="lg" className="w-full rounded-full sm:w-auto">
             申請する
-          </button>
+          </Button>
         </motion.form>
       )}
     </AnimatePresence>

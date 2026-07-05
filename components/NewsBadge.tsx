@@ -1,4 +1,6 @@
+import { Badge } from "@/components/ui/badge";
 import type { NewsCategory } from "@/lib/news";
+import { cn } from "@/lib/utils";
 
 const CATEGORY_STYLES: Record<NewsCategory, string> = {
   お知らせ: "bg-yahari-sky-light text-yahari-navy",
@@ -7,11 +9,5 @@ const CATEGORY_STYLES: Record<NewsCategory, string> = {
 };
 
 export default function NewsBadge({ category }: { category: NewsCategory }) {
-  return (
-    <span
-      className={`inline-block rounded px-2 py-0.5 text-xs font-semibold ${CATEGORY_STYLES[category]}`}
-    >
-      {category}
-    </span>
-  );
+  return <Badge className={cn(CATEGORY_STYLES[category])}>{category}</Badge>;
 }

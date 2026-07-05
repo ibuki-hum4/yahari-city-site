@@ -6,7 +6,7 @@ export default function Loading() {
         role="status"
         aria-label="読み込み中"
       />
-      <p className="text-sm text-gray-600">読み込み中...</p>
+      <p className="text-sm text-muted-foreground">読み込み中...</p>
     </div>
   );
 }

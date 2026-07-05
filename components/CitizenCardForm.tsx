@@ -11,6 +11,10 @@ import {
 } from "@/lib/citizen-card";
 import PhotoCropper from "@/components/PhotoCropper";
 import PrintButton from "@/components/PrintButton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SITE } from "@/lib/content";
 
 const PHOTO_ASPECT = CITIZEN_PHOTO_WIDTH / CITIZEN_PHOTO_HEIGHT;
@@ -160,30 +164,18 @@ export default function CitizenCardForm() {
           </p>
           <canvas ref={handleCanvasMount} className="w-full max-w-xl rounded-lg border border-gray-200 shadow-md" />
           <div className="flex flex-wrap justify-center gap-4 no-print">
-            <button
-              type="button"
-              onClick={handleDownload}
-              className="rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
-            >
+            <Button type="button" onClick={handleDownload} size="lg" className="rounded-full">
               市民証をダウンロード(PNG)
-            </button>
+            </Button>
             <PrintButton label="印刷する" />
-            <button
-              type="button"
-              onClick={handleShare}
-              className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
-            >
+            <Button type="button" variant="outline" onClick={handleShare} size="lg" className="rounded-full">
               Xでシェア
-            </button>
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
-            >
+            </Button>
+            <Button type="button" variant="outline" onClick={handleRestart} size="lg" className="rounded-full">
               新しく発行する
-            </button>
+            </Button>
           </div>
-          <p className="text-xs text-gray-500 no-print">
+          <p className="text-xs text-muted-foreground no-print">
             ※ お使いの環境によっては画像を直接共有できない場合があります。その際は先にダウンロードしてから、開いた投稿画面に画像を添付してください。
           </p>
         </motion.div>
@@ -200,58 +192,54 @@ export default function CitizenCardForm() {
           className="space-y-5"
         >
           <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
-              氏名(ニックネーム可)<span className="ml-1 text-red-600">*</span>
-            </label>
-            <input
+            <Label htmlFor="name">
+              氏名(ニックネーム可)<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Input
               id="name"
               type="text"
               required
               placeholder="例: やーはり"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
           <div>
-            <label htmlFor="term" className="block text-sm font-semibold text-gray-700">
-              所属期(クォーター)<span className="ml-1 text-red-600">*</span>
-            </label>
-            <select
-              id="term"
-              required
-              value={term}
-              onChange={(event) => setTerm(event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
-            >
-              <option value="">選択してください</option>
-              {CITIZEN_TERMS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <Label htmlFor="term">
+              所属期(クォーター)<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Select value={term} onValueChange={setTerm} required>
+              <SelectTrigger id="term" className="mt-1 w-full">
+                <SelectValue placeholder="選択してください" />
+              </SelectTrigger>
+              <SelectContent>
+                {CITIZEN_TERMS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
-            <label htmlFor="joinDate" className="block text-sm font-semibold text-gray-700">
-              矢張市への加入日<span className="ml-1 text-red-600">*</span>
-            </label>
-            <input
+            <Label htmlFor="joinDate">
+              矢張市への加入日<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Input
               id="joinDate"
               type="date"
               required
               value={joinDate}
               onChange={(event) => setJoinDate(event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
           <div>
-            <label htmlFor="photo" className="block text-sm font-semibold text-gray-700">
-              証明写真(任意)
-            </label>
+            <Label htmlFor="photo">証明写真(任意)</Label>
 
             {isCropping && rawPhotoSrc ? (
               <div className="mt-2">
@@ -276,35 +264,34 @@ export default function CitizenCardForm() {
                     />
                   )}
                   {photoDataUrl && rawPhotoSrc && (
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
+                      size="sm"
                       onClick={() => setIsCropping(true)}
-                      className="shrink-0 rounded-full border border-yahari-navy px-4 py-1.5 text-xs font-semibold text-yahari-navy hover:bg-yahari-sky-light"
+                      className="shrink-0 rounded-full"
                     >
                       位置・拡大を編集
-                    </button>
+                    </Button>
                   )}
                   <input
                     id="photo"
                     type="file"
                     accept="image/*"
                     onChange={handlePhotoChange}
-                    className="block w-full text-sm text-gray-700 file:mr-3 file:rounded-full file:border-0 file:bg-yahari-sky-light file:px-4 file:py-2 file:text-sm file:font-semibold file:text-yahari-navy hover:file:bg-yahari-sky"
+                    className="block w-full text-sm text-foreground file:mr-3 file:rounded-full file:border-0 file:bg-yahari-sky-light file:px-4 file:py-2 file:text-sm file:font-semibold file:text-yahari-navy hover:file:bg-yahari-sky"
                   />
                 </div>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-muted-foreground">
                   未指定の場合はシルエットが表示されます。選択後にトリミング(移動・ズーム)できます。画像はブラウザ内でのみ処理され、サーバーには送信されません。
                 </p>
               </>
             )}
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark sm:w-auto"
-          >
+          <Button type="submit" size="lg" className="w-full rounded-full sm:w-auto">
             市民証を発行する
-          </button>
+          </Button>
         </motion.form>
       )}
     </AnimatePresence>

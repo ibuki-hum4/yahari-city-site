@@ -1,13 +1,16 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+
 export default function PrintButton({ label }: { label: string }) {
   return (
-    <button
+    <Button
       type="button"
       onClick={() => window.print()}
-      className="no-print rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
+      size="lg"
+      className="no-print rounded-full"
     >
       {label}
-    </button>
+    </Button>
   );
 }

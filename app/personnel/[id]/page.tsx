@@ -63,7 +63,7 @@ export default async function PersonnelDetailPage({
         <div className="mt-8 flex justify-center">
           <PrintButton label="辞令書をPDFとして保存・印刷する" />
         </div>
-        <p className="mt-4 text-center text-xs text-gray-600">
+        <p className="mt-4 text-center text-xs text-muted-foreground">
           ※ 印刷ダイアログの出力先を「PDFに保存」にすると、PDFファイルとして保存できます。
         </p>
       </section>

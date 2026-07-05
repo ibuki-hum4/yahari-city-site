@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
+import { Button } from "@/components/ui/button";
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -67,7 +68,7 @@ export default function PhotoCropper({
       </div>
 
       <div className="mt-3 flex items-center gap-3">
-        <span className="shrink-0 text-xs text-gray-600">ズーム</span>
+        <span className="shrink-0 text-xs text-muted-foreground">ズーム</span>
         <input
           type="range"
           min={1}
@@ -75,26 +76,18 @@ export default function PhotoCropper({
           step={0.01}
           value={zoom}
           onChange={(event) => setZoom(Number(event.target.value))}
-          className="flex-1"
+          className="flex-1 accent-yahari-navy"
         />
       </div>
-      <p className="mt-1 text-xs text-gray-500">ドラッグで位置を移動、スライダーで拡大・縮小できます。</p>
+      <p className="mt-1 text-xs text-muted-foreground">ドラッグで位置を移動、スライダーで拡大・縮小できます。</p>
 
       <div className="mt-4 flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-full border border-gray-300 px-5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-        >
+        <Button type="button" variant="outline" onClick={onCancel} className="rounded-full">
           キャンセル
-        </button>
-        <button
-          type="button"
-          onClick={handleConfirm}
-          className="rounded-full bg-yahari-navy px-5 py-2 text-sm font-semibold text-white hover:bg-yahari-navy-dark"
-        >
+        </Button>
+        <Button type="button" onClick={handleConfirm} className="rounded-full">
           この範囲に決定
-        </button>
+        </Button>
       </div>
     </div>
   );

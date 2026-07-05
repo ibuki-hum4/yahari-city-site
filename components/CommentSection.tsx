@@ -1,8 +1,16 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { deleteComment, postComment } from "@/app/comments/actions";
 import TurnstileWidget from "@/components/TurnstileWidget";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import type { CommentItem, CommentTargetType } from "@/lib/comments";
 
 export default function CommentSection({
@@ -80,66 +88,69 @@ export default function CommentSection({
   };
 
   return (
-    <div className="mt-12 border-t border-gray-100 pt-8">
+    <div className="mt-12 pt-8">
+      <Separator className="mb-8" />
       <h2 className="text-lg font-bold text-yahari-navy">コメント({comments.length}件)</h2>
 
       <ul className="mt-4 space-y-4">
         {comments.map((comment) => (
-          <li key={comment.id} className="rounded border border-gray-100 bg-gray-50 p-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-yahari-navy">{comment.nickname}</span>
-              <div className="flex items-center gap-2">
-                <time className="text-xs text-gray-500">{comment.createdAt}</time>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(comment.id)}
-                  className="text-xs text-gray-400 hover:text-red-600"
-                  aria-label="コメントを削除(管理者用)"
-                >
-                  削除
-                </button>
-              </div>
-            </div>
-            <p className="mt-2 whitespace-pre-wrap text-sm text-gray-700">{comment.body}</p>
+          <li key={comment.id}>
+            <Card size="sm" className="bg-muted/50 shadow-none">
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-yahari-navy">{comment.nickname}</span>
+                  <div className="flex items-center gap-2">
+                    <time className="text-xs text-muted-foreground">{comment.createdAt}</time>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-sm"
+                      onClick={() => handleDelete(comment.id)}
+                      className="text-muted-foreground hover:text-destructive"
+                      aria-label="コメントを削除(管理者用)"
+                    >
+                      <Trash2 />
+                    </Button>
+                  </div>
+                </div>
+                <p className="mt-2 whitespace-pre-wrap text-sm text-foreground">{comment.body}</p>
+              </CardContent>
+            </Card>
           </li>
         ))}
-        {comments.length === 0 && <p className="text-sm text-gray-500">まだコメントはありません。</p>}
+        {comments.length === 0 && <p className="text-sm text-muted-foreground">まだコメントはありません。</p>}
       </ul>
 
       <form onSubmit={handleSubmit} className="relative mt-6 space-y-4">
         {errorMessage && (
-          <p role="alert" className="rounded bg-red-50 px-4 py-3 text-sm text-red-700">
-            {errorMessage}
-          </p>
+          <Alert variant="destructive" role="alert">
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
         )}
 
-        <div>
-          <label htmlFor="comment-nickname" className="block text-sm font-semibold text-gray-700">
-            ニックネーム(任意)
-          </label>
-          <input
+        <div className="space-y-1">
+          <Label htmlFor="comment-nickname">ニックネーム(任意)</Label>
+          <Input
             id="comment-nickname"
             type="text"
             maxLength={30}
             placeholder="例: やーはり"
             value={nickname}
             onChange={(event) => setNickname(event.target.value)}
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
           />
         </div>
 
-        <div>
-          <label htmlFor="comment-body" className="block text-sm font-semibold text-gray-700">
-            コメント<span className="ml-1 text-red-600">*</span>
-          </label>
-          <textarea
+        <div className="space-y-1">
+          <Label htmlFor="comment-body">
+            コメント<span className="ml-1 text-destructive">*</span>
+          </Label>
+          <Textarea
             id="comment-body"
             required
             maxLength={500}
             rows={3}
             value={body}
             onChange={(event) => setBody(event.target.value)}
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
           />
         </div>
 
@@ -157,13 +168,13 @@ export default function CommentSection({
 
         <TurnstileWidget key={widgetKey} onToken={setTurnstileToken} />
 
-        <button
+        <Button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark disabled:opacity-50"
+          className="rounded-full px-6"
         >
           {submitting ? "送信中…" : "送信する"}
-        </button>
+        </Button>
       </form>
     </div>
   );

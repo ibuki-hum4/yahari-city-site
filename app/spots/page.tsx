@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { Card, CardContent } from "@/components/ui/card";
 import { SITE, TOURIST_SPOTS, pageMetadata } from "@/lib/content";
 
 export const metadata: Metadata = pageMetadata("/spots");
@@ -17,12 +18,9 @@ export default function SpotsPage() {
       <section className="mx-auto max-w-4xl px-4 py-12">
         <div className="grid gap-6 sm:grid-cols-2">
           {TOURIST_SPOTS.map((spot) => (
-            <div
-              key={spot.name}
-              className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm"
-            >
+            <Card key={spot.name} className="overflow-hidden py-0">
               {spot.image && (
-                <div className="relative aspect-video bg-gray-50">
+                <div className="relative aspect-video bg-muted">
                   <Image
                     src={spot.image}
                     alt={spot.name}
@@ -32,15 +30,15 @@ export default function SpotsPage() {
                   />
                 </div>
               )}
-              <div className="p-5">
+              <CardContent className="py-5">
                 <h2 className="font-bold text-yahari-navy">{spot.name}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{spot.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{spot.description}</p>
                 <p className="mt-3 text-xs font-semibold text-yahari-navy">見どころ: {spot.highlight}</p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
-        <p className="mt-8 text-xs text-gray-600">
+        <p className="mt-8 text-xs text-muted-foreground">
           ※ 掲載しているスポットは遊戯目的の架空のものです。
         </p>
       </section>

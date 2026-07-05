@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { DEPARTMENTS, pageMetadata } from "@/lib/content";
 
 export const metadata: Metadata = pageMetadata("/departments");
@@ -17,17 +19,19 @@ export default function DepartmentsPage() {
       <section className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {DEPARTMENTS.map((department) => (
-            <div key={department.name} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-              <h2 className="font-bold text-yahari-navy">{department.name}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{department.description}</p>
-            </div>
+            <Card key={department.name}>
+              <CardContent>
+                <h2 className="font-bold text-yahari-navy">{department.name}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{department.description}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
-        <p className="mt-8 text-sm">
-          <Link href="/personnel" className="font-medium text-yahari-navy hover:underline">
-            人事異動情報(辞令一覧)を見る ›
-          </Link>
-        </p>
+        <div className="mt-8">
+          <Button asChild variant="link" className="h-auto p-0 text-sm">
+            <Link href="/personnel">人事異動情報(辞令一覧)を見る ›</Link>
+          </Button>
+        </div>
       </section>
     </>
   );

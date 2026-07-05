@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 import { NAV_LINKS, SITE } from "@/lib/content";
 
 export default function Footer() {
@@ -131,7 +132,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-white/70">
+      <Separator className="bg-white/10" />
+      <div className="px-4 py-4 text-center text-xs text-white/70">
         © {SITE.foundedYear} {SITE.name}. All rights reserved.
       </div>
     </footer>

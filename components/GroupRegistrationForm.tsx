@@ -3,6 +3,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { registerGroup } from "@/app/applications/group-registration/actions";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 type Stage = "form" | "submitting" | "done";
 
@@ -69,14 +74,10 @@ export default function GroupRegistrationForm() {
           <p className="rounded bg-yahari-sky-light px-4 py-2 font-mono text-base font-bold text-yahari-navy">
             登録番号 {registrationNumber}
           </p>
-          <p className="text-sm text-gray-600">団体一覧ページに反映されます。</p>
-          <button
-            type="button"
-            onClick={handleRestart}
-            className="rounded-full border border-yahari-navy px-6 py-3 text-sm font-semibold text-yahari-navy hover:bg-yahari-sky-light"
-          >
+          <p className="text-sm text-muted-foreground">団体一覧ページに反映されます。</p>
+          <Button type="button" variant="outline" onClick={handleRestart} size="lg" className="rounded-full">
             もう一団体登録する
-          </button>
+          </Button>
         </motion.div>
       )}
 
@@ -91,16 +92,16 @@ export default function GroupRegistrationForm() {
           className="space-y-5"
         >
           {errorMessage && (
-            <p role="alert" className="rounded bg-red-50 px-4 py-3 text-sm text-red-700">
-              {errorMessage}
-            </p>
+            <Alert variant="destructive" role="alert">
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Alert>
           )}
 
           <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
-              団体名<span className="ml-1 text-red-600">*</span>
-            </label>
-            <input
+            <Label htmlFor="name">
+              団体名<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Input
               id="name"
               type="text"
               required
@@ -108,15 +109,15 @@ export default function GroupRegistrationForm() {
               placeholder="例: 春巻き同好会"
               value={values.name}
               onChange={(event) => handleChange("name", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
           <div>
-            <label htmlFor="representative" className="block text-sm font-semibold text-gray-700">
-              代表者名(ニックネーム可)<span className="ml-1 text-red-600">*</span>
-            </label>
-            <input
+            <Label htmlFor="representative">
+              代表者名(ニックネーム可)<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Input
               id="representative"
               type="text"
               required
@@ -124,15 +125,15 @@ export default function GroupRegistrationForm() {
               placeholder="例: やーはり"
               value={values.representative}
               onChange={(event) => handleChange("representative", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
           <div>
-            <label htmlFor="activity" className="block text-sm font-semibold text-gray-700">
-              活動内容<span className="ml-1 text-red-600">*</span>
-            </label>
-            <textarea
+            <Label htmlFor="activity">
+              活動内容<span className="ml-1 text-destructive">*</span>
+            </Label>
+            <Textarea
               id="activity"
               required
               maxLength={500}
@@ -140,16 +141,13 @@ export default function GroupRegistrationForm() {
               placeholder="例: 月1回、春巻きを食べながら雑談するVCを開催しています。"
               value={values.activity}
               onChange={(event) => handleChange("activity", event.target.value)}
-              className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-yahari-navy focus:outline-none"
+              className="mt-1"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-full bg-yahari-navy px-6 py-3 text-sm font-semibold text-white hover:bg-yahari-navy-dark sm:w-auto"
-          >
+          <Button type="submit" size="lg" className="w-full rounded-full sm:w-auto">
             登録申請する
-          </button>
+          </Button>
         </motion.form>
       )}
     </AnimatePresence>

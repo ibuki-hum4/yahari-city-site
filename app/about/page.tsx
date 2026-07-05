@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { MAYOR_PROFILE, MAYOR_QUOTES, SITE, pageMetadata } from "@/lib/content";
 
 export const metadata: Metadata = pageMetadata("/about");
@@ -37,7 +39,7 @@ export default function AboutPage() {
             height={96}
             className="h-24 w-24 shrink-0 self-start"
           />
-          <div className="space-y-4 text-sm leading-relaxed text-gray-700">
+          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
             <p>
               {SITE.name}公式サイトをご覧いただき、誠にありがとうございます。{SITE.mayorTitle}の{SITE.mayor}です。
             </p>
@@ -59,31 +61,33 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">{SITE.mayorTitle}プロフィール</h2>
-        <dl className="mt-6 divide-y divide-gray-100 border-y border-gray-100 text-sm">
+        <dl className="mt-6 divide-y divide-border border-y border-border text-sm">
           {MAYOR_PROFILE.map((item) => (
             <div key={item.label} className="grid grid-cols-3 gap-4 py-3">
-              <dt className="font-semibold text-gray-500">{item.label}</dt>
-              <dd className="col-span-2 text-gray-800">{item.value}</dd>
+              <dt className="font-semibold text-muted-foreground">{item.label}</dt>
+              <dd className="col-span-2 text-foreground">{item.value}</dd>
             </div>
           ))}
         </dl>
 
-        <div className="mt-8 rounded-lg border border-yahari-sky bg-yahari-sky-light/40 p-5">
-          <h3 className="text-sm font-bold text-yahari-navy">市長の一言コーナー</h3>
-          <p className="mt-2 text-sm leading-relaxed text-gray-700">「{MAYOR_QUOTES[0]}」</p>
-        </div>
+        <Card className="mt-8 border-yahari-sky bg-yahari-sky-light/40">
+          <CardContent>
+            <h3 className="text-sm font-bold text-yahari-navy">市長の一言コーナー</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">「{MAYOR_QUOTES[0]}」</p>
+          </CardContent>
+        </Card>
 
-        <p className="mt-6 text-sm">
-          <Link href="/column" className="font-medium text-yahari-navy hover:underline">
-            市長コラムをもっと読む ›
-          </Link>
-        </p>
+        <div className="mt-6">
+          <Button asChild variant="link" className="h-auto p-0 text-sm">
+            <Link href="/column">市長コラムをもっと読む ›</Link>
+          </Button>
+        </div>
       </section>
 
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-4xl px-4 py-12">
           <h2 className="text-xl font-bold text-yahari-navy">矢張市について</h2>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700">
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
             <p>
               {SITE.name}(やはりし)は、Discord上で活動する非公式・架空の「市」です。実在する地方公共団体とは一切関係ありません。
             </p>
@@ -99,19 +103,19 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-12">
         <h2 className="text-xl font-bold text-yahari-navy">基礎データ</h2>
-        <dl className="mt-6 divide-y divide-gray-100 border-y border-gray-100 text-sm">
+        <dl className="mt-6 divide-y divide-border border-y border-border text-sm">
           {BASIC_DATA.map((item) => (
             <div key={item.label} className="grid grid-cols-3 gap-4 py-3">
-              <dt className="font-semibold text-gray-500">{item.label}</dt>
-              <dd className="col-span-2 text-gray-800">{item.value}</dd>
+              <dt className="font-semibold text-muted-foreground">{item.label}</dt>
+              <dd className="col-span-2 text-foreground">{item.value}</dd>
             </div>
           ))}
         </dl>
-        <p className="mt-6 text-sm">
-          <Link href="/departments" className="font-medium text-yahari-navy hover:underline">
-            矢張市役所の部署一覧を見る ›
-          </Link>
-        </p>
+        <div className="mt-6">
+          <Button asChild variant="link" className="h-auto p-0 text-sm">
+            <Link href="/departments">矢張市役所の部署一覧を見る ›</Link>
+          </Button>
+        </div>
       </section>
     </>
   );

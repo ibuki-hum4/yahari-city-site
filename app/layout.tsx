@@ -7,6 +7,7 @@ import MascotChatbot from "@/components/MascotChatbot";
 import { SITE } from "@/lib/content";
 import { lineSeedJP } from "@/lib/fonts";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const description = `${SITE.name}(やはりし)は、Discord上で活動する架空のコミュニティです。市の概要・沿革・お知らせなどをご紹介します。`;
 
@@ -71,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`h-full antialiased ${lineSeedJP.variable}`}>
+    <html lang="ja" className={cn("h-full", "antialiased", "font-sans", lineSeedJP.variable)}>
       <body className="flex min-h-full flex-col">
         <script
           type="application/ld+json"

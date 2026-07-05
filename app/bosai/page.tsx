@@ -1,9 +1,13 @@
+import { TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import EarthquakeMap from "@/components/EarthquakeMap";
 import PageHeader from "@/components/PageHeader";
 import RefreshButton from "@/components/RefreshButton";
 import WarningLookup from "@/components/WarningLookup";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { pageMetadata } from "@/lib/content";
 import { getAreaOffices, getRecentEarthquakes, getRecentTsunamiBulletins } from "@/lib/jma";
 
@@ -51,9 +55,10 @@ export default async function BosaiPage() {
       />
 
       <section className="mx-auto max-w-4xl px-4 py-8">
-        <div className="rounded-lg border-2 border-red-200 bg-red-50 p-4 text-sm leading-relaxed text-red-800">
-          <p className="font-bold">ご利用にあたって</p>
-          <p className="mt-1">
+        <Alert variant="destructive">
+          <TriangleAlert />
+          <AlertTitle>ご利用にあたって</AlertTitle>
+          <AlertDescription>
             本ポータルは気象庁が公開している観測データを独自に集約した参考情報です。矢張市は架空の自治体であり、本ポータル自体が公式な防災機関ではありません。
             <strong>
               最新かつ正式な情報は、必ず
@@ -67,8 +72,8 @@ export default async function BosaiPage() {
               </a>
               およびお住まいの自治体の発表でご確認ください。
             </strong>
-          </p>
-        </div>
+          </AlertDescription>
+        </Alert>
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-8">
@@ -76,24 +81,22 @@ export default async function BosaiPage() {
           <h2 className="text-xl font-bold text-yahari-navy">地震情報</h2>
           <RefreshButton />
         </div>
-        <p className="mt-1 text-xs text-gray-600">出典: 気象庁(直近{earthquakes.length}件)</p>
+        <p className="mt-1 text-xs text-muted-foreground">出典: 気象庁(直近{earthquakes.length}件)</p>
 
         <div className="mt-4">
           <EarthquakeMap earthquakes={earthquakes} />
         </div>
 
         {earthquakes.length === 0 ? (
-          <p className="mt-4 text-sm text-gray-600">情報を取得できませんでした。</p>
+          <p className="mt-4 text-sm text-muted-foreground">情報を取得できませんでした。</p>
         ) : (
-          <ul className="mt-4 divide-y divide-gray-100 border-y border-gray-100">
+          <ul className="mt-4 divide-y divide-border border-y border-border">
             {earthquakes.map((eq) => (
               <li key={eq.eid + eq.rdt} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3 text-sm">
-                <time className="w-40 shrink-0 text-gray-600">{formatDateTime(eq.at)}</time>
-                <span className="font-semibold text-gray-800">{eq.anm || eq.en_anm}</span>
-                <span className="text-gray-600">M{eq.mag || "不明"}</span>
-                <span className="rounded bg-yahari-sky-light px-2 py-0.5 text-xs font-semibold text-yahari-navy">
-                  最大震度 {eq.maxi || "不明"}
-                </span>
+                <time className="w-40 shrink-0 text-muted-foreground">{formatDateTime(eq.at)}</time>
+                <span className="font-semibold text-foreground">{eq.anm || eq.en_anm}</span>
+                <span className="text-muted-foreground">M{eq.mag || "不明"}</span>
+                <Badge>最大震度 {eq.maxi || "不明"}</Badge>
               </li>
             ))}
           </ul>
@@ -111,27 +114,24 @@ export default async function BosaiPage() {
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-4xl px-4 py-8">
           <h2 className="text-xl font-bold text-yahari-navy">津波情報</h2>
-          <p className="mt-1 text-xs text-gray-600">出典: 気象庁(直近の発表{tsunamis.length}件)</p>
+          <p className="mt-1 text-xs text-muted-foreground">出典: 気象庁(直近の発表{tsunamis.length}件)</p>
 
           {tsunamis.length === 0 ? (
-            <p className="mt-4 text-sm text-gray-600">直近の発表はありません。</p>
+            <p className="mt-4 text-sm text-muted-foreground">直近の発表はありません。</p>
           ) : (
-            <ul className="mt-4 divide-y divide-gray-100 border-y border-gray-100">
+            <ul className="mt-4 divide-y divide-border border-y border-border">
               {tsunamis.map((t) => (
                 <li key={t.eid + t.rdt} className="py-3 text-sm">
                   <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                    <time className="w-40 shrink-0 text-gray-600">{formatDateTime(t.rdt)}</time>
-                    <span className="font-semibold text-gray-800">{t.ttl}</span>
-                    <span className="text-gray-600">{t.anm}</span>
+                    <time className="w-40 shrink-0 text-muted-foreground">{formatDateTime(t.rdt)}</time>
+                    <span className="font-semibold text-foreground">{t.ttl}</span>
+                    <span className="text-muted-foreground">{t.anm}</span>
                   </div>
                   {t.kind.length > 0 && (
                     <ul className="mt-1 flex flex-wrap gap-1 pl-0 sm:pl-44">
                       {[...new Set(t.kind.map((k) => k.kind))].map((kind) => (
-                        <li
-                          key={kind}
-                          className="rounded bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-700"
-                        >
-                          {kind}
+                        <li key={kind}>
+                          <Badge variant="destructive">{kind}</Badge>
                         </li>
                       ))}
                     </ul>
@@ -153,7 +153,7 @@ export default async function BosaiPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-8">
         <h2 className="text-xl font-bold text-yahari-navy">警報・注意報</h2>
-        <p className="mt-1 text-xs text-gray-600">出典: 気象庁</p>
+        <p className="mt-1 text-xs text-muted-foreground">出典: 気象庁</p>
         <div className="mt-4">
           <WarningLookup offices={offices} />
         </div>
@@ -162,21 +162,25 @@ export default async function BosaiPage() {
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-4xl px-4 py-8">
           <h2 className="text-xl font-bold text-yahari-navy">避難所情報</h2>
-          <p className="mt-2 text-sm leading-relaxed text-gray-700">
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             避難所・避難場所は市区町村ごとに指定されており、全国を網羅する単一のリアルタイムAPIは公開されていません。お住まいの地域の最新の指定状況は、以下の公的なサービスでご確認ください。
           </p>
           <ul className="mt-4 space-y-3">
             {SHELTER_LINKS.map((link) => (
-              <li key={link.href} className="rounded-lg bg-white p-4 shadow-sm">
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-yahari-navy hover:underline"
-                >
-                  {link.title}
-                </a>
-                <p className="mt-1 text-sm text-gray-600">{link.description}</p>
+              <li key={link.href}>
+                <Card>
+                  <CardContent>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-yahari-navy hover:underline"
+                    >
+                      {link.title}
+                    </a>
+                    <p className="mt-1 text-sm text-muted-foreground">{link.description}</p>
+                  </CardContent>
+                </Card>
               </li>
             ))}
           </ul>
@@ -184,7 +188,7 @@ export default async function BosaiPage() {
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-8">
-        <p className="text-xs text-gray-600">
+        <p className="text-xs text-muted-foreground">
           矢張市防災ポータルは、
           <Link href="/about" className="underline">
             矢張市

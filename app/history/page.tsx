@@ -16,7 +16,7 @@ export default function HistoryPage() {
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <HistoryTimeline events={HISTORY_EVENTS} />
-        <p className="mt-4 text-xs text-gray-600">
+        <p className="mt-4 text-xs text-muted-foreground">
           ※ 年表の日付は今後の市政の進展に応じて更新されます。
         </p>
       </section>

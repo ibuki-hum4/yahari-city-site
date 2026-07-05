@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { pageMetadata } from "@/lib/content";
 
@@ -28,19 +34,18 @@ export default function FaqPage() {
         lead="市民になる方法やサーバーに関するよくある質問をまとめています。"
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
-        <div className="divide-y divide-gray-100 border-y border-gray-100">
+        <Accordion type="single" collapsible className="border-y border-border">
           {FAQ_ITEMS.map((item) => (
-            <details key={item.question} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-gray-800">
-                <span>Q. {item.question}</span>
-                <span className="ml-4 shrink-0 text-yahari-navy transition group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-gray-600">A. {item.answer}</p>
-            </details>
+            <AccordionItem key={item.question} value={item.question} className="px-1">
+              <AccordionTrigger className="font-semibold text-foreground">
+                Q. {item.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                A. {item.answer}
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </section>
     </>
   );
