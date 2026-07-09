@@ -1,7 +1,9 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +14,7 @@ import {
 const CONTRAST_KEY = "yahari-high-contrast";
 
 export default function AccessibilityMenu() {
+  const t = useTranslations("Accessibility");
   const [highContrast, setHighContrast] = useState(false);
   const [speaking, setSpeaking] = useState(false);
 
@@ -58,32 +61,29 @@ export default function AccessibilityMenu() {
     setSpeaking(true);
   };
 
-  const openTranslate = () => {
-    const url = `https://translate.google.com/translate?sl=ja&tl=en&u=${encodeURIComponent(window.location.href)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-1 rounded px-1.5 py-0.5 hover:bg-white/20">
-        アクセシビリティ
+        {t("menuLabel")}
         <ChevronDown className="size-3" aria-hidden="true" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64 text-foreground">
         <DropdownMenuItem onSelect={(event) => { event.preventDefault(); toggleSpeech(); }}>
           <span className="flex w-full items-center justify-between">
-            <span>ページの読み上げ</span>
-            <span className="text-xs font-semibold text-yahari-navy">{speaking ? "停止" : "開始"}</span>
+            <span>{t("readAloud")}</span>
+            <span className="text-xs font-semibold text-yahari-navy">
+              {speaking ? t("readAloudStop") : t("readAloudStart")}
+            </span>
           </span>
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={(event) => { event.preventDefault(); toggleContrast(); }}>
           <span className="flex w-full items-center justify-between">
-            <span>高コントラスト表示</span>
+            <span>{t("highContrast")}</span>
             <span className="text-xs font-semibold text-yahari-navy">{highContrast ? "ON" : "OFF"}</span>
           </span>
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={openTranslate}>
-          English(Google翻訳)
+        <DropdownMenuItem onSelect={(event) => event.preventDefault()}>
+          <LocaleSwitcher />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

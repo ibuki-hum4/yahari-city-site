@@ -1,0 +1,60 @@
+{
+  "Accessibility": {
+    "menuLabel": "Accessibility",
+    "readAloud": "Read page aloud",
+    "readAloudStart": "Start",
+    "readAloudStop": "Stop",
+    "highContrast": "High contrast mode",
+    "language": "Language"
+  },
+  "Header": {
+    "officialSite": "{name} Official Site",
+    "fontSize": "Font size",
+    "fontSizeSmall": "S",
+    "fontSizeMedium": "M",
+    "fontSizeLarge": "L",
+    "fontSizeLabel": "Font size {size}",
+    "joinDiscord": "Join Discord",
+    "openMenu": "Open menu",
+    "menuTitle": "{name} Menu",
+    "mainNav": "Main navigation"
+  },
+  "Footer": {
+    "pageList": "Pages",
+    "otherInfo": "More Information",
+    "newspaper": "Yahari City Newspaper",
+    "column": "Mayor's Column",
+    "departments": "Departments",
+    "ordinances": "Ordinances",
+    "personnel": "Personnel Changes",
+    "groups": "Community Group Registration",
+    "legends": "Hall of Fame",
+    "spots": "Tourist Spots",
+    "contact": "Citizens' Voice",
+    "changelog": "Changelog",
+    "search": "Site Search",
+    "sitemap": "Sitemap",
+    "accessibility": "Web Accessibility",
+    "privacy": "Privacy Policy",
+    "rss": "News & Column RSS",
+    "aboutSite": "About This Site",
+    "aboutSiteBody": "{name} is a fictional community active on Discord. It has no relation to any real local government.",
+    "copyrightLink": "Copyright & Links",
+    "rights": "All rights reserved."
+  },
+  "Layout": {
+    "skipToContent": "Skip to main content"
+  },
+  "Nav": {
+    "/": "Home",
+    "/about": "About Yahari",
+    "/history": "History",
+    "/news": "News",
+    "/bosai": "Disaster Prevention",
+    "/pictures": "Photo Gallery",
+    "/access": "Becoming a Citizen",
+    "/applications": "Applications",
+    "/citizen-card": "Citizen Card",
+    "/faq": "FAQ"
+  }
+}

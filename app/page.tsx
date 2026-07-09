@@ -3,6 +3,7 @@ import Link from "next/link";
 import Carousel, { type CarouselSlide } from "@/components/Carousel";
 import EmergencyBanner from "@/components/EmergencyBanner";
 import NewsBadge from "@/components/NewsBadge";
+import TodayStudent from "@/components/TodayStudent";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SITE } from "@/lib/content";
@@ -139,6 +140,8 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      <TodayStudent />
 
       <section className="bg-yahari-sky-light">
         <div className="mx-auto max-w-6xl px-4 py-12">

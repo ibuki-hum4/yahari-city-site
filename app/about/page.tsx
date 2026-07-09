@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MAYOR_PROFILE, MAYOR_QUOTES, SITE, pageMetadata } from "@/lib/content";
+import { MAIN_TOPICS, MAYOR_PROFILE, MAYOR_QUOTES, SITE, pageMetadata } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata("/about");
 
@@ -97,6 +99,21 @@ export default function AboutPage() {
             <p>
               「矢張(やはり)」の名は、目標に向かって一直線に進む「矢」と、弓を「張る」ことで生まれる推進力を表しており、市章にもそのモチーフが描かれています。
             </p>
+          </div>
+
+          <h3 className="mt-8 text-sm font-bold text-yahari-navy">主な話題</h3>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {MAIN_TOPICS.map((topic) => (
+              <Badge
+                key={topic.label}
+                variant={topic.featured ? "default" : "secondary"}
+                className={cn(
+                  topic.featured && "h-7 bg-yahari-navy px-3 text-sm font-bold text-white"
+                )}
+              >
+                {topic.label}
+              </Badge>
+            ))}
           </div>
         </div>
       </section>

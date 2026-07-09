@@ -1,9 +1,13 @@
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { NAV_LINKS, SITE } from "@/lib/content";
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getTranslations("Footer");
+  const tNav = await getTranslations("Nav");
+
   return (
     <footer className="bg-yahari-navy-dark text-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-4">
@@ -16,12 +20,12 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-white/80">ページ一覧</h3>
+          <h3 className="text-sm font-semibold text-white/80">{t("pageList")}</h3>
           <ul className="mt-3 space-y-2 text-sm text-white/70">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="hover:text-white hover:underline">
-                  {link.label}
+                  {tNav(link.href)}
                 </Link>
               </li>
             ))}
@@ -29,81 +33,81 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-white/80">各種情報</h3>
+          <h3 className="text-sm font-semibold text-white/80">{t("otherInfo")}</h3>
           <ul className="mt-3 space-y-2 text-sm text-white/70">
             <li>
               <Link href="/newspaper" className="hover:text-white hover:underline">
-                矢張市新聞
+                {t("newspaper")}
               </Link>
             </li>
             <li>
               <Link href="/column" className="hover:text-white hover:underline">
-                市長コラム
+                {t("column")}
               </Link>
             </li>
             <li>
               <Link href="/departments" className="hover:text-white hover:underline">
-                部署一覧
+                {t("departments")}
               </Link>
             </li>
             <li>
               <Link href="/ordinances" className="hover:text-white hover:underline">
-                条例集
+                {t("ordinances")}
               </Link>
             </li>
             <li>
               <Link href="/personnel" className="hover:text-white hover:underline">
-                人事異動情報
+                {t("personnel")}
               </Link>
             </li>
             <li>
               <Link href="/groups" className="hover:text-white hover:underline">
-                市民活動団体登録
+                {t("groups")}
               </Link>
             </li>
             <li>
               <Link href="/legends" className="hover:text-white hover:underline">
-                殿堂入り
+                {t("legends")}
               </Link>
             </li>
             <li>
               <Link href="/spots" className="hover:text-white hover:underline">
-                観光スポット
+                {t("spots")}
               </Link>
             </li>
             <li>
               <Link href="/contact" className="hover:text-white hover:underline">
-                市民の声
+                {t("contact")}
               </Link>
             </li>
             <li>
               <Link href="/changelog" className="hover:text-white hover:underline">
-                更新履歴
+                {t("changelog")}
               </Link>
             </li>
             <li>
               <Link href="/search" className="hover:text-white hover:underline">
-                サイト内検索
+                {t("search")}
               </Link>
             </li>
             <li>
               <Link href="/sitemap" className="hover:text-white hover:underline">
-                サイトマップ
+                {t("sitemap")}
               </Link>
             </li>
             <li>
               <Link href="/accessibility" className="hover:text-white hover:underline">
-                ウェブアクセシビリティについて
+                {t("accessibility")}
               </Link>
             </li>
             <li>
               <Link href="/privacy" className="hover:text-white hover:underline">
-                個人情報保護方針
+                {t("privacy")}
               </Link>
             </li>
             <li>
               <a href="/feed.xml" className="hover:text-white hover:underline">
-                お知らせ・コラムRSS
+                {t("rss")}
               </a>
             </li>
           </ul>
@@ -112,14 +116,14 @@ export default function Footer() {
         <div>
           <h3 className="text-sm font-semibold text-white/80">
             <Link href="/terms" className="hover:text-white hover:underline">
-              このサイトについて
+              {t("aboutSite")}
             </Link>
           </h3>
           <p className="mt-3 text-sm text-white/70">
-            {SITE.name}は、Discord上で活動する架空のコミュニティです。実在する地方公共団体とは一切関係ありません。
+            {t("aboutSiteBody", { name: SITE.name })}
           </p>
           <Link href="/terms" className="mt-2 inline-block text-sm text-white/70 underline hover:text-white">
-            著作権・リンクについて
+            {t("copyrightLink")}
           </Link>
           <a
             href="https://uniproject.jp"
@@ -134,7 +138,7 @@ export default function Footer() {
 
       <Separator className="bg-white/10" />
       <div className="px-4 py-4 text-center text-xs text-white/70">
-        © {SITE.foundedYear} {SITE.name}. All rights reserved.
+        © {SITE.foundedYear} {SITE.name}. {t("rights")}
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,15 +20,18 @@ import { NAV_LINKS, SITE } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const FONT_SCALE_KEY = "yahari-font-scale";
-const FONT_SCALES = [
-  { label: "小", value: "87.5%" },
-  { label: "中", value: "100%" },
-  { label: "大", value: "115%" },
-];
 
 export default function Header() {
+  const t = useTranslations("Header");
+  const tNav = useTranslations("Nav");
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const FONT_SCALES = [
+    { label: t("fontSizeSmall"), value: "87.5%" },
+    { label: t("fontSizeMedium"), value: "100%" },
+    { label: t("fontSizeLarge"), value: "115%" },
+  ];
 
   useEffect(() => {
     const saved = localStorage.getItem(FONT_SCALE_KEY);
@@ -47,17 +51,17 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b bg-background shadow-sm">
       <div className="bg-yahari-navy-dark text-xs text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-1.5">
-          <p className="hidden sm:block">{SITE.name}公式サイト</p>
+          <p className="hidden sm:block">{t("officialSite", { name: SITE.name })}</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
-              <span className="hidden sm:inline">文字サイズ</span>
+              <span className="hidden sm:inline">{t("fontSize")}</span>
               {FONT_SCALES.map((scale) => (
                 <button
                   key={scale.value}
                   type="button"
                   onClick={() => setFontScale(scale.value)}
                   className="rounded px-1.5 py-0.5 hover:bg-white/20"
-                  aria-label={`文字サイズ${scale.label}`}
+                  aria-label={t("fontSizeLabel", { size: scale.label })}
                 >
                   {scale.label}
                 </button>
@@ -70,7 +74,7 @@ export default function Header() {
               className="rounded-full bg-yahari-sky text-yahari-navy-dark hover:bg-white"
             >
               <a href={SITE.discordInviteUrl} target="_blank" rel="noopener noreferrer">
-                Discordに参加
+                {t("joinDiscord")}
               </a>
             </Button>
           </div>
@@ -105,7 +109,7 @@ export default function Header() {
                 variant="ghost"
                 size="icon"
                 className="text-yahari-navy lg:hidden"
-                aria-label="メニューを開く"
+                aria-label={t("openMenu")}
               >
                 <Menu />
               </Button>
@@ -114,13 +118,13 @@ export default function Header() {
               <SheetHeader className="border-b">
                 <SheetTitle className="flex items-center gap-2 text-yahari-navy">
                   <Image src={SITE.logo} alt="" width={24} height={24} aria-hidden />
-                  {SITE.name}メニュー
+                  {t("menuTitle", { name: SITE.name })}
                 </SheetTitle>
               </SheetHeader>
               <div className="px-4 pb-4">
                 <SearchForm />
               </div>
-              <nav aria-label="メインナビゲーション" className="flex flex-col overflow-y-auto px-2 pb-6">
+              <nav aria-label={t("mainNav")} className="flex flex-col overflow-y-auto px-2 pb-6">
                 {NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
                   return (
@@ -134,7 +138,7 @@ export default function Header() {
                         isActive && "bg-yahari-sky-light font-bold text-yahari-navy"
                       )}
                     >
-                      {link.label}
+                      {tNav(link.href)}
                     </Link>
                   );
                 })}
@@ -144,7 +148,7 @@ export default function Header() {
         </div>
       </div>
 
-      <nav aria-label="メインナビゲーション" className="hidden bg-yahari-navy text-white lg:block">
+      <nav aria-label={t("mainNav")} className="hidden bg-yahari-navy text-white lg:block">
         <ul className="mx-auto flex max-w-6xl flex-wrap justify-center">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
@@ -158,7 +162,7 @@ export default function Header() {
                     isActive && "bg-yahari-navy-dark font-bold"
                   )}
                 >
-                  {link.label}
+                  {tNav(link.href)}
                 </Link>
               </li>
             );

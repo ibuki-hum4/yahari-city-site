@@ -376,6 +376,17 @@ export const LEGEND_RECORDS: LegendRecord[] = [
   },
 ];
 
+export interface Topic {
+  label: string;
+  featured?: boolean;
+}
+
+export const MAIN_TOPICS: Topic[] = [
+  { label: "ブルーアーカイブ", featured: true },
+  { label: "TRPG" },
+  { label: "雑談" },
+];
+
 export interface TouristSpot {
   name: string;
   description: string;

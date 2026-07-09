@@ -1,0 +1,60 @@
+{
+  "Accessibility": {
+    "menuLabel": "アクセシビリティ",
+    "readAloud": "ページの読み上げ",
+    "readAloudStart": "開始",
+    "readAloudStop": "停止",
+    "highContrast": "高コントラスト表示",
+    "language": "表示言語"
+  },
+  "Header": {
+    "officialSite": "{name}公式サイト",
+    "fontSize": "文字サイズ",
+    "fontSizeSmall": "小",
+    "fontSizeMedium": "中",
+    "fontSizeLarge": "大",
+    "fontSizeLabel": "文字サイズ{size}",
+    "joinDiscord": "Discordに参加",
+    "openMenu": "メニューを開く",
+    "menuTitle": "{name}メニュー",
+    "mainNav": "メインナビゲーション"
+  },
+  "Footer": {
+    "pageList": "ページ一覧",
+    "otherInfo": "各種情報",
+    "newspaper": "矢張市新聞",
+    "column": "市長コラム",
+    "departments": "部署一覧",
+    "ordinances": "条例集",
+    "personnel": "人事異動情報",
+    "groups": "市民活動団体登録",
+    "legends": "殿堂入り",
+    "spots": "観光スポット",
+    "contact": "市民の声",
+    "changelog": "更新履歴",
+    "search": "サイト内検索",
+    "sitemap": "サイトマップ",
+    "accessibility": "ウェブアクセシビリティについて",
+    "privacy": "個人情報保護方針",
+    "rss": "お知らせ・コラムRSS",
+    "aboutSite": "このサイトについて",
+    "aboutSiteBody": "{name}は、Discord上で活動する架空のコミュニティです。実在する地方公共団体とは一切関係ありません。",
+    "copyrightLink": "著作権・リンクについて",
+    "rights": "All rights reserved."
+  },
+  "Layout": {
+    "skipToContent": "メインコンテンツへスキップ"
+  },
+  "Nav": {
+    "/": "ホーム",
+    "/about": "矢張市について",
+    "/history": "沿革",
+    "/news": "お知らせ",
+    "/bosai": "防災ポータル",
+    "/pictures": "フォトギャラリー",
+    "/access": "市民になるには",
+    "/applications": "申請窓口",
+    "/citizen-card": "市民証発行",
+    "/faq": "よくある質問"
+  }
+}
