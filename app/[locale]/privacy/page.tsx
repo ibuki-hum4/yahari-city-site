@@ -1,0 +1,98 @@
+import type { Metadata } from "next";
+import PageHeader from "@/components/PageHeader";
+import { SITE, pageMetadata } from "@/lib/content";
+import { setRequestLocale } from "next-intl/server";
+
+export const metadata: Metadata = pageMetadata("/privacy");
+
+export default async function PrivacyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return (
+    <>
+      <PageHeader
+        title="個人情報保護方針"
+        path="/privacy"
+        lead={`${SITE.name}公式サイトにおける個人情報の取り扱いについてご案内します。`}
+      />
+
+      <section className="mx-auto max-w-4xl px-4 py-12">
+        <h2 className="text-xl font-bold text-yahari-navy">本サイトでの情報の取得について</h2>
+        <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
+          <p>
+            {SITE.name}公式サイトには、お名前やメールアドレスなどの個人情報を入力する問い合わせフォーム等は設置していません。サイト内検索やフォトギャラリーなどの機能は、入力された内容をサーバーに送信せず、お使いの端末(ブラウザ)内のみで処理しています。
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-yahari-sky-light/40">
+        <div className="mx-auto max-w-4xl px-4 py-12">
+          <h2 className="text-xl font-bold text-yahari-navy">外部サービスの埋め込みについて</h2>
+          <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted-foreground">
+            <p>
+              本サイトでは、以下の外部サービスのコンテンツを埋め込んでいます。これらのサービスは、各社のプライバシーポリシーに基づき、Cookie等を利用して情報を取得する場合があります。
+            </p>
+            <ul className="list-disc space-y-2 pl-5">
+              <li>
+                Discord(サーバー参加状況の表示) —{" "}
+                <a
+                  href="https://discord.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yahari-navy underline"
+                >
+                  Discordのプライバシーポリシー
+                </a>
+              </li>
+              <li>
+                X(旧Twitter、投稿タイムラインの表示) —{" "}
+                <a
+                  href="https://x.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yahari-navy underline"
+                >
+                  Xのプライバシーポリシー
+                </a>
+              </li>
+              <li>Google翻訳(ヘッダーの「English」リンクから利用した場合)</li>
+              <li>
+                Google アナリティクス(アクセス解析) —{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yahari-navy underline"
+                >
+                  Googleのプライバシーポリシー
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 py-12">
+        <h2 className="text-xl font-bold text-yahari-navy">アクセス解析について</h2>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          本サイトでは、サイトの利用状況を把握するためにGoogleアナリティクスを利用しています。Googleアナリティクスはトラフィックデータの収集のためにCookieを使用しますが、このデータは匿名で収集されており、個人を特定するものではありません。Googleアナリティクスの利用規約に関しては、
+          <a
+            href="https://marketingplatform.google.com/about/analytics/terms/jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-yahari-navy underline"
+          >
+            Googleアナリティクス利用規約
+          </a>
+          をご覧ください。Cookieの利用を望まない場合は、ブラウザの設定からCookieを無効にすることができます。
+        </p>
+        <p className="mt-8 text-xs text-muted-foreground">本方針は2026年6月22日に制定しました。</p>
+      </section>
+    </>
+  );
+}

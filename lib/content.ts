@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/locales";
+
 export const SITE = {
   name: "矢張市",
   nameReading: "やはりし",
@@ -255,7 +257,16 @@ export function buildMetadata({
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      // `localePrefix: "as-needed"`のため、既定言語(日本語)は接頭辞なし、英語は`/en`付き。
+      languages: Object.fromEntries(
+        LOCALES.map((locale) => [
+          locale,
+          locale === DEFAULT_LOCALE ? path : `/${locale}${path === "/" ? "" : path}`,
+        ])
+      ),
+    },
     openGraph: { title, description, url: path },
     twitter: { title, description },
   };

@@ -3,8 +3,7 @@
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import SearchForm from "@/components/SearchForm";

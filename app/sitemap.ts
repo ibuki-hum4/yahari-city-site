@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/locales";
 import { APPLICATIONS } from "@/lib/applications";
 import { SITE, SITE_PAGES } from "@/lib/content";
 import { getAllColumns } from "@/lib/column";
@@ -29,59 +30,68 @@ const PRIORITY: Record<string, number> = {
 // 更新頻度が高めのページは明示的にweeklyとする(それ以外はmonthly)
 const WEEKLY_PAGES = new Set(["/", "/news", "/column", "/groups", "/changelog"]);
 
+interface Entry {
+  path: string;
+  lastModified?: string;
+  changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority?: number;
+}
+
+/** `localePrefix: "as-needed"`に合わせ、既定言語(日本語)だけ接頭辞なしのURLにする。 */
+function localizedUrl(path: string, locale: string): string {
+  const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
+  return `${SITE.url}${prefix}${path === "/" ? "" : path}` || `${SITE.url}/`;
+}
+
+function toSitemapEntry(entry: Entry): MetadataRoute.Sitemap[number] {
+  return {
+    url: localizedUrl(entry.path, DEFAULT_LOCALE),
+    lastModified: entry.lastModified,
+    changeFrequency: entry.changeFrequency ?? (WEEKLY_PAGES.has(entry.path) ? "weekly" : "monthly"),
+    priority: entry.priority ?? PRIORITY[entry.path] ?? 0.6,
+    // 各URLの言語違いをhreflangとして併記する
+    alternates: {
+      languages: Object.fromEntries(
+        LOCALES.map((locale) => [locale, localizedUrl(entry.path, locale)])
+      ),
+    },
+  };
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages: MetadataRoute.Sitemap = SITE_PAGES.map((page) => ({
-    url: `${SITE.url}${page.href}`,
-    changeFrequency: WEEKLY_PAGES.has(page.href) ? "weekly" : ("monthly" as const),
-    priority: PRIORITY[page.href] ?? 0.6,
-  }));
-
-  const newsPages: MetadataRoute.Sitemap = getAllNews().map((item) => ({
-    url: `${SITE.url}/news/${item.slug}`,
-    lastModified: item.date,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
-  const newspaperPages: MetadataRoute.Sitemap = getAllIssues().map((issue) => ({
-    url: `${SITE.url}/newspaper/${issue.slug}`,
-    lastModified: issue.date,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
-  const applicationPages: MetadataRoute.Sitemap = APPLICATIONS.map((application) => ({
-    url: `${SITE.url}/applications/${application.slug}`,
-    changeFrequency: "yearly" as const,
-    priority: 0.4,
-  }));
-
-  const columnPages: MetadataRoute.Sitemap = getAllColumns().map((item) => ({
-    url: `${SITE.url}/column/${item.slug}`,
-    lastModified: item.date,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
-  const ordinancePages: MetadataRoute.Sitemap = ORDINANCES.map((ordinance) => ({
-    url: `${SITE.url}/ordinances/${ordinance.slug}`,
-    changeFrequency: "yearly" as const,
-    priority: 0.5,
-  }));
-
-  const personnelPages: MetadataRoute.Sitemap = PERSONNEL_TRANSFERS.map((transfer) => ({
-    url: `${SITE.url}/personnel/${transfer.id}`,
-    changeFrequency: "yearly" as const,
-    priority: 0.3,
-  }));
-
-  return [
-    ...pages,
-    ...newsPages,
-    ...newspaperPages,
-    ...applicationPages,
-    ...columnPages,
-    ...ordinancePages,
-    ...personnelPages,
+  const entries: Entry[] = [
+    ...SITE_PAGES.map((page) => ({ path: page.href })),
+    ...getAllNews().map((item) => ({
+      path: `/news/${item.slug}`,
+      lastModified: item.date,
+      priority: 0.5,
+    })),
+    ...getAllIssues().map((issue) => ({
+      path: `/newspaper/${issue.slug}`,
+      lastModified: issue.date,
+      priority: 0.5,
+    })),
+    ...getAllColumns().map((item) => ({
+      path: `/column/${item.slug}`,
+      lastModified: item.date,
+      priority: 0.5,
+    })),
+    ...APPLICATIONS.map((application) => ({
+      path: `/applications/${application.slug}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    })),
+    ...ORDINANCES.map((ordinance) => ({
+      path: `/ordinances/${ordinance.slug}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
+    ...PERSONNEL_TRANSFERS.map((transfer) => ({
+      path: `/personnel/${transfer.id}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
   ];
+
+  return entries.map(toSitemapEntry);
 }

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateLocalizedPath } from "@/lib/revalidate";
 import { isAdminSecretValid } from "@/lib/admin";
 import type { CommentTargetType } from "@/lib/comments";
 import { moderateText } from "@/lib/moderation";
@@ -91,7 +91,7 @@ export async function postComment(input: PostCommentInput): Promise<CommentActio
     return { ok: false, error: "送信に失敗しました。時間を置いて再度お試しください。" };
   }
 
-  revalidatePath(targetPath(input.targetType, input.targetSlug));
+  revalidateLocalizedPath(targetPath(input.targetType, input.targetSlug));
   return { ok: true };
 }
 
@@ -111,6 +111,6 @@ export async function deleteComment(
     return { ok: false, error: "削除に失敗しました。時間を置いて再度お試しください。" };
   }
 
-  revalidatePath(targetPath(targetType, targetSlug));
+  revalidateLocalizedPath(targetPath(targetType, targetSlug));
   return { ok: true };
 }

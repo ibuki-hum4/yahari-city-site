@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { lookupWarnings, type WarningLookupResult } from "@/app/bosai/actions";
+import { lookupWarnings, type WarningLookupResult } from "@/app/[locale]/bosai/actions";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";

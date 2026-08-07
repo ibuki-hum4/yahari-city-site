@@ -10,8 +10,23 @@ bun install        # 依存パッケージのインストール
 bun run dev        # 開発サーバー起動 (http://localhost:3000)
 bun run build      # 本番ビルド
 bun run lint       # ESLint
-bun run typecheck  # 型チェック
+bun run typecheck  # 型チェック (TypeScript 7)
 ```
+
+### TypeScriptが2つ入っている理由
+
+`typescript`(5.x)と`typescript7`(7.x のエイリアス)を両方インストールしています。意図的な構成です。
+
+TypeScript 7のnpmパッケージは旧来のJSコンパイラAPIを同梱しなくなり、`require("typescript")`が返すのは`version`だけになりました。そのためこのAPIに依存するツールは軒並み動作しません。`@typescript-eslint`もその一つで、2026年8月時点では最新版もcanaryも`typescript >=4.8.4 <6.1.0`をpeerに宣言しており、TS7未対応です。`typescript`をそのまま7.xにするとESLintが起動時にクラッシュします。
+
+そこで役割を分けています:
+
+| 用途 | 使うTypeScript |
+|---|---|
+| `bun run typecheck` | `typescript7` (7.x) — ネイティブ実装で約3.7秒(5.xでは約22秒) |
+| ESLint・エディタ・`next build`の型チェック | `typescript` (5.x) |
+
+`@typescript-eslint`がTS7に対応したら、`typescript`を7.xに上げて`typescript7`と`typecheck`スクリプトの参照を消すだけで解消できます。
 
 `package.json`のスクリプトは`bun --bun next dev`ではなく素の`next dev`を呼んでいます(`bun run`経由なので実行自体はbunです)。`--bun`を付けるとこの環境ではdevサーバーが数リクエスト後に無言で落ちる現象が再現したため、安定性を優先しています。
 

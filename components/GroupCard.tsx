@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { deleteGroup, updateGroup } from "@/app/groups/actions";
+import { deleteGroup, updateGroup } from "@/app/[locale]/groups/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

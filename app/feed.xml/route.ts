@@ -11,6 +11,9 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
+// 元データはビルド時に確定するMarkdownのみ。既定では動的扱いになるため明示的に静的化する。
+export const dynamic = "force-static";
+
 interface FeedItem {
   title: string;
   link: string;

@@ -1,11 +1,14 @@
-import { cookies } from "next/headers";
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { DEFAULT_LOCALE, LOCALE_COOKIE, LOCALES, type Locale } from "./locales";
 
-export default getRequestConfig(async () => {
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get(LOCALE_COOKIE)?.value;
-  const locale = LOCALES.includes(cookieLocale as Locale) ? (cookieLocale as Locale) : DEFAULT_LOCALE;
+import { routing } from "./routing";
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  // ロケールはURL(`app/[locale]`)から受け取る。以前はCookieを読んでいたが、
+  // `cookies()`はルートレイアウトを動的レンダリングに落とすため全ページが
+  // 毎リクエストSSRになっていた。
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 
   return {
     locale,

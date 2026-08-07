@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { SITE, type SitePage } from "@/lib/content";
 
 const CATEGORY_RADIUS = 140;

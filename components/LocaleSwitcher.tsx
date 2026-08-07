@@ -1,10 +1,10 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useTransition } from "react";
-import { setLocaleCookie } from "@/i18n/actions";
-import { type Locale } from "@/i18n/locales";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { LOCALES, type Locale } from "@/i18n/locales";
 
 const LOCALE_LABELS: Record<Locale, string> = {
   ja: "日本語",
@@ -15,13 +15,20 @@ export default function LocaleSwitcher() {
   const locale = useLocale() as Locale;
   const t = useTranslations("Accessibility");
   const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
   const [isPending, startTransition] = useTransition();
 
-  const setLocale = (next: Locale) => {
+  // 言語はCookieではなくURLで表す。同じページのまま`/about`↔`/en/about`を行き来する。
+  // `pathname`はロケール接頭辞を除いた形で返るため、そのまま渡せばよい。
+  const switchTo = (next: Locale) => {
     if (next === locale) return;
-    startTransition(async () => {
-      await setLocaleCookie(next);
-      router.refresh();
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error -- 動的セグメント([slug]等)を含むパスも現在の値をそのまま引き継ぐ
+        { pathname, params },
+        { locale: next }
+      );
     });
   };
 
@@ -29,14 +36,14 @@ export default function LocaleSwitcher() {
     <div className="flex w-full items-center justify-between">
       <span>{t("language")}</span>
       <div className="flex gap-1 text-xs font-semibold">
-        {(Object.keys(LOCALE_LABELS) as Locale[]).map((code) => (
+        {LOCALES.map((code) => (
           <button
             key={code}
             type="button"
             disabled={isPending}
             onClick={(event) => {
               event.preventDefault();
-              setLocale(code);
+              switchTo(code);
             }}
             aria-current={locale === code ? "true" : undefined}
             className={`rounded px-1.5 py-0.5 ${
