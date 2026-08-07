@@ -62,7 +62,7 @@ export default function Home() {
 
       <section className="relative overflow-hidden bg-gradient-to-br from-yahari-navy to-yahari-navy-dark text-white">
         <Image
-          src={SITE.logo}
+          src={SITE.logoMedium}
           alt=""
           width={520}
           height={520}

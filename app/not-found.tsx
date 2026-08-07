@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <section className="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center">
-      <Image src={SITE.logo} alt="" width={96} height={96} aria-hidden className="opacity-60" />
+      <Image src={SITE.logoMedium} alt="" width={96} height={96} aria-hidden className="opacity-60" />
       <p className="mt-6 text-sm font-semibold tracking-widest text-yahari-sky">ERROR 404</p>
       <h1 className="mt-2 text-2xl font-bold text-yahari-navy sm:text-3xl">
         お探しのページが見つかりませんでした

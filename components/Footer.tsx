@@ -13,7 +13,7 @@ export default async function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <Image src={SITE.logo} alt={`${SITE.name}章`} width={32} height={32} />
+            <Image src={SITE.logoSmall} alt={`${SITE.name}章`} width={32} height={32} />
             <span className="text-lg font-bold">{SITE.name}</span>
           </div>
           <p className="mt-3 text-sm text-white/70">{SITE.slogan}</p>

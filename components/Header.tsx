@@ -84,7 +84,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-3">
           <Image
-            src={SITE.logo}
+            src={SITE.logoSmall}
             alt={`${SITE.name}章`}
             width={44}
             height={44}
@@ -117,7 +117,7 @@ export default function Header() {
             <SheetContent side="right" className="w-4/5 p-0 sm:max-w-xs">
               <SheetHeader className="border-b">
                 <SheetTitle className="flex items-center gap-2 text-yahari-navy">
-                  <Image src={SITE.logo} alt="" width={24} height={24} aria-hidden />
+                  <Image src={SITE.logoSmall} alt="" width={24} height={24} aria-hidden />
                   {t("menuTitle", { name: SITE.name })}
                 </SheetTitle>
               </SheetHeader>

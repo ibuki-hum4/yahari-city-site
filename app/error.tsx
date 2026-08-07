@@ -14,7 +14,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 
   return (
     <section className="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center">
-      <Image src={SITE.logo} alt="" width={96} height={96} aria-hidden className="opacity-60" />
+      <Image src={SITE.logoMedium} alt="" width={96} height={96} aria-hidden className="opacity-60" />
       <p className="mt-6 text-sm font-semibold tracking-widest text-yahari-accent">ERROR 500</p>
       <h1 className="mt-2 text-2xl font-bold text-yahari-navy sm:text-3xl">
         システムエラーが発生しました

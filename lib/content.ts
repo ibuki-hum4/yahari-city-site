@@ -8,8 +8,8 @@ export const SITE = {
   mayorTitle: "矢張市長",
   founded: "2026年2月23日",
   foundedYear: 2026,
-  population: "130",
-  populationAsOf: "2026年6月22日時点",
+  population: "165",
+  populationAsOf: "2026年8月7日時点",
   flower: "矢車菊(ヤグルマギク)",
   tree: "クスノキ",
   bird: "ヤイロチョウ",
@@ -20,8 +20,15 @@ export const SITE = {
   xHashtag: "矢張市最高の瞬間",
   googleAnalyticsId: "G-VRZTM3QCTC",
   // ロゴは基本的に透過版を使用する。背景あり版は専用の枠で囲うなど場所を選んで使うこと。
+  // `logo`は2000x2000の原寸。Canvas描画(市民証・証明書)や構造化データなど、
+  // 解像度が要るところ専用。ヘッダー・フッターのように小さく表示する箇所では
+  // next/imageの最適化を無効化している都合上そのまま原寸が配信されてしまうため、
+  // 必ず`logoSmall`(128x128)を使うこと。
   logo: "/矢張市_透過.png",
+  logoSmall: "/矢張市_透過-128.png",
+  logoMedium: "/矢張市_透過-512.png",
   logoWithBackground: "/矢張市.png",
+  logoWithBackgroundMedium: "/矢張市-512.png",
   url: "https://yahari-city.skyia.jp",
 } as const;
 

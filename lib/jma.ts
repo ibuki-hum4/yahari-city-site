@@ -1,6 +1,8 @@
 // 気象庁(JMA)が公開している防災情報JSON(気象庁ウェブサイトの地図表示等で使用されている公開データ)を取得するユーティリティ。
 // 正式な開発者向けAPIではなく無認証で公開されているJSONエンドポイントのため、提供元の仕様変更により動作しなくなる可能性があります。
 
+import { cache } from "react";
+
 const JMA_BASE = "https://www.jma.go.jp/bosai";
 
 // 出典: 気象庁防災情報XMLフォーマット「警報等情報要素コード管理表」(https://xml.kishou.go.jp/) より転記
@@ -99,11 +101,16 @@ interface AreaJson {
   class10s: Record<string, { name: string; enName: string }>;
 }
 
-async function getAreaJson(): Promise<AreaJson | null> {
-  const res = await fetch(`${JMA_BASE}/common/const/area.json`, { cache: "no-store" });
+// area.jsonは地方予報区・府県予報区の定義そのもので、年単位でしか更新されない静的な参照データ。
+// サイズも大きいためリクエストのたびに取得せず、1日キャッシュしたうえで
+// `cache()`で同一リクエスト内の重複呼び出し(getAreaOffices/getClass10Names)もまとめる。
+const getAreaJson = cache(async (): Promise<AreaJson | null> => {
+  const res = await fetch(`${JMA_BASE}/common/const/area.json`, {
+    next: { revalidate: 60 * 60 * 24 },
+  });
   if (!res.ok) return null;
   return (await res.json()) as AreaJson;
-}
+});
 
 export async function getAreaOffices(): Promise<AreaOffice[]> {
   const data = await getAreaJson();

@@ -3,7 +3,8 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { LOCALE_COOKIE, type Locale } from "@/i18n/locales";
+import { setLocaleCookie } from "@/i18n/actions";
+import { type Locale } from "@/i18n/locales";
 
 const LOCALE_LABELS: Record<Locale, string> = {
   ja: "日本語",
@@ -18,8 +19,8 @@ export default function LocaleSwitcher() {
 
   const setLocale = (next: Locale) => {
     if (next === locale) return;
-    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
-    startTransition(() => {
+    startTransition(async () => {
+      await setLocaleCookie(next);
       router.refresh();
     });
   };

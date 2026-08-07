@@ -11,6 +11,10 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "ja",
     background_color: "#ffffff",
     theme_color: "#173a5e",
-    icons: [{ src: SITE.logo, sizes: "2000x2000", type: "image/png" }],
+    // PWAのインストール時に2000x2000の原寸を取得させないよう、推奨サイズを明示する。
+    icons: [
+      { src: "/矢張市_透過-192.png", sizes: "192x192", type: "image/png" },
+      { src: SITE.logoMedium, sizes: "512x512", type: "image/png" },
+    ],
   };
 }

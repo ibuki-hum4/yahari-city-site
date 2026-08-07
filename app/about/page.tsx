@@ -35,7 +35,7 @@ export default function AboutPage() {
         <h2 className="text-xl font-bold text-yahari-navy">市長メッセージ</h2>
         <div className="mt-6 flex flex-col gap-6 rounded-lg bg-yahari-sky-light p-6 sm:flex-row">
           <Image
-            src={SITE.logo}
+            src={SITE.logoMedium}
             alt={`${SITE.name}章`}
             width={96}
             height={96}

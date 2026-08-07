@@ -34,7 +34,7 @@ export default function PicturesPage() {
           <Card className="border-none bg-yahari-navy p-8 shadow-none">
             <CardContent className="p-0">
               <Image
-                src={SITE.logo}
+                src={SITE.logoMedium}
                 alt={`${SITE.name}章(透過版)`}
                 width={240}
                 height={240}
@@ -48,7 +48,7 @@ export default function PicturesPage() {
           <Card className="border-none bg-yahari-sky-light p-8 shadow-none">
             <CardContent className="p-0">
               <Image
-                src={SITE.logoWithBackground}
+                src={SITE.logoWithBackgroundMedium}
                 alt={`${SITE.name}章(背景あり版)`}
                 width={240}
                 height={240}
