@@ -7,6 +7,15 @@ export interface ChangelogEntry {
 // サイト自体の更新履歴。新しいバージョンをリリースしたら配列の先頭に追加する(新しい順)。
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "v1.9.0",
+    date: "2026年8月9日",
+    highlights: [
+      "矢張市の天気(/weather)を新設。架空の天気・警報注意報・週間天気を毎日/毎週ランダムに抽選し、天気に応じたアニメーション演出付きで表示",
+      "総合窓口AIチャットボットの対応時間制限を撤廃し、返答のバリエーションを大幅に追加",
+      "ホームページ・申請窓口ページのデザインをBento UI風グリッドに刷新",
+    ],
+  },
+  {
     version: "v1.2.1",
     date: "2026年6月24日",
     highlights: [

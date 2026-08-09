@@ -104,6 +104,13 @@ export const SITE_PAGES: SitePage[] = [
     category: "コンテンツ",
   },
   {
+    href: "/weather",
+    title: "矢張市の天気",
+    description: "架空の天気を毎日ランダムに抽選してお届けします。実在の気象情報とは関係ありません。",
+    keywords: "天気 天気予報 警報 注意報 的中率 ジョーク",
+    category: "コンテンツ",
+  },
+  {
     href: "/bosai",
     title: "矢張市防災ポータル",
     description: "気象庁の公開データに基づく、全国の地震・津波・警報注意報・避難所情報をまとめたポータルです。",

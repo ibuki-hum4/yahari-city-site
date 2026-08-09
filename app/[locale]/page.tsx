@@ -1,5 +1,7 @@
+import { CalendarDays, Crown, Sparkles, Users } from "lucide-react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import BentoLinkCard from "@/components/BentoLinkCard";
 import Carousel, { type CarouselSlide } from "@/components/Carousel";
 import EmergencyBanner from "@/components/EmergencyBanner";
 import NewsBadge from "@/components/NewsBadge";
@@ -8,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SITE } from "@/lib/content";
 import { getAllNews } from "@/lib/news";
+import { cn } from "@/lib/utils";
 import { setRequestLocale } from "next-intl/server";
 
 const CAROUSEL_SLIDES: CarouselSlide[] = [
@@ -24,34 +27,61 @@ const CAROUSEL_SLIDES: CarouselSlide[] = [
   },
 ];
 
+// STATSと同じくBento風の非対称グリッド。「矢張市について」を大きめの入口タイルにし、
+// 「市民になるには」はCTA的な帯タイルとして下段に配置している。
 const QUICK_LINKS = [
   {
     href: "/about",
     title: "矢張市について",
     description: "市長メッセージや市の概要、基礎データをご紹介します。",
+    icon: "landmark" as const,
+    className: "col-span-2 lg:col-span-2",
+    featured: true,
   },
   {
     href: "/history",
     title: "沿革",
     description: "発足から現在までの矢張市の歩みを年表でご覧いただけます。",
+    icon: "history" as const,
+    className: "col-span-1",
   },
   {
     href: "/pictures",
     title: "フォトギャラリー",
     description: "市章や市民の思い出の写真を掲載しています。",
+    icon: "image" as const,
+    className: "col-span-1",
   },
   {
     href: "/access",
     title: "市民になるには",
     description: "矢張市の公式Discordサーバーへの参加方法をご案内します。",
+    icon: "user-plus" as const,
+    className: "col-span-2 lg:col-span-4",
+    featured: true,
   },
 ];
 
+// Bento風の非対称グリッドで表示する。市民数を大きめのタイルにし、
+// スローガンは下段の帯タイルにすることで、均一なカード4つ並びの単調さを崩している。
 const STATS = [
-  { label: "市民数", value: `${SITE.population}人`, note: SITE.populationAsOf },
-  { label: "設立", value: SITE.founded },
-  { label: "市長", value: SITE.mayor },
-  { label: "スローガン", value: SITE.slogan },
+  {
+    label: "市民数",
+    value: `${SITE.population}人`,
+    note: SITE.populationAsOf,
+    icon: Users,
+    className: "col-span-2 sm:col-span-2",
+    featured: true,
+  },
+  { label: "設立", value: SITE.founded, icon: CalendarDays, className: "col-span-1" },
+  { label: "市長", value: SITE.mayor, icon: Crown, className: "col-span-1" },
+  {
+    label: "スローガン",
+    value: SITE.slogan,
+    icon: Sparkles,
+    className: "col-span-2 sm:col-span-4",
+    featured: true,
+  },
 ];
 
 export default async function Home({
@@ -116,13 +146,49 @@ export default async function Home({
       </section>
 
       <section className="border-b bg-background">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-4 py-8 sm:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-4 py-10 sm:grid-cols-4">
           {STATS.map((stat) => (
-            <Card key={stat.label} size="sm" className="shadow-none">
-              <CardContent>
-                <p className="text-xs font-semibold text-muted-foreground">{stat.label}</p>
-                <p className="mt-1 text-lg font-bold text-yahari-navy">{stat.value}</p>
-                {stat.note && <p className="text-xs text-muted-foreground">{stat.note}</p>}
+            <Card
+              key={stat.label}
+              size="sm"
+              className={cn(
+                "shadow-none transition-shadow duration-200 hover:shadow-lg",
+                stat.className,
+                stat.featured
+                  ? "bg-yahari-navy text-white ring-transparent"
+                  : "hover:ring-yahari-navy/30"
+              )}
+            >
+              <CardContent className="flex items-center gap-3">
+                <span
+                  className={cn(
+                    "flex size-9 shrink-0 items-center justify-center rounded-full",
+                    stat.featured ? "bg-white/15" : "bg-yahari-sky-light"
+                  )}
+                >
+                  <stat.icon
+                    className={cn("size-4.5", stat.featured ? "text-white" : "text-yahari-navy")}
+                    aria-hidden="true"
+                  />
+                </span>
+                <div>
+                  <p className={cn("text-xs font-semibold", stat.featured ? "text-white/70" : "text-muted-foreground")}>
+                    {stat.label}
+                  </p>
+                  <p
+                    className={cn(
+                      "mt-0.5 font-bold",
+                      stat.featured ? "text-2xl text-white" : "text-lg text-yahari-navy"
+                    )}
+                  >
+                    {stat.value}
+                  </p>
+                  {stat.note && (
+                    <p className={cn("text-xs", stat.featured ? "text-white/70" : "text-muted-foreground")}>
+                      {stat.note}
+                    </p>
+                  )}
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -151,19 +217,20 @@ export default async function Home({
 
       <TodayStudent />
 
-      <section className="bg-yahari-sky-light">
-        <div className="mx-auto max-w-6xl px-4 py-12">
+      <section className="bg-background">
+        <div className="mx-auto max-w-6xl px-4 py-14">
           <h2 className="text-xl font-bold text-yahari-navy">サイトメニュー</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {QUICK_LINKS.map((link) => (
-              <Card key={link.href} className="transition hover:shadow-md">
-                <Link href={link.href}>
-                  <CardContent>
-                    <h3 className="font-bold text-yahari-navy">{link.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{link.description}</p>
-                  </CardContent>
-                </Link>
-              </Card>
+              <BentoLinkCard
+                key={link.href}
+                href={link.href}
+                title={link.title}
+                description={link.description}
+                icon={link.icon}
+                className={link.className}
+                featured={link.featured}
+              />
             ))}
           </div>
         </div>

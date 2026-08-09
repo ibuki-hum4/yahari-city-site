@@ -7,6 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import SearchForm from "@/components/SearchForm";
+import WeatherBadge from "@/components/WeatherBadge";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -81,23 +82,26 @@ export default function Header() {
       </div>
 
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-3">
-          <Image
-            src={SITE.logoSmall}
-            alt={`${SITE.name}章`}
-            width={44}
-            height={44}
-            priority
-          />
-          <span>
-            <span className="block text-xl font-bold tracking-wide text-yahari-navy">
-              {SITE.name}
+        <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src={SITE.logoSmall}
+              alt={`${SITE.name}章`}
+              width={44}
+              height={44}
+              priority
+            />
+            <span>
+              <span className="block text-xl font-bold tracking-wide text-yahari-navy">
+                {SITE.name}
+              </span>
+              <span className="block text-xs text-muted-foreground">
+                {SITE.englishName} 公式サイト
+              </span>
             </span>
-            <span className="block text-xs text-muted-foreground">
-              {SITE.englishName} 公式サイト
-            </span>
-          </span>
-        </Link>
+          </Link>
+          <WeatherBadge />
+        </div>
 
         <div className="flex items-center gap-3">
           <SearchForm className="hidden w-48 lg:flex" />
