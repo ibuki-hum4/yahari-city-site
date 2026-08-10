@@ -9,17 +9,24 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { pageMetadata } from "@/lib/content";
+import { getNtpCorrectedNow } from "@/lib/ntp";
 import {
+  getSeason,
   getTodayAccuracy,
   getTodayAdvisory,
   getTodayWeather,
   getWeeklyForecast,
   isAccuracyRevealed,
+  SEASON_LABELS,
   WEATHER_TYPES,
 } from "@/lib/weather";
 import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = pageMetadata("/weather");
+
+// 天気・警報注意報・的中率はすべて現在の日付/時刻に依存するため、静的プリレンダリング
+// (ビルド時の日付で固定されてしまう)を避けてリクエストごとに計算し直す。/groupsと同じ理由。
+export const dynamic = "force-dynamic";
 
 export default async function WeatherPage({
   params,
@@ -29,11 +36,15 @@ export default async function WeatherPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const weather = getTodayWeather();
-  const advisory = getTodayAdvisory();
-  const revealed = isAccuracyRevealed();
-  const accuracy = getTodayAccuracy();
-  const weeklyForecast = getWeeklyForecast();
+  // サーバーのシステム時計のずれによって日付境界(0時)や21時判定がぶれないよう、
+  // ntp.nict.jpで補正した時刻を使う(lib/ntp.ts参照)。
+  const now = getNtpCorrectedNow();
+  const weather = getTodayWeather(now);
+  const advisory = getTodayAdvisory(now);
+  const revealed = isAccuracyRevealed(now);
+  const accuracy = getTodayAccuracy(now);
+  const weeklyForecast = getWeeklyForecast(now);
+  const season = getSeason(now);
 
   return (
     <>
@@ -122,11 +133,11 @@ export default async function WeatherPage({
         </Card>
       </section>
 
-      {/* 週間天気(月曜始まり、1週間に1度だけ抽選) */}
+      {/* 週間天気(月曜始まり。各曜日の天気は日付だけで決まるため、週の途中で見ても値は変わらない) */}
       <section className="mx-auto max-w-4xl px-4 py-8">
         <h2 className="text-xl font-bold text-yahari-navy">週間天気</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          今週分の「予報」です。週替わりで抽選するため、上に表示している本日の「実況」の天気とは食い違うことがあります(それも含めて的中率の対象です)。
+          今週(月曜始まり)の天気です。
         </p>
         <div className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-7">
           {weeklyForecast.map((day) => (
@@ -151,7 +162,7 @@ export default async function WeatherPage({
       <section className="mx-auto max-w-4xl px-4 py-8">
         <h2 className="text-xl font-bold text-yahari-navy">天気ラインナップ</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          矢張市の天気は、この{WEATHER_TYPES.length}種類の中から抽選されます。
+          矢張市の天気は、この{WEATHER_TYPES.length}種類の中から抽選されます。季節限定の天気はその季節のみ出現します(現在の季節: {SEASON_LABELS[season]})。
         </p>
         <ul className="mt-4 divide-y divide-border border-y border-border">
           {WEATHER_TYPES.map((type) => (
@@ -166,6 +177,9 @@ export default async function WeatherPage({
                     </span>
                   )}
                   {type.gag && <Badge variant="secondary">言葉遊び</Badge>}
+                  {type.season && (
+                    <Badge variant="outline">{SEASON_LABELS[type.season]}限定</Badge>
+                  )}
                 </p>
                 <p className="mt-0.5 text-sm text-muted-foreground">{type.description}</p>
               </div>

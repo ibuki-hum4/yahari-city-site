@@ -4,6 +4,11 @@
 
 export type WeatherCategory = "clear" | "cloud" | "rain" | "snow";
 
+// 二十四節気の立春・立夏・立秋・立冬を月単位に簡略化した4区分。冬(11,12,1月)から時計回りに
+// 春(2,3,4月)・夏(5,6,7月)・秋(8,9,10月)と続く伝統的な四季区分に合わせている
+// (いわゆる「気象学上の四季」(3-5月が春等)とはひと月ずれている点に注意)。
+export type Season = "spring" | "summer" | "autumn" | "winter";
+
 // 絵文字は環境によって見た目が大きく異なる(未対応環境では表示すらされない)ため、
 // アイコンはIDのみ持たせ、実際の描画は components/WeatherIcon.tsx (lucide-react) に委ねる。
 export type WeatherIconId =
@@ -27,6 +32,8 @@ export interface WeatherType {
   reading?: string;
   description: string;
   category: WeatherCategory;
+  /** 指定した季節のみ抽選対象にする。未指定なら通年いつでも出現する。 */
+  season?: Season;
   gag?: boolean;
 }
 
@@ -69,6 +76,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     label: "雪",
     description: "市内各所で積雪が見込まれます。路面凍結にご注意ください。",
     category: "snow",
+    season: "winter",
   },
   {
     id: "sleet",
@@ -76,6 +84,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     label: "みぞれ",
     description: "雨と雪が入り混じる、判断に迷う空模様です。",
     category: "snow",
+    season: "winter",
   },
   {
     id: "thunderstorm",
@@ -83,6 +92,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     label: "雷雨",
     description: "激しい雷を伴う雨が予想されます。屋内で安全にお過ごしください。",
     category: "rain",
+    season: "summer",
   },
   {
     id: "catrain",
@@ -100,6 +110,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     reading: "やぐるまびより",
     description: "市の花・矢車菊が映える、穏やかで過ごしやすい晴れです。",
     category: "clear",
+    season: "spring", // 矢車菊(コーンフラワー)の開花期(春)に合わせる
     gag: true,
   },
   {
@@ -118,6 +129,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     reading: "やいろさめ",
     description: "市の鳥・ヤイロチョウにちなみ、光の加減で虹色に霞んで見える通り雨です。",
     category: "rain",
+    season: "summer", // ヤイロチョウは夏鳥(繁殖のため夏に飛来する)なのに合わせる
     gag: true,
   },
   {
@@ -136,6 +148,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     reading: "わたゆきばれ",
     description: "雪がちらつきながらも晴れ間がのぞく、珍しい空模様です。",
     category: "snow",
+    season: "winter",
     gag: true,
   },
 ];
@@ -221,11 +234,42 @@ export function getJstHour(date: Date = new Date()): number {
   return jst.getUTCHours();
 }
 
-/** 本日(JST)の天気を決定論的に抽選する。同じ日なら常に同じ結果になる。 */
+export const SEASON_LABELS: Record<Season, string> = {
+  spring: "春",
+  summer: "夏",
+  autumn: "秋",
+  winter: "冬",
+};
+
+const SEASON_MONTHS: Record<Season, number[]> = {
+  winter: [11, 12, 1],
+  spring: [2, 3, 4],
+  summer: [5, 6, 7],
+  autumn: [8, 9, 10],
+};
+
+/** JST基準の月から季節を求める(冬=11,12,1月〜、立春・立夏・立秋・立冬による伝統的な区分)。 */
+export function getSeason(date: Date = new Date()): Season {
+  const jst = new Date(date.getTime() + JST_OFFSET_MS);
+  const month = jst.getUTCMonth() + 1;
+  const entry = (Object.entries(SEASON_MONTHS) as [Season, number[]][]).find(([, months]) =>
+    months.includes(month)
+  );
+  // SEASON_MONTHSは1〜12月を過不足なく網羅しているため、このfallbackには実際には到達しない。
+  return entry?.[0] ?? "winter";
+}
+
+/** 季節限定でない天気、または`season`と一致する天気だけの一覧を返す。 */
+function weatherPoolForSeason(season: Season): WeatherType[] {
+  return WEATHER_TYPES.filter((type) => !type.season || type.season === season);
+}
+
+/** 本日(JST)の天気を決定論的に抽選する。同じ日なら常に同じ結果になる(季節限定の天気はその季節のみ)。 */
 export function getTodayWeather(date: Date = new Date()): WeatherType {
   const dateKey = getJstDateKey(date);
-  const index = hashString(`${dateKey}:weather`) % WEATHER_TYPES.length;
-  return WEATHER_TYPES[index];
+  const pool = weatherPoolForSeason(getSeason(date));
+  const index = hashString(`${dateKey}:weather`) % pool.length;
+  return pool[index];
 }
 
 /** 本日(JST)の警報・注意報を、天気の系統に矛盾しない範囲で決定論的に抽選する。なければnull。 */
@@ -274,8 +318,10 @@ function getWeekMondayKey(dateKey: string): string {
 }
 
 /**
- * 週間天気予報(月曜始まりの7日分)を決定論的に抽選する。
- * 週の途中で日付が変わっても、同じ週内は常に同じ結果になる(=1週間に1度だけ抽選)。
+ * 週間天気予報(月曜始まりの7日分)を返す。各日の天気は`getTodayWeather()`と同じ
+ * 日付キー方式の抽選をその日の日付でそのまま呼び出しているため、「今日」欄は常に
+ * 上部の「本日の天気」と完全に一致する(=予報と実況が食い違うことはない)。
+ * また各日の抽選結果は日付だけで決まるため、週の途中で見ても同じ週内なら値は変わらない。
  */
 export function getWeeklyForecast(date: Date = new Date()): ForecastDay[] {
   const todayKey = getJstDateKey(date);
@@ -286,12 +332,11 @@ export function getWeeklyForecast(date: Date = new Date()): ForecastDay[] {
     const d = new Date(monday);
     d.setUTCDate(monday.getUTCDate() + i);
     const dateKey = d.toISOString().slice(0, 10);
-    const index = hashString(`${mondayKey}:weekly:${i}`) % WEATHER_TYPES.length;
     return {
       dateKey,
       weekdayLabel: WEEKDAY_LABELS[i],
       isToday: dateKey === todayKey,
-      weather: WEATHER_TYPES[index],
+      weather: getTodayWeather(d),
     };
   });
 }
