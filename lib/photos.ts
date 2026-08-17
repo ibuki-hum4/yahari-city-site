@@ -41,6 +41,14 @@ export const PHOTOS: Photo[] = [
     relatedLabel: "殿堂入りページで見る",
   },
   {
+    src: "/512.png",
+    alt: "新記録、512時間の耐久VC",
+    caption: "新記録、512時間の耐久VC",
+    album: "耐久VC記録",
+    relatedHref: "/legends",
+    relatedLabel: "殿堂入りページで見る",
+  },
+  {
     src: "/4kagetsu.png",
     alt: "矢張市創立4か月を祝うメッセージ",
     caption: "矢張市創立4か月を祝うメッセージ",

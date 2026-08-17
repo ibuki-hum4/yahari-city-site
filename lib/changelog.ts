@@ -7,6 +7,14 @@ export interface ChangelogEntry {
 // サイト自体の更新履歴。新しいバージョンをリリースしたら配列の先頭に追加する(新しい順)。
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "v1.10.2",
+    date: "2026年8月17日",
+    highlights: [
+      "市民数200人突破・VC耐久512時間到達を報告するお知らせと矢張市新聞第2号を追加",
+      "殿堂入り・フォトギャラリーに新記録(512時間の耐久VC)を追加",
+    ],
+  },
+  {
     version: "v1.10.1",
     date: "2026年8月10日",
     highlights: [
