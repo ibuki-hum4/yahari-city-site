@@ -12,15 +12,15 @@ export const metadata: Metadata = pageMetadata("/access");
 const STEPS = [
   {
     title: "公式Discordサーバーへアクセス",
-    description: "下のボタンから、矢張市の公式Discordサーバーへ参加してください。",
+    description: "下のボタンから、矢張区の公式Discordサーバーへ参加してください。",
   },
   {
     title: "案内に沿って自己紹介",
     description: "サーバー内の案内チャンネルの手順に沿って、簡単な自己紹介を行います。",
   },
   {
-    title: "市民として活動開始",
-    description: "市民ロール(役職)が付与されたら、矢張市民として活動を開始できます。",
+    title: "区民として活動開始",
+    description: "区民ロール(役職)が付与されたら、矢張区民として活動を開始できます。",
   },
 ];
 
@@ -41,7 +41,7 @@ export default async function AccessPage({
   return (
     <>
       <PageHeader
-        title="市民になるには"
+        title="区民になるには"
         path="/access"
         lead={`${SITE.name}の公式Discordサーバーへの参加方法をご案内します。`}
       />
@@ -69,11 +69,11 @@ export default async function AccessPage({
             </a>
           </Button>
           <p className="mt-4 text-sm">
-            市民になったら、
+            区民になったら、
             <Link href="/citizen-card" className="font-medium text-yahari-navy hover:underline">
-              市民証発行ページ
+              区民証発行ページ
             </Link>
-            から自分だけの市民証を発行してみましょう。
+            から自分だけの区民証を発行してみましょう。
           </p>
         </div>
       </section>
@@ -82,7 +82,7 @@ export default async function AccessPage({
         <div className="mx-auto max-w-4xl px-4 py-12">
           <h2 className="text-xl font-bold text-yahari-navy">サーバーの様子</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            現在オンラインの市民数などをリアルタイムで確認できます。
+            現在オンラインの区民数などをリアルタイムで確認できます。
           </p>
           <div className="mt-6">
             <DiscordWidget />

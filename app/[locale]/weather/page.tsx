@@ -49,7 +49,7 @@ export default async function WeatherPage({
   return (
     <>
       <PageHeader
-        title="矢張市の天気"
+        title="矢張区の天気"
         path="/weather"
         lead="架空の天気を毎日ランダムに抽選してお届けしています。実在の気象情報とは一切関係ありません。"
       />
@@ -61,7 +61,7 @@ export default async function WeatherPage({
           <AlertDescription>
             このページの天気・警報注意報・的中率・週間天気はすべて日付をもとにしたジョークコンテンツで、実際の気象状況とは無関係です。実在の警報・注意報や防災情報は
             <Link href="/bosai" className="underline">
-              矢張市防災ポータル
+              矢張区防災ポータル
             </Link>
             (気象庁の公開データを使用)をご確認ください。
           </AlertDescription>
@@ -162,7 +162,7 @@ export default async function WeatherPage({
       <section className="mx-auto max-w-4xl px-4 py-8">
         <h2 className="text-xl font-bold text-yahari-navy">天気ラインナップ</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          矢張市の天気は、この{WEATHER_TYPES.length}種類の中から抽選されます。季節限定の天気はその季節のみ出現します(現在の季節: {SEASON_LABELS[season]})。
+          矢張区の天気は、この{WEATHER_TYPES.length}種類の中から抽選されます。季節限定の天気はその季節のみ出現します(現在の季節: {SEASON_LABELS[season]})。
         </p>
         <ul className="mt-4 divide-y divide-border border-y border-border">
           {WEATHER_TYPES.map((type) => (

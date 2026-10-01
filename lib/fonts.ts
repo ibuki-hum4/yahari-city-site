@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-// サイト全体の基本フォント。Canvas(市民証・証明書等)の描画でも同じフォントを使うため、
+// サイト全体の基本フォント。Canvas(区民証・証明書等)の描画でも同じフォントを使うため、
 // ここから`lineSeedJP.style.fontFamily`を参照して両方で一貫させる。
 //
 // 配信量を抑えるため、TTFではなくWOFF2(約1/2.4のサイズ)を使う。

@@ -49,7 +49,7 @@ export default async function BosaiPage() {
   return (
     <>
       <PageHeader
-        title="矢張市防災ポータル"
+        title="矢張区防災ポータル"
         path="/bosai"
         lead="気象庁が公開する観測データをもとに、全国の地震・津波・警報注意報・避難所情報をまとめてご覧いただけます。"
       />
@@ -59,7 +59,7 @@ export default async function BosaiPage() {
           <TriangleAlert />
           <AlertTitle>ご利用にあたって</AlertTitle>
           <AlertDescription>
-            本ポータルは気象庁が公開している観測データを独自に集約した参考情報です。矢張市は架空の自治体であり、本ポータル自体が公式な防災機関ではありません。
+            本ポータルは気象庁が公開している観測データを独自に集約した参考情報です。矢張区は架空の自治体であり、本ポータル自体が公式な防災機関ではありません。
             <strong>
               最新かつ正式な情報は、必ず
               <a
@@ -189,9 +189,9 @@ export default async function BosaiPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-8">
         <p className="text-xs text-muted-foreground">
-          矢張市防災ポータルは、
+          矢張区防災ポータルは、
           <Link href="/about" className="underline">
-            矢張市
+            矢張区
           </Link>
           が独自に運営する非公式の情報集約サービスです。気象庁・国土地理院・内閣府等の発表データを引用していますが、これらの機関とは関係ありません。
         </p>

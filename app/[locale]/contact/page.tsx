@@ -17,9 +17,9 @@ export default async function ContactPage({
   return (
     <>
       <PageHeader
-        title="市民の声"
+        title="区民の声"
         path="/contact"
-        lead="矢張市公式サイトへのご意見・ご感想・不具合の報告はこちらからお寄せください。"
+        lead="矢張区公式サイトへのご意見・ご感想・不具合の報告はこちらからお寄せください。"
       />
       <section className="mx-auto max-w-2xl px-4 py-12">
         <ContactForm />

@@ -1,13 +1,13 @@
 ---
 name: run-yahari-site
-description: Build, run, and visually verify the 矢張市サイト (Next.js) app. Use when asked to start the dev server, take a screenshot, or confirm a page/feature renders correctly in the browser.
+description: Build, run, and visually verify the 矢張区サイト (Next.js) app. Use when asked to start the dev server, take a screenshot, or confirm a page/feature renders correctly in the browser.
 ---
 
-矢張市サイトはNext.js 16 (App Router) + Bunのアプリです。`chromium-cli`はこの環境に存在しないため、Playwright(`chromium`)を直接使ったREPLドライバ(`driver.mjs`)で代用しています。
+矢張区サイトはNext.js 16 (App Router) + Bunのアプリです。`chromium-cli`はこの環境に存在しないため、Playwright(`chromium`)を直接使ったREPLドライバ(`driver.mjs`)で代用しています。
 
 エージェントから動作確認する場合は **`bun run dev`を直接実行しない**。代わりに`driver.mjs`の`launch`コマンドを使うこと。`launch`が`bun run dev`を管理対象の子プロセスとして起動し、ポートが応答するまで待ってからheadless Chromiumを接続する。`quit`でブラウザとdevサーバーの両方を停止する。
 
-全パスは`矢張市サイト/`(プロジェクトルート)からの相対パス。
+全パスは`矢張区サイト/`(プロジェクトルート)からの相対パス。
 
 ## Prerequisites
 

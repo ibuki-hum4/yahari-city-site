@@ -1,4 +1,4 @@
-// 矢張市の「架空の天気」機能。実在の気象情報とは一切関係のないジョークコンテンツ。
+// 矢張区の「架空の天気」機能。実在の気象情報とは一切関係のないジョークコンテンツ。
 // 日付(JST)をシードにした決定論的な抽選のため、同じ日であれば誰がいつ見ても
 // 同じ天気・警報注意報・的中率になる(サーバー/クライアントで計算がずれない)。
 
@@ -53,7 +53,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     id: "clear",
     icon: "sun",
     label: "晴れ",
-    description: "雲ひとつない、矢張市らしい爽やかな晴天です。",
+    description: "雲ひとつない、矢張区らしい爽やかな晴天です。",
     category: "clear",
   },
   {
@@ -74,7 +74,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     id: "snow",
     icon: "cloud-snow",
     label: "雪",
-    description: "市内各所で積雪が見込まれます。路面凍結にご注意ください。",
+    description: "区内各所で積雪が見込まれます。路面凍結にご注意ください。",
     category: "snow",
     season: "winter",
   },
@@ -108,7 +108,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     icon: "flower",
     label: "矢車日和",
     reading: "やぐるまびより",
-    description: "市の花・矢車菊が映える、穏やかで過ごしやすい晴れです。",
+    description: "区の花・矢車菊が映える、穏やかで過ごしやすい晴れです。",
     category: "clear",
     season: "spring", // 矢車菊(コーンフラワー)の開花期(春)に合わせる
     gag: true,
@@ -118,7 +118,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     icon: "tree-pine",
     label: "楠曇り",
     reading: "くすぐもり",
-    description: "市の木・クスノキの葉がざわざわと揺れる、どこかくすぐったい曇り空です。",
+    description: "区の木・クスノキの葉がざわざわと揺れる、どこかくすぐったい曇り空です。",
     category: "cloud",
     gag: true,
   },
@@ -127,7 +127,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     icon: "rainbow",
     label: "八色雨",
     reading: "やいろさめ",
-    description: "市の鳥・ヤイロチョウにちなみ、光の加減で虹色に霞んで見える通り雨です。",
+    description: "区の鳥・ヤイロチョウにちなみ、光の加減で虹色に霞んで見える通り雨です。",
     category: "rain",
     season: "summer", // ヤイロチョウは夏鳥(繁殖のため夏に飛来する)なのに合わせる
     gag: true,
@@ -137,7 +137,7 @@ export const WEATHER_TYPES: WeatherType[] = [
     icon: "calendar-days",
     label: "矢張特異日",
     reading: "やはりとくいび",
-    description: "統計的になぜか同じ天気になりやすいとされる、矢張市ならではの特異日です。",
+    description: "統計的になぜか同じ天気になりやすいとされる、矢張区ならではの特異日です。",
     category: "clear",
     gag: true,
   },

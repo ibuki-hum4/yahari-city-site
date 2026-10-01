@@ -22,15 +22,15 @@
   "Footer": {
     "pageList": "ページ一覧",
     "otherInfo": "各種情報",
-    "newspaper": "矢張市新聞",
-    "column": "市長コラム",
+    "newspaper": "矢張区新聞",
+    "column": "区長コラム",
     "departments": "部署一覧",
     "ordinances": "条例集",
     "personnel": "人事異動情報",
-    "groups": "市民活動団体登録",
+    "groups": "区民活動団体登録",
     "legends": "殿堂入り",
     "spots": "観光スポット",
-    "contact": "市民の声",
+    "contact": "区民の声",
     "changelog": "更新履歴",
     "search": "サイト内検索",
     "sitemap": "サイトマップ",
@@ -47,14 +47,14 @@
   },
   "Nav": {
     "/": "ホーム",
-    "/about": "矢張市について",
+    "/about": "矢張区について",
     "/history": "沿革",
     "/news": "お知らせ",
     "/bosai": "防災ポータル",
     "/pictures": "フォトギャラリー",
-    "/access": "市民になるには",
+    "/access": "区民になるには",
     "/applications": "申請窓口",
-    "/citizen-card": "市民証発行",
+    "/citizen-card": "区民証発行",
     "/faq": "よくある質問"
   }
 }

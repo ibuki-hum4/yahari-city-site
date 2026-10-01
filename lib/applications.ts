@@ -49,7 +49,7 @@ export const APPLICATIONS: ApplicationDef[] = [
     slug: "reality-escape",
     title: "現実逃避の一時渡航届",
     description:
-      "心が疲れたとき、矢張市民は一時的に「現実」を離れることができます。出発前にこちらの渡航届をご提出ください。",
+      "心が疲れたとき、矢張区民は一時的に「現実」を離れることができます。出発前にこちらの渡航届をご提出ください。",
     fields: [
       { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
       { name: "gender", label: "性別", type: "select", required: true, options: GENDER_OPTIONS },
@@ -79,7 +79,7 @@ export const APPLICATIONS: ApplicationDef[] = [
   {
     slug: "pin-mian-registration",
     title: "ピン留ミアン登録システム",
-    description: "矢張市における各種ピン留ミアンの登録はこちらから申請してください。",
+    description: "矢張区における各種ピン留ミアンの登録はこちらから申請してください。",
     fields: [
       {
         name: "pinMianNumber",
@@ -97,7 +97,7 @@ export const APPLICATIONS: ApplicationDef[] = [
   {
     slug: "oshi-leave",
     title: "推し活休暇申請",
-    description: "推しのために業務・学業から一時離脱する市民のための休暇申請です。",
+    description: "推しのために業務・学業から一時離脱する区民のための休暇申請です。",
     fields: [
       { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
       { name: "oshiName", label: "推しの名前", type: "text", required: true, placeholder: "例: ○○担" },
@@ -132,7 +132,7 @@ export const APPLICATIONS: ApplicationDef[] = [
   {
     slug: "vc-marathon-certificate",
     title: "VC耐久参加証明書",
-    description: "矢張市公認の耐久VCに参加した市民へ贈られる証明書です。",
+    description: "矢張区公認の耐久VCに参加した区民へ贈られる証明書です。",
     fields: [
       { name: "name", label: "氏名(ニックネーム可)", type: "text", required: true, placeholder: "例: やーはり" },
       {

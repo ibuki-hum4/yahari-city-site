@@ -22,15 +22,15 @@
   "Footer": {
     "pageList": "Pages",
     "otherInfo": "More Information",
-    "newspaper": "Yahari City Newspaper",
-    "column": "Mayor's Column",
+    "newspaper": "Yahari Ward Newspaper",
+    "column": "Ward Mayor's Column",
     "departments": "Departments",
     "ordinances": "Ordinances",
     "personnel": "Personnel Changes",
     "groups": "Community Group Registration",
     "legends": "Hall of Fame",
     "spots": "Tourist Spots",
-    "contact": "Citizens' Voice",
+    "contact": "Residents' Voice",
     "changelog": "Changelog",
     "search": "Site Search",
     "sitemap": "Sitemap",
@@ -52,9 +52,9 @@
     "/news": "News",
     "/bosai": "Disaster Prevention",
     "/pictures": "Photo Gallery",
-    "/access": "Becoming a Citizen",
+    "/access": "Becoming a Resident",
     "/applications": "Applications",
-    "/citizen-card": "Citizen Card",
+    "/citizen-card": "Resident Card",
     "/faq": "FAQ"
   }
 }

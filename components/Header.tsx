@@ -87,7 +87,7 @@ export default function Header() {
             <Image
               // priority付き画像はNext.jsがpreload用のLinkレスポンスヘッダーにsrcを
               // そのまま埋め込むが、Node.jsのHTTPヘッダーはASCII範囲外の文字を許容しないため、
-              // 日本語を含むファイル名(矢張市_透過-128.png)だと"Invalid character in header
+              // 日本語を含むファイル名(矢張区_透過-128.png)だと"Invalid character in header
               // content"で落ちる。encodeURIでASCII安全な形にしてから渡す。
               src={encodeURI(SITE.logoSmall)}
               alt={`${SITE.name}章`}

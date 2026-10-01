@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata("/pictures");
 const COMING_SOON_CAPTIONS = [
   "フォトコンテスト入選作品",
   "創立記念イベント",
-  "市民の日常",
+  "区民の日常",
 ];
 
 export default async function PicturesPage({
@@ -30,11 +30,11 @@ export default async function PicturesPage({
       <PageHeader
         title="フォトギャラリー"
         path="/pictures"
-        lead={`${SITE.name}の市章や、市民の皆さまから寄せられた写真を掲載しています。`}
+        lead={`${SITE.name}の区章や、区民の皆さまから寄せられた写真を掲載しています。`}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="text-xl font-bold text-yahari-navy">市章・シンボル</h2>
+        <h2 className="text-xl font-bold text-yahari-navy">区章・シンボル</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           通常は透過版をご利用ください。背景あり版は、背景色を選べない場面など、用途に応じて使用してください。
         </p>
@@ -72,9 +72,9 @@ export default async function PicturesPage({
 
       <section className="bg-yahari-sky-light/40">
         <div className="mx-auto max-w-6xl px-4 py-12">
-          <h2 className="text-xl font-bold text-yahari-navy">市民の思い出</h2>
+          <h2 className="text-xl font-bold text-yahari-navy">区民の思い出</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            市民の皆さまから寄せられた写真は、今後随時こちらに追加していく予定です。掲載をご希望の方はサーバー内「#写真募集」チャンネルへどうぞ。
+            区民の皆さまから寄せられた写真は、今後随時こちらに追加していく予定です。掲載をご希望の方はサーバー内「#写真募集」チャンネルへどうぞ。
           </p>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {COMING_SOON_CAPTIONS.map((caption) => (
@@ -89,7 +89,7 @@ export default async function PicturesPage({
           Xでの「#{SITE.xHashtag}」
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          市民の皆さまがXに投稿した「#{SITE.xHashtag}」タグの様子をご覧いただけます。
+          区民の皆さまがXに投稿した「#{SITE.xHashtag}」タグの様子をご覧いただけます。
         </p>
 
         <div className="mt-6">

@@ -22,7 +22,7 @@ export default async function PersonnelPage({
       <PageHeader
         title="人事異動情報"
         path="/personnel"
-        lead="矢張市役所における辞令(就任・異動・退任・新設)の一覧です。各行から辞令書を確認・印刷できます。"
+        lead="矢張区役所における辞令(就任・異動・退任・新設)の一覧です。各行から辞令書を確認・印刷できます。"
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
         <div className="overflow-x-auto rounded border border-border">

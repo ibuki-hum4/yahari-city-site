@@ -56,7 +56,7 @@ export async function submitFeedback(input: FeedbackInput): Promise<SubmitFeedba
       body: JSON.stringify({
         embeds: [
           {
-            title: `市民の声: ${input.category}`,
+            title: `区民の声: ${input.category}`,
             description: message,
             color: 0x173a5e,
             fields: [{ name: "投稿者", value: nickname || "匿名" }],

@@ -73,7 +73,7 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   ctx.strokeRect(40, 40, width - 80, height - 80);
 
   try {
-    const logo = await loadImage("/矢張市.png");
+    const logo = await loadImage("/矢張区.png");
     ctx.drawImage(logo, width / 2 - 45, 65, 90, 90);
   } catch {
     // ロゴが読み込めない場合は省略してそのまま続行する
@@ -82,7 +82,7 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   ctx.textAlign = "center";
   ctx.fillStyle = "#173a5e";
   ctx.font = `bold 28px ${FONT_FAMILY}`;
-  ctx.fillText("矢張市", width / 2, 195);
+  ctx.fillText("矢張区", width / 2, 195);
 
   ctx.font = `bold 38px ${FONT_FAMILY}`;
   ctx.fillText(options.title, width / 2, 250);
@@ -128,14 +128,14 @@ export async function drawCertificate(canvas: HTMLCanvasElement, options: Certif
   ctx.textAlign = "center";
   ctx.font = `bold 18px ${FONT_FAMILY}`;
   ctx.fillText("矢張", 0, -6);
-  ctx.fillText("市長印", 0, 18);
+  ctx.fillText("区長印", 0, 18);
   ctx.restore();
 
   ctx.textAlign = "center";
   ctx.fillStyle = "#6b7280";
   ctx.font = `14px ${FONT_FAMILY}`;
   ctx.fillText(
-    "この証明書は矢張市公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
+    "この証明書は矢張区公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
     width / 2,
     height - 50,
   );

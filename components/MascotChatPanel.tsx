@@ -43,7 +43,7 @@ export default function MascotChatPanel({
         >
           <Card className="h-96 w-80 gap-0 py-0">
             <div className="flex items-center justify-between rounded-t-xl bg-yahari-navy px-4 py-3 text-white">
-              <span className="text-sm font-bold">矢張市総合窓口AI</span>
+              <span className="text-sm font-bold">矢張区総合窓口AI</span>
               <Button
                 type="button"
                 variant="ghost"

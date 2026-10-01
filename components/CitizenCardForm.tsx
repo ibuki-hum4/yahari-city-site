@@ -23,7 +23,7 @@ const PHOTO_OUTPUT_HEIGHT = CITIZEN_PHOTO_HEIGHT * 2;
 
 type Stage = "form" | "processing" | "done";
 
-const PROCESSING_STEPS = ["市民データベースを検索中…", "市章を転写中…", "市民証を発行中…"];
+const PROCESSING_STEPS = ["区民データベースを検索中…", "区章を転写中…", "区民証を発行中…"];
 
 function formatJaDate(value: string): string {
   const [year, month, day] = value.split("-");
@@ -158,14 +158,14 @@ export default function CitizenCardForm() {
           transition={{ duration: 0.25 }}
           className="flex flex-col items-center gap-6 py-8 text-center print-area"
         >
-          <p className="text-sm text-gray-600">市民証が発行されました。市民番号は以下の通りです。</p>
+          <p className="text-sm text-gray-600">区民証が発行されました。区民番号は以下の通りです。</p>
           <p className="break-all rounded bg-yahari-sky-light px-4 py-2 font-mono text-base font-bold text-yahari-navy sm:text-lg">
             第{citizenSerial}号
           </p>
           <canvas ref={handleCanvasMount} className="w-full max-w-xl rounded-lg border border-gray-200 shadow-md" />
           <div className="flex flex-wrap justify-center gap-4 no-print">
             <Button type="button" onClick={handleDownload} size="lg" className="rounded-full">
-              市民証をダウンロード(PNG)
+              区民証をダウンロード(PNG)
             </Button>
             <PrintButton label="印刷する" />
             <Button type="button" variant="outline" onClick={handleShare} size="lg" className="rounded-full">
@@ -226,7 +226,7 @@ export default function CitizenCardForm() {
 
           <div>
             <Label htmlFor="joinDate">
-              矢張市への加入日<span className="ml-1 text-destructive">*</span>
+              矢張区への加入日<span className="ml-1 text-destructive">*</span>
             </Label>
             <Input
               id="joinDate"
@@ -290,7 +290,7 @@ export default function CitizenCardForm() {
           </div>
 
           <Button type="submit" size="lg" className="w-full rounded-full sm:w-auto">
-            市民証を発行する
+            区民証を発行する
           </Button>
         </motion.form>
       )}

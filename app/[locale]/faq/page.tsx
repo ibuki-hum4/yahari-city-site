@@ -39,7 +39,7 @@ export default async function FaqPage({
       <PageHeader
         title="よくある質問"
         path="/faq"
-        lead="市民になる方法やサーバーに関するよくある質問をまとめています。"
+        lead="区民になる方法やサーバーに関するよくある質問をまとめています。"
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
         <Accordion type="single" collapsible className="border-y border-border">

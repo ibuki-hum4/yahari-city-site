@@ -19,13 +19,13 @@ export default async function HistoryPage({
       <PageHeader
         title="沿革"
         path="/history"
-        lead={`${SITE.founded}の発足から現在までの、${SITE.name}の歩みをご紹介します。`}
+        lead={`前身の矢張市の発足から、の発足を経て現在までの歩みをご紹介します。`}
       />
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <HistoryTimeline events={HISTORY_EVENTS} />
         <p className="mt-4 text-xs text-muted-foreground">
-          ※ 年表の日付は今後の市政の進展に応じて更新されます。
+          ※ 年表の日付は今後の区政の進展に応じて更新されます。
         </p>
       </section>
     </>

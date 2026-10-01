@@ -1,4 +1,4 @@
-// REPL driver for 矢張市サイト (Next.js + Bun). Run with: node driver.mjs
+// REPL driver for 矢張区サイト (Next.js + Bun). Run with: node driver.mjs
 // Designed for agents: wrap in tmux, send-keys commands, capture-pane output.
 // `launch` starts `bun run dev` as a managed child process (so the agent never
 // has to invoke `bun run dev` directly) and connects headless Chromium to it.

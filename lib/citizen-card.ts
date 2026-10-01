@@ -21,7 +21,7 @@ export interface CitizenTermOption {
 export const CITIZEN_PHOTO_WIDTH = 150;
 export const CITIZEN_PHOTO_HEIGHT = 190;
 
-// 矢張市はクォーター制(四半期ごとの「期」)を採用している。新しい期が始まったらここに追記する。
+// 矢張区はクォーター制(四半期ごとの「期」)を採用している。新しい期が始まったらここに追記する。
 export const CITIZEN_TERMS: CitizenTermOption[] = [
   { value: "O0", label: "O0(Origin 0)" },
   { value: "01A", label: "01A" },
@@ -54,7 +54,7 @@ function drawImageCover(
   ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 }
 
-// 指定した最大幅に収まるまでフォントサイズを段階的に縮小する(市民名の長さは可変のため)
+// 指定した最大幅に収まるまでフォントサイズを段階的に縮小する(区民名の長さは可変のため)
 function fitFontSize(
   ctx: CanvasRenderingContext2D,
   text: string,
@@ -105,7 +105,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   ctx.fillRect(30, 30, width - 60, 120);
 
   try {
-    const logo = await loadImage("/矢張市_透過.png");
+    const logo = await loadImage("/矢張区_透過.png");
     ctx.drawImage(logo, 55, 50, 80, 80);
   } catch {
     // ロゴが読み込めない場合は省略してそのまま続行する
@@ -114,10 +114,10 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   ctx.textAlign = "left";
   ctx.fillStyle = "#ffffff";
   ctx.font = `bold 34px ${FONT_FAMILY}`;
-  ctx.fillText("矢張市民証", 155, 90);
+  ctx.fillText("矢張区民証", 155, 90);
   ctx.font = `14px ${FONT_FAMILY}`;
   ctx.fillStyle = "#a6e1ff";
-  ctx.fillText("YAHARI CITY RESIDENT CARD", 155, 118);
+  ctx.fillText("YAHARI WARD RESIDENT CARD", 155, 118);
 
   ctx.textAlign = "right";
   ctx.font = `13px ${FONT_FAMILY}`;
@@ -190,7 +190,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
     { label: "氏名 / NAME", value: options.name, color: "#173a5e", baseSize: 32 },
     { label: "所属期 / TERM", value: options.term, color: "#1f2937", baseSize: 28 },
     { label: "加入日 / DATE OF ENTRY", value: options.joinDate, color: "#1f2937", baseSize: 28 },
-    { label: "市民番号 / CITIZEN No.", value: `第${options.citizenSerial}号`, color: "#c0392b", baseSize: 28 },
+    { label: "区民番号 / RESIDENT No.", value: `第${options.citizenSerial}号`, color: "#c0392b", baseSize: 28 },
   ];
 
   let rowY = 255;
@@ -205,7 +205,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
     rowY += 78;
   }
 
-  // 市長印
+  // 区長印
   ctx.save();
   ctx.translate(865, 470);
   ctx.rotate(-0.15);
@@ -221,7 +221,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   ctx.textAlign = "center";
   ctx.font = `bold 15px ${FONT_FAMILY}`;
   ctx.fillText("矢張", 0, -4);
-  ctx.fillText("市長印", 0, 16);
+  ctx.fillText("区長印", 0, 16);
   ctx.restore();
 
   // 簡易バーコード(装飾)
@@ -244,7 +244,7 @@ export async function drawCitizenCard(canvas: HTMLCanvasElement, options: Citize
   ctx.textAlign = "center";
   ctx.font = `11px ${FONT_FAMILY}`;
   ctx.fillText(
-    "このカードは矢張市公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
+    "このカードは矢張区公式サイトにより自動発行されたものです(架空のコミュニティによる遊戯目的の発行物です)",
     width / 2,
     615,
   );

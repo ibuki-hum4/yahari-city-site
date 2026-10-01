@@ -21,7 +21,7 @@ export default async function ColumnPage({
   return (
     <>
       <PageHeader
-        title="市長コラム"
+        title="区長コラム"
         path="/column"
         lead={`${SITE.mayorTitle}の${SITE.mayor}が、思いついたことを不定期に書き残すコラムです。`}
       />

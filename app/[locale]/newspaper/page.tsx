@@ -22,7 +22,7 @@ export default async function NewspaperPage({
   return (
     <>
       <PageHeader
-        title="矢張市新聞"
+        title="矢張区新聞"
         path="/newspaper"
         lead={`${SITE.name}の月刊新聞です。大きな出来事があった際は号外を発行します。`}
       />

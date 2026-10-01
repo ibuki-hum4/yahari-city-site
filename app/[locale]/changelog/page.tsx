@@ -21,7 +21,7 @@ export default async function ChangelogPage({
       <PageHeader
         title="更新履歴"
         path="/changelog"
-        lead="矢張市公式サイト自体の更新履歴(変更ログ)です。"
+        lead="矢張区公式サイト自体の更新履歴(変更ログ)です。"
       />
 
       <section className="mx-auto max-w-3xl px-4 py-12">

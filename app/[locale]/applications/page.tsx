@@ -33,14 +33,14 @@ export default async function ApplicationsPage({
       <PageHeader
         title="申請窓口"
         path="/applications"
-        lead="矢張市役所の各種オンライン申請はこちらからご利用いただけます。"
+        lead="矢張区役所の各種オンライン申請はこちらからご利用いただけます。"
       />
       <section className="mx-auto max-w-4xl px-4 py-12">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <BentoLinkCard
             href="/applications/group-registration"
-            title="市民活動団体登録申請"
-            description="矢張市内で活動する団体の登録はこちらから申請してください。登録された団体は市民活動団体一覧に掲載されます。"
+            title="区民活動団体登録申請"
+            description="矢張区内で活動する団体の登録はこちらから申請してください。登録された団体は区民活動団体一覧に掲載されます。"
             icon={APPLICATION_ICONS["group-registration"]}
             featured={FEATURED_SLUGS.has("group-registration")}
             className="sm:col-span-2"

@@ -13,6 +13,15 @@ export interface PersonnelTransfer {
 // 新しい辞令を追加したい場合は、この配列の先頭に項目を追加する(一覧は発令日の降順で表示される)
 export const PERSONNEL_TRANSFERS: PersonnelTransfer[] = [
   {
+    id: "2026-0017",
+    issuedDate: "2026年9月27日",
+    name: "やーはり",
+    previousPosition: "矢張市長",
+    newPosition: "矢張区長",
+    type: "就任",
+    note: "矢張市の後継として矢張区が発足したことに伴う初代矢張区長就任。",
+  },
+  {
     id: "2026-0016",
     issuedDate: "2026年7月9日",
     name: "赤い人",

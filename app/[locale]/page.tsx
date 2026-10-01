@@ -22,18 +22,18 @@ const CAROUSEL_SLIDES: CarouselSlide[] = [
   },
   {
     src: "/Carousel/yahari-city.png",
-    alt: "ABOUT 新都市、矢張市とは?",
+    alt: "ABOUT 新都市、矢張区とは?",
     href: "/about",
   },
 ];
 
-// STATSと同じくBento風の非対称グリッド。「矢張市について」を大きめの入口タイルにし、
-// 「市民になるには」はCTA的な帯タイルとして下段に配置している。
+// STATSと同じくBento風の非対称グリッド。「矢張区について」を大きめの入口タイルにし、
+// 「区民になるには」はCTA的な帯タイルとして下段に配置している。
 const QUICK_LINKS = [
   {
     href: "/about",
-    title: "矢張市について",
-    description: "市長メッセージや市の概要、基礎データをご紹介します。",
+    title: "矢張区について",
+    description: "区長メッセージや区の概要、基礎データをご紹介します。",
     icon: "landmark" as const,
     className: "col-span-2 lg:col-span-2",
     featured: true,
@@ -41,32 +41,32 @@ const QUICK_LINKS = [
   {
     href: "/history",
     title: "沿革",
-    description: "発足から現在までの矢張市の歩みを年表でご覧いただけます。",
+    description: "発足から現在までの矢張区の歩みを年表でご覧いただけます。",
     icon: "history" as const,
     className: "col-span-1",
   },
   {
     href: "/pictures",
     title: "フォトギャラリー",
-    description: "市章や市民の思い出の写真を掲載しています。",
+    description: "区章や区民の思い出の写真を掲載しています。",
     icon: "image" as const,
     className: "col-span-1",
   },
   {
     href: "/access",
-    title: "市民になるには",
-    description: "矢張市の公式Discordサーバーへの参加方法をご案内します。",
+    title: "区民になるには",
+    description: "矢張区の公式Discordサーバーへの参加方法をご案内します。",
     icon: "user-plus" as const,
     className: "col-span-2 lg:col-span-4",
     featured: true,
   },
 ];
 
-// Bento風の非対称グリッドで表示する。市民数を大きめのタイルにし、
+// Bento風の非対称グリッドで表示する。区民数を大きめのタイルにし、
 // スローガンは下段の帯タイルにすることで、均一なカード4つ並びの単調さを崩している。
 const STATS = [
   {
-    label: "市民数",
+    label: "区民数",
     value: `${SITE.population}人`,
     note: SITE.populationAsOf,
     icon: Users,
@@ -74,7 +74,7 @@ const STATS = [
     featured: true,
   },
   { label: "設立", value: SITE.founded, icon: CalendarDays, className: "col-span-1" },
-  { label: "市長", value: SITE.mayor, icon: Crown, className: "col-span-1" },
+  { label: "区長", value: SITE.mayor, icon: Crown, className: "col-span-1" },
   {
     label: "スローガン",
     value: SITE.slogan,
@@ -115,7 +115,7 @@ export default async function Home({
             {SITE.name}公式サイト
           </h1>
           <p className="mt-4 max-w-xl text-white/80">
-            {SITE.slogan} Discord上に築かれた、市民{SITE.population}人の「街」です。
+            {SITE.slogan} Discord上に築かれた、区民{SITE.population}人の「街」です。
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button
@@ -123,7 +123,7 @@ export default async function Home({
               size="lg"
               className="rounded-full bg-white text-yahari-navy hover:bg-yahari-sky-light"
             >
-              <Link href="/about">矢張市について知る</Link>
+              <Link href="/about">矢張区について知る</Link>
             </Button>
             <Button
               asChild

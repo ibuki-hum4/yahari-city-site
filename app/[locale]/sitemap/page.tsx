@@ -18,7 +18,7 @@ export default async function SitemapPage({
 
   return (
     <>
-      <PageHeader title="サイトマップ" path="/sitemap" lead="矢張市公式サイトの全ページ一覧です。" />
+      <PageHeader title="サイトマップ" path="/sitemap" lead="矢張区公式サイトの全ページ一覧です。" />
       <section className="mx-auto max-w-3xl px-4 py-12">
         <SitemapGraph pages={SITE_PAGES} />
       </section>

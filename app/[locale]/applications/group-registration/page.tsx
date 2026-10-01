@@ -17,9 +17,9 @@ export default async function GroupRegistrationPage({
   return (
     <>
       <PageHeader
-        title="市民活動団体登録申請"
+        title="区民活動団体登録申請"
         path="/applications/group-registration"
-        lead="矢張市内で活動する団体の登録はこちらから申請してください。登録された団体は市民活動団体一覧に掲載されます。"
+        lead="矢張区内で活動する団体の登録はこちらから申請してください。登録された団体は区民活動団体一覧に掲載されます。"
         parent={{ label: "申請窓口", href: "/applications" }}
       />
       <section className="mx-auto max-w-2xl px-4 py-12">

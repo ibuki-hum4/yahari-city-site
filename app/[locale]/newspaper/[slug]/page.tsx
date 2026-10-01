@@ -69,7 +69,7 @@ export default async function NewspaperIssuePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <PageHeader title={issue.title} path={`/newspaper/${slug}`} parent={{ label: "矢張市新聞", href: "/newspaper" }} />
+      <PageHeader title={issue.title} path={`/newspaper/${slug}`} parent={{ label: "矢張区新聞", href: "/newspaper" }} />
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <div className="flex items-center gap-3">

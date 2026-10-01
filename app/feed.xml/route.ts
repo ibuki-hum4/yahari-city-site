@@ -35,7 +35,7 @@ export async function GET() {
     title: item.title,
     link: `${SITE.url}/column/${item.slug}`,
     date: item.date,
-    category: "市長コラム",
+    category: "区長コラム",
     description: item.content,
   }));
 
@@ -59,9 +59,9 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${escapeXml(SITE.name)}公式サイト お知らせ・市長コラム</title>
+    <title>${escapeXml(SITE.name)}公式サイト お知らせ・区長コラム</title>
     <link>${SITE.url}/news</link>
-    <description>${escapeXml(SITE.name)}からの最新情報と市長コラム</description>
+    <description>${escapeXml(SITE.name)}からの最新情報と区長コラム</description>
     <language>ja</language>${items}
   </channel>
 </rss>`;

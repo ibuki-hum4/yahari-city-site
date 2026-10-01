@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// /contact(市民の声)フォーム用のAIモデレーション。Geminiに暴言・脅迫・
+// /contact(区民の声)フォーム用のAIモデレーション。Geminiに暴言・脅迫・
 // 差別的表現が含まれるかを判定させ、判定不能な場合は「unavailable」を返して
 // 呼び出し側で安全側(送信拒否)に倒す。
 // gemini-1.5-proは廃止済みのため、判定タスクには十分な性能のgemini-2.5-flashを使用。

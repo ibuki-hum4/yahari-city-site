@@ -13,7 +13,7 @@ import { lineSeedJP } from "@/lib/fonts";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 
-const description = `${SITE.name}(やはりし)は、Discord上で活動する架空のコミュニティです。市の概要・沿革・お知らせなどをご紹介します。`;
+const description = `${SITE.name}(やはりく)は、Discord上で活動する架空のコミュニティです。区の概要・沿革・お知らせなどをご紹介します。`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

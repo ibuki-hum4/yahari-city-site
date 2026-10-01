@@ -32,7 +32,7 @@ export default async function TermsPage({
         <div className="mx-auto max-w-4xl px-4 py-12">
           <h2 className="text-xl font-bold text-yahari-navy">著作権について</h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            本サイトに掲載しているテキスト・市章・画像等の著作権は、特に記載のあるものを除き{SITE.name}に帰属します。市民の皆さまからご提供いただいた写真等の著作権は、提供者に帰属します。無断での転載・複製はお控えください。
+            本サイトに掲載しているテキスト・区章・画像等の著作権は、特に記載のあるものを除き{SITE.name}に帰属します。区民の皆さまからご提供いただいた写真等の著作権は、提供者に帰属します。無断での転載・複製はお控えください。
           </p>
         </div>
       </section>

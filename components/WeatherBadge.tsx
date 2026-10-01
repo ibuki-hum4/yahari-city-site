@@ -16,7 +16,7 @@ export default function WeatherBadge() {
     <Link
       href="/weather"
       className="flex items-center gap-1 rounded-full bg-yahari-sky-light px-2.5 py-1 text-xs font-semibold text-yahari-navy hover:bg-yahari-sky-light/70"
-      aria-label={`本日の矢張市の天気: ${weather.label}${advisory ? `(${advisory.level}「${advisory.label}」発表中)` : ""}。詳細ページへ`}
+      aria-label={`本日の矢張区の天気: ${weather.label}${advisory ? `(${advisory.level}「${advisory.label}」発表中)` : ""}。詳細ページへ`}
     >
       <WeatherIcon icon={weather.icon} className="size-4" />
       <span className="hidden sm:inline">{weather.label}</span>

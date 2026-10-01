@@ -76,7 +76,7 @@ export default async function ColumnArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <PageHeader title={item.title} path={`/column/${slug}`} parent={{ label: "市長コラム", href: "/column" }} />
+      <PageHeader title={item.title} path={`/column/${slug}`} parent={{ label: "区長コラム", href: "/column" }} />
 
       <section className="mx-auto max-w-3xl px-4 py-12">
         <time className="text-sm text-muted-foreground">{item.date}</time>

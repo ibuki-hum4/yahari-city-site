@@ -21,9 +21,9 @@ const SAMPLE_GROUPS = [
   },
   {
     registrationNumber: "第4号",
-    name: "矢張市検定愛好会",
+    name: "矢張区検定愛好会",
     representative: "ひかり",
-    activity: "教育委員会が構想中の「矢張市検定」の出題案を考える非公式サークルです。",
+    activity: "教育委員会が構想中の「矢張区検定」の出題案を考える非公式サークルです。",
   },
 ];
 

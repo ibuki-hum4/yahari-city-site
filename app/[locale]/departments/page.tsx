@@ -21,7 +21,7 @@ export default async function DepartmentsPage({
       <PageHeader
         title="部署一覧"
         path="/departments"
-        lead="矢張市役所の各部署と業務内容をご紹介します。総合窓口AIチャットボットがご案内する部署も、こちらの一覧から選ばれています。"
+        lead="矢張区役所の各部署と業務内容をご紹介します。総合窓口AIチャットボットがご案内する部署も、こちらの一覧から選ばれています。"
       />
 
       <section className="mx-auto max-w-6xl px-4 py-12">
