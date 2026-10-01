@@ -1,7 +1,7 @@
-矢張市公式サイト
+矢張区公式サイト
 ================
 
-Discord上のコミュニティ「矢張市」(市長: やーはり)の公式サイトです。実在の自治体サイト(東京都, 豊島区, 武蔵野市, 日光市, 千葉県, 埼玉県)を参考にデザインしています。Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 で構築しています。
+Discord上のコミュニティ「矢張区」(区長: やーはり)の公式サイトです。実在の自治体サイト(東京都, 豊島区, 武蔵野区, 日光区, 千葉県, 埼玉県)を参考にデザインしています。Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 で構築しています。
 
 ## 開発
 
@@ -42,50 +42,50 @@ printf 'launch\nnav /\nss home\nquit\n' | node .claude/skills/run-yahari-site/dr
 
 - `app/` — 各ページ(ホーム / about / history / pictures / news / newspaper / column / access / faq / search / sitemap / accessibility / privacy / terms / bosai / applications / departments / legends / contact / ordinances / personnel / groups)
 - `components/` — Header, Footer, Carousel, AccessibilityMenu, WarningLookup, EarthquakeMap, ApplicationForm, ContactForm, MascotChatbot, Markdown, DiscordWidget, XHashtagFeed, CitizenCardForm, PhotoCropper, OrdinanceSearch, PersonnelTypeBadge, PrintButton, GroupRegistrationForm など共通コンポーネント
-- `lib/content.ts` — 市の基礎データ・沿革・部署一覧・殿堂入り記録・市長プロフィール・サイトマップ用ページ一覧・`pageMetadata()`/`buildMetadata()`ヘルパー
+- `lib/content.ts` — 区の基礎データ・沿革・部署一覧・殿堂入り記録・区長プロフィール・サイトマップ用ページ一覧・`pageMetadata()`/`buildMetadata()`ヘルパー
 - `lib/news.ts` — `content/news/*.md` を読み込むお知らせ取得関数
-- `lib/newspaper.ts` — `content/newspaper/*.md` を読み込む矢張市新聞取得関数
-- `lib/column.ts` — `content/column/*.md` を読み込む市長コラム取得関数
+- `lib/newspaper.ts` — `content/newspaper/*.md` を読み込む矢張区新聞取得関数
+- `lib/column.ts` — `content/column/*.md` を読み込む区長コラム取得関数
 - `lib/markdown-excerpt.ts` — `lib/news.ts`/`lib/newspaper.ts`/`lib/column.ts`で共用するMarkdown抜粋生成ユーティリティ
 - `lib/faq.ts` — よくある質問のデータ
 - `lib/jma.ts` — 気象庁の公開JSONを取得するユーティリティ(防災ポータル用)
 - `lib/discord.ts` — Discordウィジェット(widget.json)を取得するユーティリティ
 - `lib/applications.ts` — 申請フォームの定義一覧・申請番号生成
 - `lib/certificate.ts` — Canvasで証明書PNGを描画するユーティリティ
-- `lib/citizen-card.ts` — Canvasで市民証PNGを描画するユーティリティ(証明写真の合成にも対応)
+- `lib/citizen-card.ts` — Canvasで区民証PNGを描画するユーティリティ(証明写真の合成にも対応)
 - `lib/ordinances.ts` — 条例集のデータ(条例番号・条文・改正履歴)
 - `lib/personnel.ts` — 人事異動情報(辞令)のデータと発令文生成
-- `lib/groups.ts` — 市民活動団体登録情報の取得(Prisma経由でPostgreSQLから)
+- `lib/groups.ts` — 区民活動団体登録情報の取得(Prisma経由でPostgreSQLから)
 - `lib/prisma.ts` — Prisma Clientのシングルトン(`@prisma/adapter-pg`でPostgreSQLに接続)
 - `lib/moderation.ts` — Gemini APIで`/contact`投稿内容をモデレーションするユーティリティ
 - `prisma/schema.prisma` — DBスキーマ定義(`CitizenGroup`モデル)。生成されたClientは`lib/generated/prisma`(gitignore対象)
 - `content/news/*.md` — お知らせ本文(Markdown, frontmatterで`title`/`date`/`category`を指定)
-- `content/newspaper/*.md` — 矢張市新聞本文(Markdown, frontmatterで`issue`/`type`(定期号/号外)/`title`/`date`を指定)
-- `content/column/*.md` — 市長コラム本文(Markdown, frontmatterで`title`/`date`を指定)
+- `content/newspaper/*.md` — 矢張区新聞本文(Markdown, frontmatterで`issue`/`type`(定期号/号外)/`title`/`date`を指定)
+- `content/column/*.md` — 区長コラム本文(Markdown, frontmatterで`title`/`date`を指定)
 
 ## 機能
 
 - お知らせはMarkdownファイル(`content/news/`)で管理し、`react-markdown`でレンダリング
-- 矢張市新聞(`/newspaper`) — `content/newspaper/*.md`で管理する月刊新聞。`type`フィールドで定期号/号外を区別し、号外は赤バッジで表示。お知らせと同じ「一覧は抜粋+リンク、詳細ページに全文+Article JSON-LD」の構成
+- 矢張区新聞(`/newspaper`) — `content/newspaper/*.md`で管理する月刊新聞。`type`フィールドで定期号/号外を区別し、号外は赤バッジで表示。お知らせと同じ「一覧は抜粋+リンク、詳細ページに全文+Article JSON-LD」の構成
 - サイト内検索(`/search`) — お知らせとページをキーワードで検索(ヘッダーの検索ボックスから利用可)
 - サイトマップ(`/sitemap`)、よくある質問(`/faq`)
 - Discordウィジェット(`/access`) — `widget.json`から取得した実際のオンライン人数・メンバーアバターを表示(`lib/discord.ts`、60秒キャッシュ)
 - 総合窓口AIチャットボット(全ページ右下) — ルールベースの簡易チャット。24時間対応(対応時間の制限なし)。「お腹すいた」「こんにちは」「ありがとう」「猫」など複数キーワードに反応し、それぞれ複数バリエーションの返答からランダム選択。該当キーワードがなければランダムな部署に、これも複数の言い回しからランダム選択してたらい回し
 - 各種申請窓口(`/applications`) — `lib/applications.ts`の配列に追加するだけで申請フォームを増やせる設計。申請後はお役所風の処理アニメーション→申請番号(`YHR-2026-XXXX-XXXX-WORD-XXX`形式)発行→証明書PNGをダウンロード可能。現実逃避の一時渡航届・ピン留ミアン登録・推し活休暇申請・二度寝許可証・VC耐久参加証明書を収録
-- 市民証発行(`/citizen-card`) — 氏名・所属期(クォーター)・加入日を入力し、市章入りの市民証(Canvas描画PNG)をその場で発行。証明写真は任意でアップロードでき、`react-easy-crop`による移動・ズームのトリミングUIで位置調整してから合成できる
+- 区民証発行(`/citizen-card`) — 氏名・所属期(クォーター)・加入日を入力し、区章入りの区民証(Canvas描画PNG)をその場で発行。証明写真は任意でアップロードでき、`react-easy-crop`による移動・ズームのトリミングUIで位置調整してから合成できる
 - 条例集(`/ordinances`) — `lib/ordinances.ts`の配列で条例番号・条文(第○条・号)・改正履歴を管理。キーワードによる全文検索付き(`components/OrdinanceSearch.tsx`)
 - 人事異動情報(`/personnel`) — `lib/personnel.ts`の配列で辞令(就任・異動・退任・新設)を管理。`/personnel/[id]`で正式な辞令書面を表示し、印刷専用CSS(`.print-area`, `app/globals.css`)経由でPDF保存・印刷が可能
-- 市民活動団体登録(`/groups`) — 登録団体一覧をPostgreSQL(Prisma経由)から取得して表示。新規登録は`/applications/group-registration`のServer Action(`registerGroup`)がDBへ書き込む
-- 市長コラム(`/column`) — `content/column/*.md`で管理する市長のブログ。`/about`に市長プロフィールと「市長の一言コーナー」も追加
+- 区民活動団体登録(`/groups`) — 登録団体一覧をPostgreSQL(Prisma経由)から取得して表示。新規登録は`/applications/group-registration`のServer Action(`registerGroup`)がDBへ書き込む
+- 区長コラム(`/column`) — `content/column/*.md`で管理する区長のブログ。`/about`に区長プロフィールと「区長の一言コーナー」も追加
 - 部署一覧(`/departments`) — `lib/content.ts`の`DEPARTMENTS`配列(MascotChatbotのたらい回し先と共通データ)を一覧表示
 - 殿堂入り(`/legends`) — `lib/content.ts`の`LEGEND_RECORDS`配列を手動キュレーションで管理する伝説的記録集
-- 市民の声フォーム(`/contact`) — `app/contact/actions.ts`のServer ActionがDiscord Webhook(`DISCORD_FEEDBACK_WEBHOOK_URL`)へ送信する実用フォーム。honeypotフィールドと表示後3秒未満の送信拒否でボット対策、`lib/moderation.ts`がGemini(既定では`gemini-2.5-flash`、`GEMINI_API_KEY`が必要)に投稿内容を判定させ、暴言・差別的表現が含まれる場合は送信前に拒否(APIキー未設定またはAPI呼び出し失敗時も安全側に倒して送信を拒否する)
+- 区民の声フォーム(`/contact`) — `app/contact/actions.ts`のServer ActionがDiscord Webhook(`DISCORD_FEEDBACK_WEBHOOK_URL`)へ送信する実用フォーム。honeypotフィールドと表示後3秒未満の送信拒否でボット対策、`lib/moderation.ts`がGemini(既定では`gemini-2.5-flash`、`GEMINI_API_KEY`が必要)に投稿内容を判定させ、暴言・差別的表現が含まれる場合は送信前に拒否(APIキー未設定またはAPI呼び出し失敗時も安全側に倒して送信を拒否する)
 - 404 (`not-found.tsx`) / 500 (`error.tsx`) / 読み込み中 (`loading.tsx`) のカスタムページ
-- Xの「#矢張市最高の瞬間」ハッシュタグタイムライン埋め込み・実際のスクリーンショット掲載(`/pictures`)
+- Xの「#矢張区最高の瞬間」ハッシュタグタイムライン埋め込み・実際のスクリーンショット掲載(`/pictures`)
 - ホームのCarousel(`motion`によるクロスフェード、サムネイルプレビュー、一時停止操作付き)
 - 「Discordに参加」ボタンは共通で`/discord`に集約し、`next.config.ts`の`redirects()`で実際のDiscord招待リンクに転送(招待リンクが変わった場合はそこだけ更新すればよい)
 
-### 矢張市防災ポータル(`/bosai`)
+### 矢張区防災ポータル(`/bosai`)
 
 気象庁が公開している防災情報JSON(地図表示等に使われている無認証の公開エンドポイント。正式な開発者向けAPIではないため将来仕様変更で動作しなくなる可能性があります)を取得し、全国の地震・津波・警報注意報を表示します。
 
@@ -99,7 +99,7 @@ printf 'launch\nnav /\nss home\nquit\n' | node .claude/skills/run-yahari-site/dr
 
 - `metadataBase`・OGP・Twitter Card・JSON-LD(Organization / WebSite+SearchAction / BreadcrumbList / FAQPage / Article)
 - お知らせは`/news/[slug]`で個別URL・個別メタデータ・Article JSON-LDを持つ(一覧`/news`は抜粋+リンクのみ)
-- `/sitemap.xml`(`app/sitemap.ts`、お知らせ・市長コラム・条例・人事異動・申請ページなどを含む全URLを`changeFrequency`/`priority`/実日付の`lastModified`付きで出力)、`/robots.txt`(`app/robots.ts`)、`/manifest.webmanifest`(`app/manifest.ts`)、お知らせ・市長コラムRSS(`/feed.xml`、各記事へのパーマリンク付き)
+- `/sitemap.xml`(`app/sitemap.ts`、お知らせ・区長コラム・条例・人事異動・申請ページなどを含む全URLを`changeFrequency`/`priority`/実日付の`lastModified`付きで出力)、`/robots.txt`(`app/robots.ts`)、`/manifest.webmanifest`(`app/manifest.ts`)、お知らせ・区長コラムRSS(`/feed.xml`、各記事へのパーマリンク付き)
 - 各ページの`description`/`canonical`は`lib/content.ts`の`pageMetadata()`/`buildMetadata()`で一元管理
 - 検索結果ページ(`/search?q=`)は`robots: { index: false }`で重複コンテンツ化を回避
 
@@ -186,7 +186,7 @@ kubectl apply -f k8s/migration-job.yaml   # スキーマ変更時は再適用す
 - `lib/content.ts` の `SITE.url` — 実際に公開するドメイン(metadataBase / OGP / サイトマップ / RSSで使用)
 - `content/news/*.md`・`HISTORY_EVENTS`の日付・内容は架空のサンプルです
 - `public/` 内の写真ギャラリー用の実際の画像
-- `/contact`(市民の声フォーム)を使う場合は、Discordサーバーの「サーバー設定 → 連携サービス → ウェブフック」で新規ウェブフックを作成し、そのURLを`.env.local`に`DISCORD_FEEDBACK_WEBHOOK_URL=...`として設定してください(`.env.local.example`参照)。加えて、投稿内容のモデレーション(Gemini 1.5 Pro)に使う`GEMINI_API_KEY`を[Google AI Studio](https://aistudio.google.com/app/apikey)で発行し設定してください。いずれか未設定のままでもサイトはクラッシュせず、フォームが「準備中」エラーを返すだけです
+- `/contact`(区民の声フォーム)を使う場合は、Discordサーバーの「サーバー設定 → 連携サービス → ウェブフック」で新規ウェブフックを作成し、そのURLを`.env.local`に`DISCORD_FEEDBACK_WEBHOOK_URL=...`として設定してください(`.env.local.example`参照)。加えて、投稿内容のモデレーション(Gemini 1.5 Pro)に使う`GEMINI_API_KEY`を[Google AI Studio](https://aistudio.google.com/app/apikey)で発行し設定してください。いずれか未設定のままでもサイトはクラッシュせず、フォームが「準備中」エラーを返すだけです
 - `/groups`・`/applications/group-registration`・記事コメント機能を使う場合は、PostgreSQL 18を用意して`DATABASE_URL`を設定し、`bunx prisma migrate deploy`(本番)または`bunx prisma migrate dev`(開発時)でスキーマを反映してください(`.env.local.example`参照)。未設定の場合、これらのページはエラーメッセージを表示します
 - 記事コメント機能(`/news`, `/column`)の荒らし対策には[Cloudflare Turnstile](https://dash.cloudflare.com/)のサイトキーを発行し、`NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`を設定してください(`.env.local.example`参照)。未設定の場合、ウィジェットは「準備中」と表示され投稿は常に拒否されます
 - `k8s/ingress.yaml`のホスト名、`k8s/secret.yaml`/`k8s/postgres-secret.yaml`の`CHANGE_ME`(値を埋めたらkubesealで`k8s/sealed/`に変換する。`NEXT_PUBLIC_TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`も同様に追加が必要)
