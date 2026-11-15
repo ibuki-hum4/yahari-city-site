@@ -3,13 +3,10 @@ kind: Ingress
 metadata:
   name: yahari-app-ingress
   namespace: yahari-city
-  annotations:
+  labels:
+    name: yahari-app-ingress
 spec:
   ingressClassName: traefik
-  tls:
-    - hosts:
-        - yahari-city.skyia.jp
-      secretName: yahari-app-tls
   rules:
     - host: yahari-city.skyia.jp
       http:
